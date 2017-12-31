@@ -1,5 +1,4 @@
-//var tetronimos = "IILLOOTTZZXXllll";
-var tetronimos = ["L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L"];
+var tetronimos = ["I", "I", "L", "L", "O", "O", "T", "T", "Z", "Z", "X", "X", "V", "V", "V", "V"];
 
 var count01 = new Array(1)
 
@@ -17,9 +16,102 @@ var gridItems = [
     [0, 0, 0, 0, 0, 0]
 ];
 
-var L = new Array(7)
+var I = new Array(1);
+var O = new Array(0);
+var L = new Array(7);
+var T = new Array(3)
+var Z = new Array(3);
+var X = new Array(0);
+var V = new Array(3);
 
 //letters
+
+V[0] = [
+    [1, 1],
+    [0, 1]
+];
+
+V[1] = [
+    [1, 1],
+    [1, 0]
+];
+
+V[2] = [
+    [0, 1],
+    [1, 1]
+];
+
+V[3] = [
+    [1, 0],
+    [1, 1]
+];
+
+X[0] = [
+    [0, 1, 0],
+    [1, 1, 1],
+    [0, 1, 0]
+];
+
+Z[0] = [
+    [1, 1, 0],
+    [0, 1, 1]
+];
+
+Z[1] = [
+    [0, 1, 1],
+    [1, 1, 0]
+];
+
+Z[2] = [
+    [0, 1],
+    [1, 1],
+    [1, 0]
+];
+
+Z[3] = [
+    [1, 0],
+    [1, 1],
+    [0, 0]
+];
+
+I[0] = [
+    [1, 1, 1, 1]
+];
+
+I[1] = [
+    [1],
+    [1],
+    [1],
+    [1]
+];
+
+O[0] = [
+    [1, 1],
+    [1, 1]
+];
+
+T[0] = [
+    [1, 1, 1],
+    [0, 1, 0]
+];
+
+T[1] = [
+    [0, 1, 0],
+    [1, 1, 1]
+];
+
+T[2] = [
+    [1, 0],
+    [1, 1],
+    [1, 0]
+];
+
+T[3] = [
+    [0, 1],
+    [1, 1],
+    [0, 1]
+];
+
 L[0] = [
     [1, 1, 1],
     [0, 0, 1]
@@ -91,7 +183,7 @@ function calculate() {
             for (var j = 0; j < cube.length; j++) {
 
 
-                display("L[" + i + "][" + j + "] = " + cube[j]);
+                display(block+"[" + i + "][" + j + "] = " + cube[j]);
 
 
                 context.fillStyle = "#ff0000";

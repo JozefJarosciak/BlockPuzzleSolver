@@ -20,7 +20,7 @@ var gridItems = [
 var I = new Array(1);
 var O = new Array(0);
 var L = new Array(7);
-var T = new Array(3)
+var T = new Array(3);
 var Z = new Array(3);
 var X = new Array(0);
 var V = new Array(3);
@@ -157,39 +157,48 @@ L[7] = [
     [0, 1]
 ];
 
-console.log(sizeAr(L[3]));
+//console.log(sizeAr(L[3]));
 
 
 
 
 function calculate() {
+    var t0 = performance.now();
 
-    while (count01[0]>0) {
 
+
+
+
+    while (count01[0]>1) {
+
+        // randomly draw available blocks from tetronimo selection
+        var shuffledTetronimoArray = shuffle(tetronimos);
+        while (shuffledTetronimoArray[0] === "X") {
+            shuffledTetronimoArray = shuffle(tetronimos);
+        }
+
+
+    if (count01[0]>0) {
+        //  display("RELOADING...")
+        reload();
+    }
 
     var count = 0;
     var c_canvas = document.getElementById("c");
     var context = c_canvas.getContext("2d");
 
 
-    // randomly draw available blocks from tetronimo selection
-    var shuffledTetronimoArray = shuffle(tetronimos);
-    while (shuffledTetronimoArray[0] === "X") {
-        shuffledTetronimoArray = shuffle(tetronimos);
-    }
-
-    display(" Shuffled: " +shuffledTetronimoArray);
 
 
 
     shuffledTetronimoArray.forEach(function (block) {
         count = count + 1;
-        display(" -- ");
-        display(" BLOCK " + block);
+        //  display(" -- ");
+        //  display(" BLOCK " + block);
         var foundOne = 0;
         // get color for block
 
-       // if (count === 1) {
+        // if (count === 1) {
 
 
         for (var y = 0; y < 10; y += 1) {
@@ -197,28 +206,22 @@ function calculate() {
 
                 if (foundOne === 0) {
 
-            // scroll through a specific block options
-            for (var i = 0; i < this[block].length; i++) {
-                var cube = this[block][i];
-                display(" -- ");
+                    // scroll through a specific block options
+                    for (var i = 0; i < this[block].length; i++) {
+                        var cube = this[block][i];
+                        // display(" -- ");
 
-                var isFreetoPlace = 0;
-                var countOnes = 0;
-                //findEmptyPositioninGrid();
-
-                display("x: " + x + " | y: " + y);
-
-
-
+                        var isFreetoPlace = 0;
+                        var countOnes = 0;
+                        //findEmptyPositioninGrid();
 
 
                         // try specific block if it fits
                         for (var j = 0; j < cube.length; j++) {
-                          //  findEmptyPositioninGrid();
+                            //  findEmptyPositioninGrid();
 
                             var blockColor = getRandomColor();
 
-                            display("Testing: " + block + "[" + i + "][" + j + "] = " + cube[j]);
 
                             for (var l = 0; l < sizeAr(this[block][i])[1]; l++) {
                                 // display ("X: " + freePosition[0] + " | Y: " + freePosition[1]);
@@ -227,14 +230,18 @@ function calculate() {
                                         countOnes++;
                                     }
 
-                                    if (gridItems[y + j][x + l] === 0) {
+                                    try {
+                                        if (gridItems[y + j][x + l] === 0) {
 
-                                        if (cube[j][l] === 1) {
-                                            isFreetoPlace++;
+                                            if (cube[j][l] === 1) {
+                                                isFreetoPlace++;
+                                            }
+                                            // display("gridItems[" + (freePosition[0] + l) + "][" + (freePosition[1] + j) + "]=" + gridItems[freePosition[0] + l][freePosition[1] + j] + " + Cube[" + j + "][" + l + "]=" + cube[j][l] + " ==> " + isFreetoPlace);
                                         }
-
-                                        // display("gridItems[" + (freePosition[0] + l) + "][" + (freePosition[1] + j) + "]=" + gridItems[freePosition[0] + l][freePosition[1] + j] + " + Cube[" + j + "][" + l + "]=" + cube[j][l] + " ==> " + isFreetoPlace);
+                                    } catch (err) {
                                     }
+
+
                                 }
                             }
                             //display("Size of Array: " + sizeAr(this[block][i])[0] + " / " + sizeAr(this[block][i])[1]);
@@ -255,29 +262,30 @@ function calculate() {
                                                 context.fillStyle = blockColor;
                                                 context.fillRect(((x + l) * 50) + 1, ((y + j) * 50) + 1, 48, 48);
 
-
-                                                display("gridItems[" + (x + l) + "][" + (y + j) + "]=" + gridItems[(x + l)][(y + j)] + " + Cube[" + j + "][" + l + "]=" + cube[j][l] + " ==> " + isFreetoPlace);
+                                                // display("x: " + x + " | y: " + y);
+                                                // display("Placing: " + block + "[" + i + "][" + j + "] = " + cube[j]);
+                                                // display("gridItems[" + (x + l) + "][" + (y + j) + "]=" + gridItems[(x + l)][(y + j)] + " + Cube[" + j + "][" + l + "]=" + cube[j][l] + " ==> " + isFreetoPlace);
                                                 gridItems[(y + j)][(x + l)] = 1;
                                             }
                                         }
                                     }
                                     //display("Size of Array: " + sizeAr(this[block][i])[0] + " / " + sizeAr(this[block][i])[1]);
                                 }
-                                display("Above is placed!");
+                                //  display("Above is placed!");
                                 create01Grid();
-                               // findEmptyPositioninGrid();
+                                // findEmptyPositioninGrid();
                                 foundOne = 1;
                                 isFreetoPlace = 0;
                                 countOnes = 0;
                                 break;
                             }
-                          //  break;
+                            //  break;
                         }
                         //break;
 
                     }
 
-            }
+                }
             }
 
         }
@@ -301,10 +309,28 @@ function calculate() {
      });
      });
      */
-    if (count01[0]>0) {reload();}
 
-
+       // display("RELOADING:" + count01[0])
     }
+
+    var t1 = performance.now();
+    display("Calculation took " + msToTime(t1 - t0) + ".")
+    display("Result Shuffled: " +shuffledTetronimoArray);
+
+}
+
+
+function msToTime(duration) {
+    var milliseconds = parseInt((duration%1000)/100)
+        , seconds = parseInt((duration/1000)%60)
+        , minutes = parseInt((duration/(1000*60))%60)
+        , hours = parseInt((duration/(1000*60*60))%24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
 }
 
 function countOccurenceInArray() {
@@ -381,15 +407,17 @@ function onLoad() {
 
 
     // On mouse click
-    $(c_canvas).click(function (evt) {
-        var pos = getNearestSquare(getMousePos(c_canvas, evt));
 
+    $(c_canvas).click(function (evt) {
+
+        var pos = getNearestSquare(getMousePos(c_canvas, evt));
         var pixelData = context.getImageData(pos.x, pos.y, 1, 1).data;
         var hex = "#" + ("000000" + rgbToHex(pixelData[0], pixelData[1], pixelData[2])).slice(-6);
         if (hex === "#000000") {
             hex = "#ffffff";
         }
 
+        /*
         if (pos != null) {
             if (hex === "#ffffff") {
                 context.fillStyle = "#ff0000";
@@ -399,6 +427,7 @@ function onLoad() {
                 context.fillRect(pos.x, pos.y, 48, 48);
             }
         }
+        */
         document.getElementById('pixColor').innerHTML = hex;
         document.getElementById('xPos').innerHTML = ((pos.x - 1) / 50);// + " | " + pos.x;
         document.getElementById('yPos').innerHTML = ((pos.y - 1) / 50); // + " | " + pos.y;

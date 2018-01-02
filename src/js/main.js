@@ -1,7 +1,9 @@
 var tetronimos = ["I", "I", "L", "L", "O", "O", "T", "T", "Z", "Z", "X", "X", "V", "V", "V", "V"];
 
 var count01 = new Array(1);
-var freePosition = new Array(1);
+var usedBlocks = new Array(15);
+var usedBlockColors = new Array(15);
+var countUsedBlocks,countUsedPositions = 0;
 
 // initialize array
 var gridItems = [
@@ -72,15 +74,14 @@ Z[2] = [
 Z[3] = [
     [1, 0],
     [1, 1],
-    [0, 0]
+    [0, 1]
 ];
 
 I[0] = [
-    [1, 1, 1, 1]
+    [1, 1, 1]
 ];
 
 I[1] = [
-    [1],
     [1],
     [1],
     [1]
@@ -164,159 +165,183 @@ L[7] = [
 
 function calculate() {
     var t0 = performance.now();
+    var delay = 200;
+
+    reload();
+
+ //  document.getElementById("clean_button").style.visibility = "hidden";
+    document.getElementById("calculate_button").disabled = true;
+    document.getElementById("calcText").innerHTML = "Processing...";
+
+    function timeoutLoop() {
 
 
+        while (count01[0] >= 1) {
+
+            // randomly draw available blocks from tetronimo selection
+            var shuffledTetronimoArray = shuffle(tetronimos);
+            while (shuffledTetronimoArray[0] === "X") {
+                shuffledTetronimoArray = shuffle(tetronimos);
+            }
 
 
+            if (count01[0] > 0) {
+                //  display("RELOADING...")
+                countUsedBlocks = 0;
+                countUsedPositions = 0;
+                reload();
+            }
 
-    while (count01[0]>1) {
-
-        // randomly draw available blocks from tetronimo selection
-        var shuffledTetronimoArray = shuffle(tetronimos);
-        while (shuffledTetronimoArray[0] === "X") {
-            shuffledTetronimoArray = shuffle(tetronimos);
-        }
-
-
-    if (count01[0]>0) {
-        //  display("RELOADING...")
-        reload();
-    }
-
-    var count = 0;
-    var c_canvas = document.getElementById("c");
-    var context = c_canvas.getContext("2d");
+            var count = 0;
+            var c_canvas = document.getElementById("c");
+            var context = c_canvas.getContext("2d");
 
 
+            shuffledTetronimoArray.forEach(function (block) {
+                count = count + 1;
+                //  display(" -- ");
+                //  display(" BLOCK " + block);
+                var foundOne = 0;
+                // get color for block
 
-
-
-    shuffledTetronimoArray.forEach(function (block) {
-        count = count + 1;
-        //  display(" -- ");
-        //  display(" BLOCK " + block);
-        var foundOne = 0;
-        // get color for block
-
-        // if (count === 1) {
-
-
-        for (var y = 0; y < 10; y += 1) {
-            for (var x = 0; x < 6; x += 1) {
+                // if (count === 1) {
 
                 if (foundOne === 0) {
+                    for (var y = 0; y < 10; y += 1) {
 
-                    // scroll through a specific block options
-                    for (var i = 0; i < this[block].length; i++) {
-                        var cube = this[block][i];
-                        // display(" -- ");
+                        for (var x = 0; x < 6; x += 1) {
 
-                        var isFreetoPlace = 0;
-                        var countOnes = 0;
-                        //findEmptyPositioninGrid();
-
-
-                        // try specific block if it fits
-                        for (var j = 0; j < cube.length; j++) {
-                            //  findEmptyPositioninGrid();
 
                             var blockColor = getRandomColor();
 
+                            // scroll through a specific block options
+                            for (var i = 0; i < this[block].length; i++) {
+                                var cube = this[block][i];
+                                // display(" -- ");
 
-                            for (var l = 0; l < sizeAr(this[block][i])[1]; l++) {
-                                // display ("X: " + freePosition[0] + " | Y: " + freePosition[1]);
-                                if (((x + l) < 7) && ((y + j) < 11)) {
-                                    if (cube[j][l] === 1) {
-                                        countOnes++;
-                                    }
-
-                                    try {
-                                        if (gridItems[y + j][x + l] === 0) {
-
-                                            if (cube[j][l] === 1) {
-                                                isFreetoPlace++;
-                                            }
-                                            // display("gridItems[" + (freePosition[0] + l) + "][" + (freePosition[1] + j) + "]=" + gridItems[freePosition[0] + l][freePosition[1] + j] + " + Cube[" + j + "][" + l + "]=" + cube[j][l] + " ==> " + isFreetoPlace);
-                                        }
-                                    } catch (err) {
-                                    }
+                                var isFreetoPlace = 0;
+                                var countOnes = 0;
+                                //findEmptyPositioninGrid();
 
 
-                                }
-                            }
-                            //display("Size of Array: " + sizeAr(this[block][i])[0] + " / " + sizeAr(this[block][i])[1]);
-                        }
-
-                        if ((isFreetoPlace === countOnes) && ((isFreetoPlace > 0) && (countOnes > 0))) {
-                            if (((x + l) < 7) && ((y + j) < 11)) {
+                                // try specific block if it fits
                                 for (var j = 0; j < cube.length; j++) {
-                                    //display("isFreetoPlace: " + isFreetoPlace + " | countOnes: " + countOnes);
+                                    //  findEmptyPositioninGrid();
 
 
                                     for (var l = 0; l < sizeAr(this[block][i])[1]; l++) {
                                         // display ("X: " + freePosition[0] + " | Y: " + freePosition[1]);
-
-                                        if (gridItems[y + j][x + l] === 0) {
+                                        if (((x + l) < 7) && ((y + j) < 11)) {
                                             if (cube[j][l] === 1) {
-
-                                                context.fillStyle = blockColor;
-                                                context.fillRect(((x + l) * 50) + 1, ((y + j) * 50) + 1, 48, 48);
-
-                                                // display("x: " + x + " | y: " + y);
-                                                // display("Placing: " + block + "[" + i + "][" + j + "] = " + cube[j]);
-                                                // display("gridItems[" + (x + l) + "][" + (y + j) + "]=" + gridItems[(x + l)][(y + j)] + " + Cube[" + j + "][" + l + "]=" + cube[j][l] + " ==> " + isFreetoPlace);
-                                                gridItems[(y + j)][(x + l)] = 1;
+                                                countOnes++;
                                             }
+
+                                            try {
+                                                if (gridItems[y + j][x + l] === 0) {
+
+                                                    if (cube[j][l] === 1) {
+                                                        isFreetoPlace++;
+                                                    }
+                                                   }
+                                            } catch (err) {
+                                            }
+
+
                                         }
                                     }
                                     //display("Size of Array: " + sizeAr(this[block][i])[0] + " / " + sizeAr(this[block][i])[1]);
                                 }
-                                //  display("Above is placed!");
-                                create01Grid();
-                                // findEmptyPositioninGrid();
-                                foundOne = 1;
-                                isFreetoPlace = 0;
-                                countOnes = 0;
-                                break;
+
+                                // place specific block on 01 grid and board
+                                if ((isFreetoPlace === countOnes) && (foundOne === 0) && ((isFreetoPlace > 0) && (countOnes > 0))) {
+                                    if (((x + l) < 7) && ((y + j) < 11)) {
+                                        for (var j = 0; j < cube.length; j++) {
+                                            //display("isFreetoPlace: " + isFreetoPlace + " | countOnes: " + countOnes);
+
+
+                                            for (var l = 0; l < sizeAr(this[block][i])[1]; l++) {
+                                               //  display ("X: " + y + " | Y: " + x);
+
+                                                if ((gridItems[y + j][x + l] === 0) ) {
+                                                    if (cube[j][l] === 1)  {
+
+                                                        context.fillStyle = blockColor;
+                                                        context.fillRect(((x + l) * 50) + 1, ((y + j) * 50) + 1, 48, 48);
+                                                        gridItems[(y + j)][(x + l)] = 1;
+
+                                                        //display("Placing: " + block + "[" + (x + l) + "][" + (y + j) + "]");
+
+
+                                                        // display("gridItems[" + (x + l) + "][" + (y + j) + "]=" + gridItems[(x + l)][(y + j)] + " + Cube[" + j + "][" + l + "]=" + cube[j][l] + " ==> " + isFreetoPlace);
+                                                        //break;
+                                                    }
+
+                                                }
+
+
+                                            }
+                                            //display("Size of Array: " + sizeAr(this[block][i])[0] + " / " + sizeAr(this[block][i])[1]);
+                                        }
+                                        //  display("Above is placed!");
+                                        // create01Grid();
+                                        // findEmptyPositioninGrid();
+                                        foundOne = 1;
+                                        isFreetoPlace = 0;
+
+                                        countUsedPositions = countUsedPositions + countOnes;
+                                        countOnes = 0;
+                                        //display(block +" - countUsedPositions: " + countUsedPositions);
+                                        usedBlocks[countUsedBlocks] = block;
+                                        usedBlockColors[countUsedBlocks] = blockColor;
+                                        countUsedBlocks++;
+                                    }
+
+
+                                }
+
                             }
-                            //  break;
+
                         }
-                        //break;
 
                     }
 
                 }
-            }
+                countOccurenceInArray();
 
+
+            });
+
+            //if (gridItems[0][0] === 0) {
+
+
+            /*
+             L.forEach(function (letter) {
+             console.log(letter);
+             var splitLetters = letter.split("");
+             splitLetters.forEach(function (direction) {
+             console.log(direction);
+             });
+             });
+             */
+
+            // display("RELOADING:" + count01[0])
         }
 
+        var t1 = performance.now();
+        //display("Tahali v poradi: " + shuffledTetronimoArray);
+       // display("Available Tetronimo Blocks: I,I,L,L,O,O,T,T,Z,Z,X,X,V,V,V,V");
+        display("Solution: " + usedBlocks);
+        //display("Solution Color Order: " + usedBlockColors);
+        display("Used: " + countUsedBlocks + " of 16 blocks");
+        display("Length of Calculation: " + msToTime(t1 - t0));
 
-
-
-
-    });
-
-    //if (gridItems[0][0] === 0) {
-    create01Grid();
-
-
-    /*
-     L.forEach(function (letter) {
-     console.log(letter);
-     var splitLetters = letter.split("");
-     splitLetters.forEach(function (direction) {
-     console.log(direction);
-     });
-     });
-     */
-
-       // display("RELOADING:" + count01[0])
+      // document.getElementById("clean_button").style.visibility = "visible";
+        document.getElementById("calculate_button").disabled = false;
+        document.getElementById("calcText").innerHTML = "Solve";
+     //   setTimeout(timeoutLoop, delay);
     }
 
-    var t1 = performance.now();
-    display("Calculation took " + msToTime(t1 - t0) + ".")
-    display("Result Shuffled: " +shuffledTetronimoArray);
-
+    setTimeout(timeoutLoop, delay);
 }
 
 
@@ -326,11 +351,11 @@ function msToTime(duration) {
         , minutes = parseInt((duration/(1000*60))%60)
         , hours = parseInt((duration/(1000*60*60))%24);
 
-    hours = (hours < 10) ? "0" + hours : hours;
+  //  hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
 
-    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+    return hours + "h:" + minutes + "m:" + seconds + "s";
 }
 
 function countOccurenceInArray() {
@@ -350,24 +375,12 @@ function countOccurenceInArray() {
 }
 
 function getRandomColor() {
-    var letters = '0123456789ABCDEF';
+    var letters = '0123456789abcdef';
     var color = '#';
     for (var i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-}
-
-function findEmptyPositioninGrid() {
-    for (var y = 0; y < 10; y += 1) {
-        for (var x = 0; x < 6; x += 1) {
-            if (gridItems[y][x] === 0) {
-                freePosition[0] = x;
-                freePosition[1] = y;
-                return;
-            }
-        }
-    }
 }
 
 
@@ -413,9 +426,7 @@ function onLoad() {
         var pos = getNearestSquare(getMousePos(c_canvas, evt));
         var pixelData = context.getImageData(pos.x, pos.y, 1, 1).data;
         var hex = "#" + ("000000" + rgbToHex(pixelData[0], pixelData[1], pixelData[2])).slice(-6);
-        if (hex === "#000000") {
-            hex = "#ffffff";
-        }
+        //if (hex === "#000000") {            hex = "#ffffff";        }
 
         /*
         if (pos != null) {
@@ -428,12 +439,23 @@ function onLoad() {
             }
         }
         */
-        document.getElementById('pixColor').innerHTML = hex;
+
+        var color2letter = "";
+        for (var i = 0; i <= 15; i++) {
+            //console.log(usedBlockColors[i])
+            if (usedBlockColors[i] === hex) {
+                color2letter = usedBlocks[i];
+                break;
+            }
+        }
+
+
+        document.getElementById('pixColor').innerHTML = color2letter;
         document.getElementById('xPos').innerHTML = ((pos.x - 1) / 50);// + " | " + pos.x;
         document.getElementById('yPos').innerHTML = ((pos.y - 1) / 50); // + " | " + pos.y;
 
         //paint 0-1 grid
-        create01Grid();
+        //create01Grid();
     });
 
     context.strokeStyle = "#ddd";
@@ -466,7 +488,12 @@ function reload() {
     ];
 
     createGrid();
-    create01Grid();
+    //create01Grid();
+    countOccurenceInArray();
+    document.getElementById("msgs").innerHTML="";
+    document.getElementById("xPos").innerHTML = "";
+    document.getElementById("yPos").innerHTML = "";
+    document.getElementById("pixColor").innerHTML = "";
 }
 
 
@@ -506,11 +533,11 @@ function create01Grid() {
     }
     countOccurenceInArray();
     grid01 = grid01 + "<br><br> <b>Zero:</b>" + count01[0] + " | <b>One:</b>" + count01[1];
-    document.getElementById('01Grid').innerHTML = grid01;
+   // document.getElementById('01Grid').innerHTML = grid01;
 
    // console.log("GRID ITEMS:");
    // console.log(gridItems);
-
+   // $('#01table').hide().show(0);
 
 }
 

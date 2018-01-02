@@ -160,7 +160,13 @@ L[7] = [
 console.log(sizeAr(L[3]));
 
 
+
+
 function calculate() {
+
+    while (count01[0]>0) {
+
+
     var count = 0;
     var c_canvas = document.getElementById("c");
     var context = c_canvas.getContext("2d");
@@ -175,20 +181,21 @@ function calculate() {
     display(" Shuffled: " +shuffledTetronimoArray);
 
 
-    for (var y = 0; y < 10; y += 1) {
-        for (var x = 0; x < 6; x += 1) {
 
     shuffledTetronimoArray.forEach(function (block) {
         count = count + 1;
         display(" -- ");
         display(" BLOCK " + block);
-
+        var foundOne = 0;
         // get color for block
 
        // if (count === 1) {
 
 
+        for (var y = 0; y < 10; y += 1) {
+            for (var x = 0; x < 6; x += 1) {
 
+                if (foundOne === 0) {
 
             // scroll through a specific block options
             for (var i = 0; i < this[block].length; i++) {
@@ -197,9 +204,9 @@ function calculate() {
 
                 var isFreetoPlace = 0;
                 var countOnes = 0;
-                findEmptyPositioninGrid();
+                //findEmptyPositioninGrid();
 
-                display("x: " + freePosition[0] + " | y: " + freePosition[1]);
+                display("x: " + x + " | y: " + y);
 
 
 
@@ -207,7 +214,7 @@ function calculate() {
 
                         // try specific block if it fits
                         for (var j = 0; j < cube.length; j++) {
-                            findEmptyPositioninGrid();
+                          //  findEmptyPositioninGrid();
 
                             var blockColor = getRandomColor();
 
@@ -258,8 +265,8 @@ function calculate() {
                                 }
                                 display("Above is placed!");
                                 create01Grid();
-                                findEmptyPositioninGrid();
-
+                               // findEmptyPositioninGrid();
+                                foundOne = 1;
                                 isFreetoPlace = 0;
                                 countOnes = 0;
                                 break;
@@ -270,17 +277,17 @@ function calculate() {
 
                     }
 
+            }
+            }
 
-
+        }
 
 
 
 
 
     });
-        }
 
-    }
     //if (gridItems[0][0] === 0) {
     create01Grid();
 
@@ -294,7 +301,10 @@ function calculate() {
      });
      });
      */
+    if (count01[0]>0) {reload();}
 
+
+    }
 }
 
 function countOccurenceInArray() {
@@ -412,6 +422,20 @@ function sizeAr(ar) {
 
 
 function reload() {
+
+     gridItems = [
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+    ];
+
     createGrid();
     create01Grid();
 }

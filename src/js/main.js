@@ -1,6 +1,7 @@
 var tetronimos = ["I", "I", "L", "L", "O", "O", "T", "T", "Z", "Z", "X", "X", "V", "V", "V", "V"];
 
-var count01 = new Array(1)
+var count01 = new Array(1);
+var freePosition = new Array(1);
 
 // initialize array
 var gridItems = [
@@ -167,38 +168,120 @@ function calculate() {
 
     // randomly draw available blocks from tetronimo selection
     var shuffledTetronimoArray = shuffle(tetronimos);
-    display(" Shuffled ");
-    display(shuffledTetronimoArray);
+    while (shuffledTetronimoArray[0] === "X") {
+        shuffledTetronimoArray = shuffle(tetronimos);
+    }
+
+    display(" Shuffled: " +shuffledTetronimoArray);
+
+
+    for (var y = 0; y < 10; y += 1) {
+        for (var x = 0; x < 6; x += 1) {
+
     shuffledTetronimoArray.forEach(function (block) {
         count = count + 1;
         display(" -- ");
-        display(" BLOCK " + count);
+        display(" BLOCK " + block);
 
-        // scroll through a specific block options
-        for (var i = 0; i < this[block].length; i++) {
-            var cube = this[block][i];
-            display(" -- ");
+        // get color for block
 
-            // try specific block
-            for (var j = 0; j < cube.length; j++) {
+       // if (count === 1) {
 
 
-                display(block+"[" + i + "][" + j + "] = " + cube[j]);
 
 
-                context.fillStyle = "#ff0000";
-                context.fillRect(i, j, 48, 48);
+            // scroll through a specific block options
+            for (var i = 0; i < this[block].length; i++) {
+                var cube = this[block][i];
+                display(" -- ");
 
-                //gridItems[y+j][x+i] = 1;
+                var isFreetoPlace = 0;
+                var countOnes = 0;
+                findEmptyPositioninGrid();
+
+                display("x: " + freePosition[0] + " | y: " + freePosition[1]);
 
 
-            }
 
-        }
+
+
+                        // try specific block if it fits
+                        for (var j = 0; j < cube.length; j++) {
+                            findEmptyPositioninGrid();
+
+                            var blockColor = getRandomColor();
+
+                            display("Testing: " + block + "[" + i + "][" + j + "] = " + cube[j]);
+
+                            for (var l = 0; l < sizeAr(this[block][i])[1]; l++) {
+                                // display ("X: " + freePosition[0] + " | Y: " + freePosition[1]);
+                                if (((x + l) < 7) && ((y + j) < 11)) {
+                                    if (cube[j][l] === 1) {
+                                        countOnes++;
+                                    }
+
+                                    if (gridItems[y + j][x + l] === 0) {
+
+                                        if (cube[j][l] === 1) {
+                                            isFreetoPlace++;
+                                        }
+
+                                        // display("gridItems[" + (freePosition[0] + l) + "][" + (freePosition[1] + j) + "]=" + gridItems[freePosition[0] + l][freePosition[1] + j] + " + Cube[" + j + "][" + l + "]=" + cube[j][l] + " ==> " + isFreetoPlace);
+                                    }
+                                }
+                            }
+                            //display("Size of Array: " + sizeAr(this[block][i])[0] + " / " + sizeAr(this[block][i])[1]);
+                        }
+
+                        if ((isFreetoPlace === countOnes) && ((isFreetoPlace > 0) && (countOnes > 0))) {
+                            if (((x + l) < 7) && ((y + j) < 11)) {
+                                for (var j = 0; j < cube.length; j++) {
+                                    //display("isFreetoPlace: " + isFreetoPlace + " | countOnes: " + countOnes);
+
+
+                                    for (var l = 0; l < sizeAr(this[block][i])[1]; l++) {
+                                        // display ("X: " + freePosition[0] + " | Y: " + freePosition[1]);
+
+                                        if (gridItems[y + j][x + l] === 0) {
+                                            if (cube[j][l] === 1) {
+
+                                                context.fillStyle = blockColor;
+                                                context.fillRect(((x + l) * 50) + 1, ((y + j) * 50) + 1, 48, 48);
+
+
+                                                display("gridItems[" + (x + l) + "][" + (y + j) + "]=" + gridItems[(x + l)][(y + j)] + " + Cube[" + j + "][" + l + "]=" + cube[j][l] + " ==> " + isFreetoPlace);
+                                                gridItems[(y + j)][(x + l)] = 1;
+                                            }
+                                        }
+                                    }
+                                    //display("Size of Array: " + sizeAr(this[block][i])[0] + " / " + sizeAr(this[block][i])[1]);
+                                }
+                                display("Above is placed!");
+                                create01Grid();
+                                findEmptyPositioninGrid();
+
+                                isFreetoPlace = 0;
+                                countOnes = 0;
+                                break;
+                            }
+                          //  break;
+                        }
+                        //break;
+
+                    }
+
+
+
+
+
+
+
 
     });
+        }
 
-
+    }
+    //if (gridItems[0][0] === 0) {
     create01Grid();
 
 
@@ -230,12 +313,22 @@ function countOccurenceInArray() {
     count01[1] = count1;
 }
 
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
 function findEmptyPositioninGrid() {
     for (var y = 0; y < 10; y += 1) {
         for (var x = 0; x < 6; x += 1) {
             if (gridItems[y][x] === 0) {
-                return (y, x);
-                break;
+                freePosition[0] = x;
+                freePosition[1] = y;
+                return;
             }
         }
     }
@@ -297,8 +390,8 @@ function onLoad() {
             }
         }
         document.getElementById('pixColor').innerHTML = hex;
-        document.getElementById('xPos').innerHTML = ((pos.x - 1) / 50);
-        document.getElementById('yPos').innerHTML = ((pos.y - 1) / 50);
+        document.getElementById('xPos').innerHTML = ((pos.x - 1) / 50);// + " | " + pos.x;
+        document.getElementById('yPos').innerHTML = ((pos.y - 1) / 50); // + " | " + pos.y;
 
         //paint 0-1 grid
         create01Grid();
@@ -346,13 +439,14 @@ function create01Grid() {
 
     for (var y = 0; y < 10; y += 1) {
         for (var x = 0; x < 6; x += 1) {
-            var pixelData = context.getImageData((x * 50) + 1, (y * 50) + 1, 1, 1).data;
-            var hex = "#" + ("000000" + rgbToHex(pixelData[0], pixelData[1], pixelData[2])).slice(-6);
-            if ((hex === "#000000") || (hex === "#ffffff")) {
-                gridItems[y][x] = 0;
-            } else {
-                gridItems[y][x] = 1;
-            }
+
+            //var pixelData = context.getImageData((x * 50) + 1, (y * 50) + 1, 1, 1).data;
+            //var hex = "#" + ("000000" + rgbToHex(pixelData[0], pixelData[1], pixelData[2])).slice(-6);
+            //if ((hex === "#000000") || (hex === "#ffffff")) {
+              //  gridItems[y][x] = 0;
+            //} else {
+             //   gridItems[y][x] = 1;
+            //}
             grid01 = grid01 + gridItems[y][x] + ' &nbsp;&nbsp;&nbsp;';
         }
         grid01 = grid01 + "<br>"
@@ -361,8 +455,8 @@ function create01Grid() {
     grid01 = grid01 + "<br><br> <b>Zero:</b>" + count01[0] + " | <b>One:</b>" + count01[1];
     document.getElementById('01Grid').innerHTML = grid01;
 
-    console.log("GRID ITEMS:");
-    console.log(gridItems);
+   // console.log("GRID ITEMS:");
+   // console.log(gridItems);
 
 
 }

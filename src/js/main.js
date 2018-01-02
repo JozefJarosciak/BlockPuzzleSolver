@@ -4,6 +4,7 @@ var count01 = new Array(1);
 var usedBlocks = new Array(15);
 var usedBlockColors = new Array(15);
 var countUsedBlocks,countUsedPositions = 0;
+var testedPositions = 0;
 
 // initialize array
 var gridItems = [
@@ -299,6 +300,8 @@ function calculate() {
 
                                 }
 
+                                testedPositions++;
+
                             }
 
                         }
@@ -334,6 +337,7 @@ function calculate() {
         //display("Solution Color Order: " + usedBlockColors);
         display("Used: " + countUsedBlocks + " of 16 blocks");
         display("Length of Calculation: " + msToTime(t1 - t0));
+        display("Tested: " + testedPositions.toLocaleString() + " variations");
 
       // document.getElementById("clean_button").style.visibility = "visible";
         document.getElementById("calculate_button").disabled = false;
@@ -357,6 +361,7 @@ function msToTime(duration) {
 
     return hours + "h:" + minutes + "m:" + seconds + "s";
 }
+
 
 function countOccurenceInArray() {
     var count0 = 0;

@@ -7,7 +7,8 @@
 [https://www.joe0.com/tools/tetronimo/](https://www.joe0.com/tools/tetronimo/)
 
 # Screenshots
-Couple of Screenshots in the following article: [https://www.joe0.com/2018/01/03/16-block-tetronimo-tangram-puzzle-solver-in-javascript/](https://www.joe0.com/2018/01/03/16-block-tetronimo-tangram-puzzle-solver-in-javascript/)
+In the following article:
+[https://www.joe0.com/2018/01/03/16-block-tetronimo-tangram-puzzle-solver-in-javascript/](https://www.joe0.com/2018/01/03/16-block-tetronimo-tangram-puzzle-solver-in-javascript/)
 
 # Description
 The following 16 Block Tetronimo Tangram Puzzle Solver is a first itteration of the puzzle solver.

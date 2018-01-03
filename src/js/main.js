@@ -356,6 +356,9 @@ function calculate() {
         display("Used Solution : " + usedBlocks);
         display("Used: " + countUsedBlocks + " of 16 blocks");
         display("Length of Calculation: " + msToTime(t1 - t0));
+
+        display("Speed of Calculation: " + (Math.round((testedPositions/((t1 - t0)/1000)))).toLocaleString()+ " positions per second") ;
+
         display("Tested: " + testedPositions.toLocaleString() + " block positions");
 
         document.getElementById("calculate_button").disabled = false;
@@ -384,7 +387,7 @@ function msToTime(duration) {
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
 
-    return hours + "h:" + minutes + "m:" + seconds + "s";
+    return hours + "h:" + minutes + "m:" + seconds+"."+ milliseconds + "s";
 }
 
 function checkBadlyPlaced(block) {

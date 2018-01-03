@@ -256,14 +256,20 @@ function calculate() {
                                             //display(block+" - " + placingPosition[f]);
                                             var placeAtPosition = placingPosition[f].split(",");
                                             gridItems[(placeAtPosition[0])][(placeAtPosition[1])] = 1;
+                                            context.fillStyle = blockColor;
+                                            context.fillRect(((placeAtPosition[1]) * 50) + 1, ((placeAtPosition[0]) * 50) + 1, 48, 48);
                                         }
 
+                                    foundOne = 1;
+                                    isFreetoPlace = 0;
+                                    countUsedPositions = countUsedPositions + countOnes;
+                                    countOnes = 0;
+                                    usedBlocks[countUsedBlocks] = block;
+                                    usedBlockColors[countUsedBlocks] = blockColor;
+                                    countUsedBlocks++;
 
+/*
                                     var checkBadlyPlacedFin = checkBadlyPlaced(block);
-                                   // display("checkBadlyPlaced: " + checkBadlyPlacedFin);
-
-                                    //display("--");
-
                                         if (checkBadlyPlacedFin>0) {
                                              for (var f = 0; f < placingPosition.length - 1; f++) {
                                                 //display(block+" - " + placingPosition[f]);
@@ -287,6 +293,7 @@ function calculate() {
                                                 gridItems[(placeAtPosition[0])][(placeAtPosition[1])] = 0;
                                             }
                                         }
+                                    */
 
 
 
@@ -330,10 +337,12 @@ function calculate() {
                         }
                     }
                 }
+
+                countOccurenceInArray();
             });
 
             //if (gridItems[0][0] === 0) {
-            countOccurenceInArray();
+//            countOccurenceInArray();
 
             /*
              L.forEach(function (letter) {

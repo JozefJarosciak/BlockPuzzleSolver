@@ -53,19 +53,33 @@
 
 
                <td>
-                   <br><b>Block Tester:</b> X:<label id="xPos"></label> | Y:<label id="yPos"></label> | Block:<label id="pixColor"></label><br>
-                   <!--
                    <b>0-1 Grid:</b><br>
                    </h1><label id="01Grid"></label>
-               -->
+
                </td>
 
            </tr>
        </table>
 
-     <div id="msgs"></div>
+     <br><b>Block Tester:</b> X:<label id="xPos"></label> | Y:<label id="yPos"></label> | Block:<label id="pixColor"></label><br>
 
-     <button id="calculate_button" class="button" style="vertical-align:middle" onclick="calculate()"><span id="calcText">Solve </span></button>
+     <br><div id="msgs"></div>
+
+     <br><br>
+     Max. Error Rate:
+     <select id="errorRate">
+         <option value=1>0</option>
+         <option value=4>3</option>
+         <option value=5>4</option>
+         <option value=6>5</option>
+         <option value=7>6</option>
+         <option value=8>7</option>
+         <option value=9>8</option>
+         <option value=10>9</option>
+         <option selected value=11>10</option>
+     </select>
+
+     <br><button id="calculate_button" class="button" style="vertical-align:middle" onclick="calculate()"><span id="calcText">Solve </span></button>
 
   <!-- <button id="clean_button" type="submit" onclick="reload()">Clean Board</button> -->
 

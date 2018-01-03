@@ -1,4 +1,6 @@
-# [16 Block Tetronimo Tangram Puzzle Solver](https://byig.com/tetronimosolver/)
+# [16 Block Tetronimo Tangram Puzzle Solver](https://joe.com/tools/tetronimo/)
+
+Demo: [https://joe.com/tools/tetronimo/](https://joe.com/tools/tetronimo/)
 
 [![Build Status](https://travis-ci.org/h5bp/html5-boilerplate.svg)](https://travis-ci.org/h5bp/html5-boilerplate)
 [![devDependency Status](https://david-dm.org/h5bp/html5-boilerplate/dev-status.svg)](https://david-dm.org/h5bp/html5-boilerplate#info=devDependencies)

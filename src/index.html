@@ -35,53 +35,73 @@
 
 
 
-        <H2>16 Block Tangram Puzzle Solver</H2>
+        <H2>Tetronimo Puzzle Solver</H2>
 
      <b>Author: Jozef Jarosciak</b> - <a href="https://github.com/JozefJarosciak/TetronimoPuzzleSolver">Open Source Code</a><br>
-     <small><b>16 Blocks:</b> I,I,L,L,O,O,T,T,Z,Z,X,X,V,V,V,V</small><br><br>
 
+<hr width="400px">
 
+     <br><b>Block Configuration:</b><br>
 
-
-
-
-
-
-        <table id="01table" style="width:600px">
-            <tr>
-                <td><canvas id="c" width="301px" height="501px"></canvas></td>
-
-
-               <td>
-                   <b>0-1 Grid:</b><br>
-                   </h1><label id="01Grid"></label>
-
-               </td>
-
-           </tr>
-       </table>
-
-     <br><b>Block Tester:</b> X:<label id="xPos"></label> | Y:<label id="yPos"></label> | Block:<label id="pixColor"></label><br>
-
-     <br><div id="msgs"></div>
+     <img src="img/Z.jpg" style="width:40px">
+     <input value=2 type="text" onkeyup="calculateTotals()" id="Z-letter" style="width:20px">
+     &nbsp;
+     <img src="img/L.jpg" style="width:40px">
+     <input value=2 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px">
+     &nbsp;
+     <img src="img/T.jpg" style="width:40px">
+     <input value=0 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px">
+     &nbsp;
+     <img src="img/I.jpg" style="width:40px">
+     <input value=0 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
 
      <br><br>
-     Max. Error Rate:
+
+     <img src="img/O.jpg" style="width:30px">
+     <input value=0 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px">
+     &nbsp;&nbsp;&nbsp;
+     <img src="img/X.jpg" style="width:30px">
+     <input value=0 type="text" onkeyup="calculateTotals()" id="X-letter" style="width:20px">
+     &nbsp;&nbsp;&nbsp;&nbsp;
+     <img src="img/V.jpg" style="width:30px">
+     <input value=0 type="text" onkeyup="calculateTotals()" id="V-letter" style="width:20px">
+
+     <small> - Total Value:</small> <b><label id="block_value"></label></b><br><br>
+
+     <b>Board Configuration:</b><br>
+     X: <input min=5 max=20 value=4 type="text" onkeyup="calculateTotals()" id="X-zone" style="width:20px">
+     * <input min=5 max=20 value=4 type="text" onkeyup="calculateTotals()" id="Y-zone" style="width:20px"> :Y
+     <small> - Total Value:</small> <b><label id="board_value"></label></b><br><br>
+
+     <hr width="400px">
+
+     <canvas id="canvas" style="border:1px solid"></canvas></td>
+
+     <br>
+     <label id="01Grid"></label>
+     <br>
+     <b>Block Tester:</b> X:<label id="xPos"></label> | Y:<label id="yPos"></label> | Block:<label id="pixColor"></label><br>
+     <hr width="400px">
+
+
+      Max. Error Rate:
      <select id="errorRate">
-         <option value=1>0</option>
-         <option value=4>3</option>
-         <option selected value=5>4</option>
-         <option value=6>5</option>
-         <option value=7>6</option>
-         <option value=8>7</option>
-         <option value=9>8</option>
-         <option value=10>9</option>
-         <option value=11>10</option>
+         <option value=0>0</option>
+         <option value=3>3</option>
+         <option value=4>4</option>
+         <option value=5>5</option>
+         <option value=6>6</option>
+         <option value=7>7</option>
+         <option value=8>8</option>
+         <option value=9>9</option>
+         <option selected value=10>10</option>
      </select>
 
      <br><button id="calculate_button" class="button" style="vertical-align:middle" onclick="calculate()"><span id="calcText">Solve </span></button>
+     <button id="clean_button" type="submit" onclick="reload();arrayCalculator();">Clean Board</button>
 
-  <!-- <button id="clean_button" type="submit" onclick="reload()">Clean Board</button> -->
+
+     <br><div id="msgs"></div>
 
 
 

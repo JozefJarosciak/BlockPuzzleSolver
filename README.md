@@ -6,6 +6,8 @@
 # Description
 The following n-Block Tetronimo Tangram Puzzle Solver is a slower version that calculates every possibility to solve the puzzle on a user defined X*Y sized board.
 
+The faster version that uses a random unique combinations of block positions is in the: [RandomizerBased Branch](https://github.com/JozefJarosciak/TetronimoPuzzleSolver/tree/RandomizerBased)
+
 # Demo
 [https://www.joe0.com/tools/tetronimo/](https://www.joe0.com/tools/tetronimo/)
 

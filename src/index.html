@@ -1,119 +1,181 @@
 <!doctype html>
 <html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="manifest" href="site.webmanifest">
-        <link rel="apple-touch-icon" href="icon.png">
-        <!-- Place favicon.ico in the root directory -->
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
-        <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+    <link rel="stylesheet" href="css/main.css">
 
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
-
-
-    </head>
-    <body onload="onLoad()">
-     <title>16 Block Tangram Tetronimo Puzzle Solver</title>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
 
 
-        <!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
-
-        <!-- Add your site or application content here -->
+</head>
+<body onload="onLoad()">
+<title>Tetronimo Puzzle Solver</title>
 
 
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
+    your browser</a> to improve your experience and security.</p>
+<![endif]-->
 
-        <H2>Tetronimo Puzzle Solver</H2>
-
-     <b>Author: Jozef Jarosciak</b> - <a href="https://github.com/JozefJarosciak/TetronimoPuzzleSolver">Open Source Code</a><br>
-
-<hr width="400px">
-
-     <br><b>Block Configuration:</b><br>
-
-     <img src="img/Z.jpg" style="width:40px">
-     <input value=0 type="text" onkeyup="calculateTotals()" id="Z-letter" style="width:20px">
-     &nbsp;
-     <img src="img/L.jpg" style="width:40px">
-     <input value=2 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px">
-     &nbsp;
-     <img src="img/T.jpg" style="width:40px">
-     <input value=0 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px">
-     &nbsp;
-     <img src="img/I.jpg" style="width:40px">
-     <input value=0 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
-
-     <br>
-
-     <img src="img/O.jpg" style="width:30px">
-     <input value=4 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px">
-     &nbsp;&nbsp;&nbsp;
-     <img src="img/X.jpg" style="width:30px">
-     <input value=0 type="text" onkeyup="calculateTotals()" id="X-letter" style="width:20px">
-     &nbsp;&nbsp;&nbsp;&nbsp;
-     <img src="img/V.jpg" style="width:30px">
-     <input value=0 type="text" onkeyup="calculateTotals()" id="V-letter" style="width:20px">
-
-     <small> - Total Value:</small> <b><label id="block_value"></label></b>
-     <br>
-     Selected <b><label id="selectedBlocksLen"></label></b> Blocks: <label id="selectedBlocks"></label>
-     <br><br>
-
-     <b>Board Configuration:</b><br>
-     X: <input min=5 max=20 value=6 type="text" onkeyup="calculateTotals()" id="X-zone" style="width:20px">
-     * <input min=5 max=20 value=4 type="text" onkeyup="calculateTotals()" id="Y-zone" style="width:20px"> :Y
-     <small> - Total Value:</small> <b><label id="board_value"></label></b><br><br>
-
-     <hr width="400px">
-
-     <canvas id="canvas" style="border:1px solid"></canvas></td>
-
-     <br>
-     <label id="01Grid"></label>
-     <br>
-     <b>Block Tester:</b> X:<label id="xPos"></label> | Y:<label id="yPos"></label> | Block:<label id="pixColor"></label><br>
-     <hr width="400px">
+<!-- Add your site or application content here -->
 
 
-      Max. Error Rate:
-     <select id="errorRate">
-         <option value=0>0</option>
-         <option value=3>3</option>
-         <option value=4>4</option>
-         <option value=5>5</option>
-         <option value=6>6</option>
-         <option value=7>7</option>
-         <option value=8>8</option>
-         <option value=9>9</option>
-         <option selected value=10>10</option>
-     </select>
+<H2>Tetronimo Puzzle Solver</H2>
 
-     <br><button id="calculate_button" class="button" style="vertical-align:middle" onclick="calculate()"><span id="calcText">Solve </span></button>
-     <button id="clean_button" type="submit" onclick="reload();arrayCalculator();">Clean Board</button>
+<b>Author: Jozef Jarosciak</b> - <a href="https://github.com/JozefJarosciak/TetronimoPuzzleSolver">Open Source
+    Code</a>
+<br><br>
+<hr width="500px">
+
+<b>Block Configuration:</b><br>
 
 
-     <br><div id="msgs"></div>
+<img src="img/I.png">
+<input value=2 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
+
+&nbsp;
+<img src="img/J.png">
+<input value=2 type="text" onkeyup="calculateTotals()" id="J-letter" style="width:20px">
+
+&nbsp;
+<img src="img/L.png">
+<input value=2 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px">
+
+&nbsp;
+<img src="img/O.png">
+<input value=2 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px">
+
+&nbsp;
+<img src="img/T.png">
+<input value=2 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px">
+
+&nbsp;
+<img src="img/S.png">
+<input value=2 type="text" onkeyup="calculateTotals()" id="S-letter" style="width:20px">
+
+&nbsp;
+<img src="img/Z.png">
+<input value=2 type="text" onkeyup="calculateTotals()" id="Z-letter" style="width:20px">
+
+
+<br>
+<b><label id="selectedBlocksLen"></label></b> Blocks: <label id="selectedBlocks"></label></b>
+<small> | Tetronimo Area:</small>
+<b><label id="block_value"></label></b>
+
+
+<!--   <br> Possible Block Configurations: <b><label id="possibleCombinations"></label></b>-->
+
+<br><br>
+
+<b>Board Configuration:</b><br>
+X: <input min=5 max=20 value=8 type="text" onkeyup="calculateTotals()" id="X-zone" style="width:20px">
+* <input min=5 max=20 value=7 type="text" onkeyup="calculateTotals()" id="Y-zone" style="width:20px"> :Y
+<small> - Board Area:</small>
+<b><label id="board_value"></label></b><br>
+
+
+<br>
 
 
 
 
-        <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-        <script>
-            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-            ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
-        </script>
-        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
 
 
 
-    </body>
+<hr width="500px">
+
+
+<table>
+    <tbody>
+    <tr>
+        <td>
+            <canvas id="canvas" style="border:1px solid"></canvas>
+        </td>
+
+    <td style="padding:40px;">
+            <label id="01Grid"></label>
+            <br>
+            <b>Block Tester:</b> X:<label id="xPos"></label> | Y:<label id="yPos"></label> | Block:<label id="pixColor"></label><br>
+
+    </tr>
+    </tbody>
+</table>
+
+
+</td>
+
+<table>
+    <tbody>
+    <tr>
+        <td><b>Max. Error Rate:</b><br></td>
+        <td><select id="errorRate">
+            <option value=0>0</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+            <option value=9>9</option>
+            <option selected value=10>10</option>
+            <option value=11>11</option>
+            <option value=12>12</option>
+            <option value=13>13</option>
+            <option value=14>14</option>
+            <option value=15>15</option>
+            <option value=16>16</option>
+            <option value=17>17</option>
+            <option value=18>18</option>
+            <option value=19>19</option>
+            <option value=20>20</option>
+        </select></td>
+    </tr>
+    <tr>
+        <td><b>Calculation Type:</b><br></td>
+        <td><select id="calculation_Type">
+            <option value="all">All Combinations [slow]</option>
+            <option selected value="random">Random Combinations [faster]</option>
+        </select></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<button id="calculate_button" class="button" style="vertical-align:middle" onclick="calculate()"><span id="calcText">Solve </span>
+</button>
+<button id="clean_button" type="submit" onclick="reload();test();">Clean Board</button>
+
+<hr width="500px"></td>
+<br>
+<div id="msgs"></div>
+
+
+<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+<script>
+    window.ga = function () {
+        ga.q.push(arguments)
+    };
+    ga.q = [];
+    ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto');
+    ga('send', 'pageview')
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+
+</body>
 </html>

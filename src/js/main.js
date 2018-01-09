@@ -1,4 +1,5 @@
 var tetronimos = [];
+var err = 0;
 var orig_tetronimos = [];
 
 var t0, t1 = 0;
@@ -6,14 +7,15 @@ var numofperm = 0;
 
 var gridWidth = 0;
 var gridHeight = 0;
+var usedRandomTetronimos = [[]];
 
 var I = new Array(1);
+var J = new Array(3);
+var L = new Array(3);
 var O = new Array(0);
-var L = new Array(7);
 var T = new Array(3);
-var Z = new Array(3);
-var X = new Array(0);
-var V = new Array(3);
+var S = new Array(1);
+var Z = new Array(1);
 
 var count01 = new Array(1);
 var usedBlocks = [];
@@ -30,69 +32,82 @@ var gridItems = [[]];
 
 //letters
 
-V[0] = [
-    [1, 1],
-    [0, 1]
-];
-
-V[1] = [
-    [1, 1],
-    [1, 0]
-];
-
-V[2] = [
-    [0, 1],
-    [1, 1]
-];
-
-V[3] = [
-    [1, 0],
-    [1, 1]
-];
-
-X[0] = [
-    [0, 1, 0],
-    [1, 1, 1],
-    [0, 1, 0]
-];
-
-Z[0] = [
-    [1, 1, 0],
-    [0, 1, 1]
-];
-
-Z[1] = [
-    [0, 1, 1],
-    [1, 1, 0]
-];
-
-Z[2] = [
-    [0, 1],
-    [1, 1],
-    [1, 0]
-];
-
-Z[3] = [
-    [1, 0],
-    [1, 1],
-    [0, 1]
-];
-
+// I
 I[0] = [
-    [1, 1, 1]
+    [1, 1, 1, 1]
 ];
 
 I[1] = [
     [1],
     [1],
+    [1],
     [1]
 ];
 
+
+// J
+J[0] = [
+    [1, 0, 0],
+    [1, 1, 1]
+];
+
+J[1] = [
+    [0, 1],
+    [0, 1],
+    [1, 1]
+];
+
+J[2] = [
+    [1, 1, 1],
+    [0, 0, 1]
+];
+
+
+J[3] = [
+    [1, 1],
+    [1, 0],
+    [1, 0]
+];
+
+
+
+
+// L
+L[0] = [
+    [1, 1, 1],
+    [1, 0, 0]
+];
+
+L[1] = [
+    [1, 0],
+    [1, 0],
+    [1, 1]
+];
+
+L[2] = [
+    [0, 0, 1],
+    [1, 1, 1]
+];
+
+
+L[3] = [
+    [1, 1],
+    [0, 1],
+    [0, 1]
+];
+
+
+
+
+// O
 O[0] = [
     [1, 1],
     [1, 1]
 ];
 
+
+
+// T
 T[0] = [
     [1, 1, 1],
     [0, 1, 0]
@@ -115,49 +130,90 @@ T[3] = [
     [0, 1]
 ];
 
-L[0] = [
-    [1, 1, 1],
-    [0, 0, 1]
+
+
+// S
+S[0] = [
+    [0, 1, 1],
+    [1, 1, 0]
 ];
 
-L[1] = [
-    [1, 1, 1],
-    [1, 0, 0]
-];
-
-L[2] = [
-    [0, 0, 1],
-    [1, 1, 1]
-];
-
-L[3] = [
-    [1, 0, 0],
-    [1, 1, 1]
-];
-
-L[4] = [
+S[1] = [
     [1, 0],
-    [1, 0],
-    [1, 1]
-];
-
-L[5] = [
     [1, 1],
-    [1, 0],
+    [0, 1]
+];
+
+
+
+// Z
+Z[0] = [
+    [1, 1, 0],
+    [0, 1, 1]
+];
+
+Z[1] = [
+    [0, 1],
+    [1, 1],
     [1, 0]
 ];
 
-L[6] = [
-    [0, 1],
+
+
+/*
+
+
+V[0] = [
+    [1, 1],
+    [0, 1]
+];
+
+V[1] = [
+    [1, 1],
+    [1, 0]
+];
+
+V[2] = [
     [0, 1],
     [1, 1]
 ];
 
-L[7] = [
-    [1, 1],
-    [0, 1],
-    [0, 1]
+V[3] = [
+    [1, 0],
+    [1, 1]
 ];
+
+
+
+X[0] = [
+    [0, 1, 0],
+    [1, 1, 1],
+    [0, 1, 0]
+];
+
+*/
+
+
+
+function calculate() {
+    if (document.getElementById("calculation_Type").value === "random"){
+        calculate_random_combinations()
+    }
+
+    if (document.getElementById("calculation_Type").value === "all"){
+        calculate_all_combinations()
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
 //console.log(sizeAr(L[3]));
 
@@ -185,9 +241,8 @@ function permute(permutation) {
 }
 
 
-function calculate() {
 
-
+function calculate_all_combinations() {
 
     // start the timer
     t0 = performance.now();
@@ -195,15 +250,17 @@ function calculate() {
     testedPositions = 0;
     processingBlockNumber = 0;
 
+    document.getElementById("clean_button").style.visibility = "hidden";
+    document.getElementById("calculate_button").disabled = true;
+    document.getElementById("calculate_button").innerHTML = "Processing...";
+
     reload();
 
 
     function timeoutLoop() {
         var count = 0;
 
-        document.getElementById("clean_button").style.visibility = "hidden";
-        document.getElementById("calculate_button").disabled = true;
-        document.getElementById("calculate_button").innerHTML = "Processing...";
+
 
         errorRate = parseInt(document.getElementById("errorRate").value);
         // console.log("errorRate: " + errorRate)
@@ -235,19 +292,13 @@ function calculate() {
 
                 //throw "exit";
 
-
-
-
-
-
-
                 for (var d = 0; d < tetronimoSpecificCombination1.length; d++) {
                     //    reload();
 
                     var tetronimoCombination = tetronimoSpecificCombination1[d];
-                   //    console.log(tetronimoSpecificCombination1[d]);
+                    //    console.log(tetronimoSpecificCombination1[d]);
 
-                   // reload();
+                    // reload();
 
                     // try specific block if it fits
                     for (var s = 0; s < tetronimoCombination.length; s++) {
@@ -299,6 +350,8 @@ function calculate() {
                                             gridItems[(placeAtPosition[0])][(placeAtPosition[1])] = 1;
                                             context.fillStyle = blockColor;
                                             context.fillRect(((placeAtPosition[1]) * 25) + 1, ((placeAtPosition[0]) * 25) + 1, 23, 23);
+                                            context.fillStyle = "#ffffff";
+                                            context.fillText(block,((placeAtPosition[1]) * 25) + 10, ((placeAtPosition[0]) * 25) + 15);
                                         }
                                         foundOne = 1;
                                         isFreetoPlace = 0;
@@ -349,7 +402,7 @@ function calculate() {
     setTimeout(timeoutLoop, delay);
     countOccurenceInArray();
     reload;
-  //endResult();
+    //endResult();
     document.getElementById("clean_button").style.visibility = "visible";
     document.getElementById("calculate_button").disabled = false;
     document.getElementById("calculate_button").innerHTML = "Solve";
@@ -357,6 +410,423 @@ function calculate() {
 
 }
 
+
+function calculate_random_combinations() {
+
+    countCombinations = 0;
+    t0 = performance.now();
+    var delay = 100;
+    testedPositions = 0;
+
+    reload();
+
+    //  document.getElementById("clean_button").style.visibility = "hidden";
+    document.getElementById("calculate_button").disabled = true;
+    document.getElementById("calculate_button").innerHTML = "Processing...";
+
+    function timeoutLoop() {
+        var errorRate = document.getElementById("errorRate").value;
+        // console.log("errorRate: " + errorRate)
+
+        while (count01[0] >= errorRate) {
+
+            // randomly draw available blocks from tetronimo selection
+            var shuffledTetronimoArray = shuffle(tetronimos);
+
+            if (count01[0] > 0) {
+                //  display("RELOADING...")
+
+                reload();
+            }
+
+            var count = 0;
+            var c_canvas = document.getElementById("canvas");
+            var context = c_canvas.getContext("2d");
+
+            countCombinations++;
+
+            shuffledTetronimoArray.forEach(function (block) {
+                count = count + 1;
+                var foundOne = 0;
+
+                if (foundOne === 0) {
+
+                    var blockColor = getRandomColor();
+                    testedPositions++;
+                    // test all available board positions for the specific block
+
+                            for (var y = 0; y < gridHeight; y += 1) {
+                                for (var x = 0; x < gridWidth; x += 1) {
+
+
+
+
+
+                            // scroll through a specific block options
+                            for (var i = 0; i < this[block].length; i++) {
+                                var cube = this[block][i];
+                                var myPlacingArray = "";
+
+                                var isFreetoPlace = 0;
+                                var countOnes = 0;
+
+
+                                // try specific block if it fits
+                                for (var j = 0; j < cube.length; j++) {
+                                    for (var l = 0; l < sizeAr(this[block][i])[1]; l++) {
+
+                                        if (((x + l) < (gridWidth + 1)) && ((y + j) < (gridHeight + 1))) {
+                                            if (cube[j][l] === 1) {
+                                                countOnes++;
+                                            }
+                                            try {
+                                                if (gridItems[y + j][x + l] === 0) {
+
+                                                    if (cube[j][l] === 1) {
+                                                        isFreetoPlace++;
+                                                        myPlacingArray = myPlacingArray + (y + j) + "," + (x + l) + " | ";
+                                                    }
+                                                }
+                                            } catch (err) {
+                                            }
+                                        }
+                                    }
+                                }
+
+                                // check if there is any single empty position blocked
+                                if ((isFreetoPlace === countOnes) && (foundOne === 0) && ((isFreetoPlace > 0) && (countOnes > 0))) {
+                                    //if (((x + l) < 7) && ((y + j) < 11)) {
+
+
+
+                                    var placingPosition = myPlacingArray.split(" | ");
+
+                                    for (var f = 0; f < placingPosition.length - 1; f++) {
+                                        //display(block+" - " + placingPosition[f]);
+                                        var placeAtPosition = placingPosition[f].split(",");
+                                        gridItems[(placeAtPosition[0])][(placeAtPosition[1])] = 1;
+                                        context.fillStyle = blockColor;
+                                        context.fillRect(((placeAtPosition[1]) * 25) + 1, ((placeAtPosition[0]) * 25) + 1, 23, 23);
+                                        context.fillStyle = "#ffffff";
+                                        context.fillText(block,((placeAtPosition[1]) * 25) + 10, ((placeAtPosition[0]) * 25) + 15);
+                                    }
+
+                                    foundOne = 1;
+                                    isFreetoPlace = 0;
+                                    countUsedPositions = countUsedPositions + countOnes;
+                                    countOnes = 0;
+                                    usedBlocks[countUsedBlocks] = block;
+                                    usedBlockColors[countUsedBlocks] = blockColor;
+                                    countUsedBlocks++;
+
+                                    countOccurenceInArray();
+
+                                    if (count01[0] === 0) {
+                                        endResult();
+                                        throw "exit";
+                                    } else {
+                                        if (errorRate > 0) {
+                                            if (count01[0] <= errorRate) {
+                                                endResult();
+                                           throw "exit";
+                                            }
+                                        }
+                                    }
+
+                                    /*
+                                     var checkBadlyPlacedFin = checkBadlyPlaced(block);
+                                     if (checkBadlyPlacedFin>0) {
+                                     for (var f = 0; f < placingPosition.length - 1; f++) {
+                                     //display(block+" - " + placingPosition[f]);
+                                     var placeAtPosition = placingPosition[f].split(",");
+                                     context.fillStyle = blockColor;
+                                     context.fillRect(((placeAtPosition[1]) * 50) + 1, ((placeAtPosition[0]) * 50) + 1, 48, 48);
+                                     }
+                                     display(block + ": " + myPlacingArray.substring(0, myPlacingArray.length - 2));
+                                     foundOne = 1;
+                                     isFreetoPlace = 0;
+                                     countUsedPositions = countUsedPositions + countOnes;
+                                     countOnes = 0;
+                                     usedBlocks[countUsedBlocks] = block;
+                                     usedBlockColors[countUsedBlocks] = blockColor;
+                                     countUsedBlocks++;
+                                     checkBadlyPlacedFin = 0;
+                                     } else {
+                                     for (var f = 0; f < placingPosition.length - 1; f++) {
+                                     //display(block+" - " + placingPosition[f]);
+                                     var placeAtPosition = placingPosition[f].split(",");
+                                     gridItems[(placeAtPosition[0])][(placeAtPosition[1])] = 0;
+                                     }
+                                     }
+                                     */
+
+
+
+                                    //}
+                                }
+
+                                /*
+                                 // place specific block on 01 grid and board
+                                 if ((isFreetoPlace === countOnes) && (foundOne === 0) && ((isFreetoPlace > 0) && (countOnes > 0))) {
+                                 //display("isFreetoPlace: " + isFreetoPlace + " - countOnes:" + countOnes + " = " + (isFreetoPlace - countOnes));
+                                 //if (((x + l) < 7) && ((y + j) < 11)) {
+                                 for (var j = 0; j < cube.length; j++) {
+                                 for (var l = 0; l < sizeAr(this[block][i])[1]; l++) {
+                                 if ((gridItems[y + j][x + l] === 0)) {
+                                 if (cube[j][l] === 1) {
+                                 context.fillStyle = blockColor;
+                                 context.fillRect(((x + l) * 50) + 1, ((y + j) * 50) + 1, 48, 48);
+                                 gridItems[(y + j)][(x + l)] = 1;
+                                 //display("Placing: " + block + "[" + (x + l) + "][" + (y + j) + "]");
+                                 // display("gridItems[" + (x + l) + "][" + (y + j) + "]=" + gridItems[(x + l)][(y + j)] + " + Cube[" + j + "][" + l + "]=" + cube[j][l] + " ==> " + isFreetoPlace);
+                                 }
+
+                                 }
+                                 }
+                                 }
+                                 foundOne = 1;
+                                 isFreetoPlace = 0;
+                                 countUsedPositions = countUsedPositions + countOnes;
+                                 countOnes = 0;
+                                 usedBlocks[countUsedBlocks] = block;
+                                 usedBlockColors[countUsedBlocks] = blockColor;
+                                 countUsedBlocks++;
+                                 // }
+                                 }
+
+                                 */
+
+
+
+                            }
+                        }
+                    }
+                }
+
+                countOccurenceInArray();
+            });
+
+            //if (gridItems[0][0] === 0) {
+//            countOccurenceInArray();
+
+            /*
+             L.forEach(function (letter) {
+             console.log(letter);
+             var splitLetters = letter.split("");
+             splitLetters.forEach(function (direction) {
+             console.log(direction);
+             });
+             });
+             */
+
+            // display("RELOADING:" + count01[0])
+        }
+
+
+
+        // document.getElementById("clean_button").style.visibility = "visible";
+        // display("Available Tetronimo Blocks: I,I,L,L,O,O,T,T,Z,Z,X,X,V,V,V,V");
+        //display("Solution Color Order: " + usedBlockColors);
+
+
+    }
+
+    setTimeout(timeoutLoop, delay);
+}
+
+
+/*
+
+function calculate2() {
+    usedRandomTetronimos = [[]];
+    usedRandomTetronimos.length = 0;
+
+    // start the timer
+    t0 = performance.now();
+    var delay = 500;
+    testedPositions = 0;
+    processingBlockNumber = 0;
+
+    reload();
+    usedRandomTetronimos = [];
+    err = 0;
+
+    document.getElementById("clean_button").style.visibility = "hidden";
+    document.getElementById("calculate_button").disabled = true;
+    document.getElementById("calculate_button").innerHTML = "Processing...";
+
+
+    function timeoutLoop() {
+        var count = 0;
+
+
+
+        errorRate = parseInt(document.getElementById("errorRate").value);
+        // console.log("errorRate: " + errorRate)
+        var c_canvas = document.getElementById("canvas");
+        var context = c_canvas.getContext("2d");
+
+
+        countCombinations = 0;
+
+
+
+
+                // result.push(tetronimoSpecificCombination);
+
+                //console.log(tetronimoSpecificCombination);
+
+
+        while (count01[0] >= errorRate) {
+            reload();
+            countCombinations++;
+
+            var tetronimoSpecificCombination = [];
+            tetronimoSpecificCombination.length = 0;
+         //tetronimoSpecificCombination = RandomizerCalculator();
+
+
+
+            var randomTetronimos = [];
+            for (var x = 0; x < tetronimos.length; x += 1) {
+                var tetroBlock = tetronimos[x];
+                randomTetronimos[x] = tetroBlock + Math.floor(Math.random() * this[tetroBlock].length);
+            }
+            tetronimoSpecificCombination = shuffle(randomTetronimos);
+
+
+
+
+            if (tetronimoSpecificCombination.toString() === "exit") {
+                console.log(tetronimoSpecificCombination.toString());
+
+                display(" ------------------");
+                display(" --- RESULT ---");
+                display(" ------------------ ");
+                display("Tried all combination and found no solution.");
+
+                return;}
+
+          //  console.log("Testing: " + tetronimoSpecificCombination);
+
+
+        //   if (tetronimoSpecificCombination.toString() === "exit") {
+         //      throw "exit";
+         //  }
+
+
+                for (var d = 0; d < tetronimoSpecificCombination.length; d++) {
+                    //    reload();
+
+                    var tetronimoCombination = tetronimoSpecificCombination[d];
+
+                   // reload();
+                   // try specific block if it fits
+                //    for (var s = 0; s < tetronimoCombination.length; s++) {
+
+                        var block = tetronimoCombination.charAt(0);
+                        var blockLength = parseInt(tetronimoCombination.substr(1));
+
+                     //   console.log(tetronimoCombination+ " - " + block + " - " + blockLength);
+
+                        count = count + 1;
+                        var foundOne = 0;
+
+                        var blockColor = getRandomColor();
+                        testedPositions++;
+                        for (var y = 0; y < gridHeight; y += 1) {
+                            for (var x = 0; x < gridWidth; x += 1) {
+
+                                if ((gridItems[y][x] === 0) && (foundOne === 0)){
+
+
+                                    var cube = this[block][blockLength];
+                                    var myPlacingArray = "";
+
+                                    var isFreetoPlace = 0;
+                                    var countOnes = 0;
+
+                                    // try specific block if it fits
+                                    for (var j = 0; j < cube.length; j++) {
+
+                                        for (var l = 0; l < sizeAr(this[block][blockLength])[1]; l++) {
+                                            if (((x + l) < (gridWidth + 1)) && ((y + j) < (gridHeight + 1))) {
+                                                if (cube[j][l] === 1) {
+                                                    countOnes++;
+                                                }
+                                                try {
+                                                    if (gridItems[y + j][x + l] === 0) {
+
+                                                        if (cube[j][l] === 1) {
+                                                            isFreetoPlace++;
+                                                            myPlacingArray = myPlacingArray + (y + j) + "," + (x + l) + " | ";
+                                                        }
+                                                    }
+                                                } catch (err) {
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    // check if there is any single empty position blocked
+                                    if ((isFreetoPlace === countOnes) && (foundOne === 0) && ((isFreetoPlace > 0) && (countOnes > 0))) {
+                                        if (((x + l) < (gridWidth + 1)) && ((y + j) < (gridHeight + 1))) {
+                                            var placingPosition = myPlacingArray.split(" | ");
+                                            for (var f = 0; f < placingPosition.length - 1; f++) {
+                                                var placeAtPosition = placingPosition[f].split(",");
+                                                gridItems[(placeAtPosition[0])][(placeAtPosition[1])] = 1;
+                                                context.fillStyle = blockColor;
+                                                context.fillRect(((placeAtPosition[1]) * 25) + 1, ((placeAtPosition[0]) * 25) + 1, 23, 23);
+                                            }
+                                            foundOne = 1;
+                                            isFreetoPlace = 0;
+                                            countUsedPositions = countUsedPositions + countOnes;
+                                            countOnes = 0;
+                                            usedBlocks[countUsedBlocks] = block;
+                                            usedBlockColors[countUsedBlocks] = blockColor;
+                                            countUsedBlocks++;
+                                        }
+                                        countOccurenceInArray();
+
+                                        if (count01[0] === 0) {
+                                            endResult();
+                                            return;
+                                            // throw "exit";
+                                        } else {
+                                            if (errorRate > 0) {
+                                                if (count01[0] <= errorRate) {
+                                                    endResult();
+                                                    return;
+                                                    //        throw "exit";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                   // }
+                    //  throw "exit";
+                }
+
+
+        }
+
+
+    }
+
+
+    setTimeout(timeoutLoop, delay);
+    countOccurenceInArray();
+    reload;
+  //endResult();
+    document.getElementById("clean_button").style.visibility = "visible";
+    document.getElementById("calculate_button").disabled = false;
+    document.getElementById("calculate_button").innerHTML = "Solve";
+
+
+}
+*/
 
 function uniq_fast(a) {
     var seen = {};
@@ -383,7 +853,7 @@ function endResult() {
     display("Solution: <b>" + usedBlocks + "<b>");
     display("Used: " + countUsedBlocks + " of " + tetronimos.length + " blocks");
     display("Length of Calculation: <b>" + msToTime(t1 - t0)) + "</b>";
-    display("Tested: <b>" + countCombinations + "</b> board configurations and <b>" + testedPositions.toLocaleString() + "</b> block positions");
+    display("Tested: <b>" + countCombinations.toLocaleString() + "</b> board configurations and <b>" + testedPositions.toLocaleString() + "</b> block positions");
     display("Speed of Calculation: <b>" + (Math.round((testedPositions / ((t1 - t0) / 1000)))).toLocaleString() + "</b> positions per second");
 
 
@@ -392,6 +862,7 @@ function endResult() {
     document.getElementById("calculate_button").innerHTML = "Solve";
 
     create01Grid();
+    countCombinations=0;
 }
 
 function msToTime(duration) {
@@ -400,7 +871,7 @@ function msToTime(duration) {
         , minutes = parseInt((duration / (1000 * 60)) % 60)
         , hours = parseInt((duration / (1000 * 60 * 60)) % 24);
 
-    //  hours = (hours < 10) ? "0" + hours : hours;
+    hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
 
@@ -424,10 +895,10 @@ function countOccurenceInArray() {
 }
 
 function getRandomColor() {
-    var letters = '0123456789abcdef';
+    var letters = '0123456789abcd';
     var color = '#';
     for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
+        color += letters[Math.floor(Math.random() * 14)];
     }
     return color;
 }
@@ -513,6 +984,7 @@ function reload() {
     createGrid();
     create01Grid();
 
+
     document.getElementById("msgs").innerHTML = "";
     document.getElementById("xPos").innerHTML = "";
     document.getElementById("yPos").innerHTML = "";
@@ -531,32 +1003,52 @@ function makeGridItemsArray(w, h, val) {
 }
 
 
-function arrayCalculator() {
+function RandomizerCalculator() {
 
+    var randomTetronimos = [];
 
-}
-
-
-function getCombinations(array) {
-    var count = 0;
-
-    function iter(i, p) {
-        if (i === array.length) {
-            count++;
-            result.push(p); // <==================== use the items
-            console.log(count + " - " + p);
-            return;
-        }
-        array[i].forEach(function (a) {
-            iter(i + 1, p.concat(a));
-        });
+    for (var x = 0; x < tetronimos.length; x += 1) {
+        var tetroBlock = tetronimos[x];
+        randomTetronimos[x] = tetroBlock + Math.floor(Math.random() * this[tetroBlock].length);
     }
 
-    var result = [];
 
-    iter(0, []);
-    return result;
+    //console.log(shuffleddRandom);
+    //console.log(ifExists(shuffleddRandom, usedRandomTetronimos));
+
+    var found = 0;
+  //
+
+    while (found===0) {
+    var shuffleddRandom = shuffle(randomTetronimos);
+
+    if (ifExists(shuffleddRandom, usedRandomTetronimos)===false) {
+        usedRandomTetronimos.push(shuffleddRandom);
+        if (usedRandomTetronimos.length===2){
+            usedRandomTetronimos =  usedRandomTetronimos.filter(e => e.length);
+        }
+        found++;
+
+    } else {
+        err++;
+        console.log("Error: " +err);
+        if (err>1000) {found=1;return "exit";}
+    }
+
+    }
+     return shuffleddRandom;
+
 }
+
+
+
+function ifExists(arr1, arr2) {
+    var aStr = JSON.stringify(arr1);
+    var doesExists = !!arr2.find( s => JSON.stringify(s) == aStr);
+    return doesExists;
+}
+
+
 
 function createGrid() {
     var c_canvas = document.getElementById("canvas");
@@ -624,14 +1116,39 @@ function getNearestSquare(position) {
     };
 }
 
+
+function test() {
+
+}
+
+var combinations = (function() {
+    return function(n,r){
+        return Math.factorial(n) / (Math.factorial(r) * Math.factorial(n - r));
+    };
+})();
+Math.factorial = function( _x ) {
+    return _x == 1 ? _x : _x * Math.factorial( --_x ) ;
+}
+
 function calculateTotals() {
-    var total_value_blocks = parseInt(document.getElementById("Z-letter").value) * 4
+    var total_value_blocks = parseInt(document.getElementById("I-letter").value) * 4
+        + parseInt(document.getElementById("J-letter").value) * 4
         + parseInt(document.getElementById("L-letter").value) * 4
-        + parseInt(document.getElementById("T-letter").value) * 4
-        + parseInt(document.getElementById("I-letter").value) * 3
         + parseInt(document.getElementById("O-letter").value) * 4
-        + parseInt(document.getElementById("X-letter").value) * 5
-        + parseInt(document.getElementById("V-letter").value) * 3;
+        + parseInt(document.getElementById("T-letter").value) * 4
+        + parseInt(document.getElementById("S-letter").value) * 4
+        + parseInt(document.getElementById("Z-letter").value) * 4;
+
+/*
+    var total_possible_combinations = (I.length*parseInt(document.getElementById("I-letter").value))+1
+        * (J.length*parseInt(document.getElementById("J-letter").value))+1
+        * (L.length*parseInt(document.getElementById("L-letter").value))+1
+        * (O.length*parseInt(document.getElementById("I-letter").value))+1
+        * (O.length*parseInt(document.getElementById("O-letter").value))+1
+        * (X.length*parseInt(document.getElementById("X-letter").value))+1
+        * (V.length*parseInt(document.getElementById("V-letter").value))+1;
+
+*/
 
     if (isNaN(total_value_blocks)) {
         total_value_blocks = "";
@@ -641,33 +1158,41 @@ function calculateTotals() {
         tetronimos = [];
         orig_tetronimos = [];
 
+
+
         for (var i = 0; i < parseInt(document.getElementById("I-letter").value); i++) {
             tetronimos.push("I");
             orig_tetronimos.push("I");
         }
+
+        for (var i = 0; i < parseInt(document.getElementById("J-letter").value); i++) {
+            tetronimos.push("J");
+            orig_tetronimos.push("J");
+        }
+
         for (var i = 0; i < parseInt(document.getElementById("L-letter").value); i++) {
             tetronimos.push("L");
             orig_tetronimos.push("L");
         }
+
         for (var i = 0; i < parseInt(document.getElementById("O-letter").value); i++) {
             tetronimos.push("O");
             orig_tetronimos.push("O");
         }
+
         for (var i = 0; i < parseInt(document.getElementById("T-letter").value); i++) {
             tetronimos.push("T");
             orig_tetronimos.push("T");
         }
+
+            for (var i = 0; i < parseInt(document.getElementById("S-letter").value); i++) {
+            tetronimos.push("S");
+            orig_tetronimos.push("S");
+        }
+
         for (var i = 0; i < parseInt(document.getElementById("Z-letter").value); i++) {
             tetronimos.push("Z");
             orig_tetronimos.push("Z");
-        }
-        for (var i = 0; i < parseInt(document.getElementById("X-letter").value); i++) {
-            tetronimos.push("X");
-            orig_tetronimos.push("X");
-        }
-        for (var i = 0; i < parseInt(document.getElementById("V-letter").value); i++) {
-            tetronimos.push("V");
-            orig_tetronimos.push("V");
         }
 
     }
@@ -696,9 +1221,13 @@ function calculateTotals() {
         document.getElementById("calculate_button").style.visibility = "visible";
     }
 
-
     document.getElementById("block_value").innerHTML = total_value_blocks.toString();
     document.getElementById("board_value").innerHTML = total_value_board.toString();
+
+   // total_possible_combinations = total_possible_combinations - tetronimos.length;
+   // document.getElementById("possibleCombinations").innerHTML = total_possible_combinations.toLocaleString();
+
+
 
     if (tetronimos) {
         document.getElementById("selectedBlocks").innerHTML = tetronimos.toString();

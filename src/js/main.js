@@ -8,6 +8,7 @@ var numofperm = 0;
 var gridWidth = 0;
 var gridHeight = 0;
 var usedRandomTetronimos = [[]];
+var total_possible_combinations = 1;
 
 var I = new Array(1);
 var J = new Array(3);
@@ -286,24 +287,25 @@ function calculate_all_combinations() {
 
                 //console.log(tetronimoSpecificCombination);
 
-                console.log(countCombinations + " - " + tetronimoSpecificCombination);
-
-                var tetronimoSpecificCombination1 = uniq_fast(permute(tetronimoSpecificCombination));
+                 var tetronimoSpecificCombination1 = uniq_fast(permute(tetronimoSpecificCombination));
+                //var tetronimoSpecificCombination1 = tetronimoSpecificCombination;
 
                 //throw "exit";
 
                 for (var d = 0; d < tetronimoSpecificCombination1.length; d++) {
-                    //    reload();
-
-                    var tetronimoCombination = tetronimoSpecificCombination1[d];
+                        reload();
+                  var tetronimoCombination = tetronimoSpecificCombination1[d];
+               // var tetronimoCombination = tetronimoSpecificCombination;
                     //    console.log(tetronimoSpecificCombination1[d]);
-
+                    console.log(countCombinations + " - " + tetronimoSpecificCombination + " - " + tetronimoSpecificCombination1.length + " - " + tetronimoCombination);
                     // reload();
-
+                 //   console.log(countCombinations + " - " + tetronimoSpecificCombination + " - " + tetronimoSpecificCombination1.length + " - " + tetronimoCombination);
                     // try specific block if it fits
                     for (var s = 0; s < tetronimoCombination.length; s++) {
                         var block = tetronimoCombination[s].charAt(0);
                         var blockLength = parseInt(tetronimoCombination[s].substr(1));
+
+
 
                         count = count + 1;
                         var foundOne = 0;
@@ -357,7 +359,7 @@ function calculate_all_combinations() {
                                         isFreetoPlace = 0;
                                         countUsedPositions = countUsedPositions + countOnes;
                                         countOnes = 0;
-                                        usedBlocks[countUsedBlocks] = block;
+                                        usedBlocks[countUsedBlocks] = block+"["+blockLength+"]";
                                         usedBlockColors[countUsedBlocks] = blockColor;
                                         countUsedBlocks++;
                                     }
@@ -373,7 +375,29 @@ function calculate_all_combinations() {
                                             }
                                         }
                                     }
+
+
+
                                 }
+
+
+
+
+                            }
+                            //console.log(total_possible_combinations + "===" +  countCombinations);
+
+                            if ((total_possible_combinations === countCombinations) && (count01[0]>0)){
+                                reload();
+                                display(" ------------------");
+                                display(" --- RESULT ---");
+                                display(" ------------------ ");
+                                display("Tried all combination and found no solution.");
+                                throw "exit";
+                            }
+
+                            if ((total_possible_combinations === countCombinations) && (count01[0]===0)){
+                                endResult();
+                                throw "exit";
                             }
                         }
                     }
@@ -400,14 +424,17 @@ function calculate_all_combinations() {
 
 
     setTimeout(timeoutLoop, delay);
+
     countOccurenceInArray();
-    reload;
     //endResult();
     document.getElementById("clean_button").style.visibility = "visible";
     document.getElementById("calculate_button").disabled = false;
     document.getElementById("calculate_button").innerHTML = "Solve";
 
 
+
+
+    //
 }
 
 
@@ -515,7 +542,8 @@ function calculate_random_combinations() {
                                     isFreetoPlace = 0;
                                     countUsedPositions = countUsedPositions + countOnes;
                                     countOnes = 0;
-                                    usedBlocks[countUsedBlocks] = block;
+                                    //usedBlocks[countUsedBlocks] = block;
+                                    usedBlocks[countUsedBlocks] = block+"["+i+"]";
                                     usedBlockColors[countUsedBlocks] = blockColor;
                                     countUsedBlocks++;
 
@@ -643,7 +671,7 @@ function calculate2() {
 
     // start the timer
     t0 = performance.now();
-    var delay = 500;
+    var delay = 450;
     testedPositions = 0;
     processingBlockNumber = 0;
 
@@ -704,6 +732,7 @@ function calculate2() {
                 display(" --- RESULT ---");
                 display(" ------------------ ");
                 display("Tried all combination and found no solution.");
+
 
                 return;}
 
@@ -849,9 +878,9 @@ function endResult() {
     display(" ------------------");
     display(" --- RESULT ---");
     display(" ------------------ ");
-    display("Selected: " + orig_tetronimos);
+    //display("Selected: " + orig_tetronimos);
     display("Solution: <b>" + usedBlocks + "<b>");
-    display("Used: " + countUsedBlocks + " of " + tetronimos.length + " blocks");
+    display("Used: <b>" + countUsedBlocks + "</b> of <b>" + tetronimos.length + "</b> blocks");
     display("Length of Calculation: <b>" + msToTime(t1 - t0)) + "</b>";
     display("Tested: <b>" + countCombinations.toLocaleString() + "</b> board configurations and <b>" + testedPositions.toLocaleString() + "</b> block positions");
     display("Speed of Calculation: <b>" + (Math.round((testedPositions / ((t1 - t0) / 1000)))).toLocaleString() + "</b> positions per second");
@@ -1131,6 +1160,9 @@ Math.factorial = function( _x ) {
 }
 
 function calculateTotals() {
+
+    total_possible_combinations = 1;
+
     var total_value_blocks = parseInt(document.getElementById("I-letter").value) * 4
         + parseInt(document.getElementById("J-letter").value) * 4
         + parseInt(document.getElementById("L-letter").value) * 4
@@ -1139,16 +1171,12 @@ function calculateTotals() {
         + parseInt(document.getElementById("S-letter").value) * 4
         + parseInt(document.getElementById("Z-letter").value) * 4;
 
-/*
-    var total_possible_combinations = (I.length*parseInt(document.getElementById("I-letter").value))+1
-        * (J.length*parseInt(document.getElementById("J-letter").value))+1
-        * (L.length*parseInt(document.getElementById("L-letter").value))+1
-        * (O.length*parseInt(document.getElementById("I-letter").value))+1
-        * (O.length*parseInt(document.getElementById("O-letter").value))+1
-        * (X.length*parseInt(document.getElementById("X-letter").value))+1
-        * (V.length*parseInt(document.getElementById("V-letter").value))+1;
 
-*/
+
+
+
+
+
 
     if (isNaN(total_value_blocks)) {
         total_value_blocks = "";
@@ -1215,6 +1243,24 @@ function calculateTotals() {
     }
 
 
+    for (var i = 0; i < tetronimos.length; i++) {
+        var blockTurns = 0;
+
+        if (tetronimos[i] === "I") {blockTurns=2}
+        if (tetronimos[i] === "J") {blockTurns=2}
+        if (tetronimos[i] === "L") {blockTurns=2}
+        if (tetronimos[i] === "O") {blockTurns=1}
+        if (tetronimos[i] === "T") {blockTurns=4}
+        if (tetronimos[i] === "S") {blockTurns=2}
+        if (tetronimos[i] === "Z") {blockTurns=2}
+
+     //  console.log(tetronimos[i] + " - " + blockTurns + " - " + parseInt(document.getElementById(tetronimos[i]+"-letter").value));
+
+        total_possible_combinations = total_possible_combinations * blockTurns ;
+    }
+
+
+
     if (total_value_blocks != total_value_board) {
         document.getElementById("calculate_button").style.visibility = "hidden";
     } else {
@@ -1223,9 +1269,7 @@ function calculateTotals() {
 
     document.getElementById("block_value").innerHTML = total_value_blocks.toString();
     document.getElementById("board_value").innerHTML = total_value_board.toString();
-
-   // total_possible_combinations = total_possible_combinations - tetronimos.length;
-   // document.getElementById("possibleCombinations").innerHTML = total_possible_combinations.toLocaleString();
+    document.getElementById("possibleCombinations").innerHTML = total_possible_combinations.toLocaleString();
 
 
 

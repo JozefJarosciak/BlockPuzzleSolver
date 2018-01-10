@@ -20,7 +20,7 @@
 
 </head>
 <body onload="onLoad()">
-<title>Tetronimo Puzzle Solver</title>
+<title>n-Block Tetronimo Puzzle Solver</title>
 
 
 <!--[if lte IE 9]>
@@ -36,21 +36,21 @@
 <b>Author: Jozef Jarosciak</b> - <a href="https://github.com/JozefJarosciak/TetronimoPuzzleSolver">Open Source
     Code</a>
 <br><br>
-<hr width="500px">
+<hr width="450px">
 
 <b>Block Configuration:</b><br>
 
 
 <img src="img/I.png">
-<input value=2 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
+<input value=0 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
 
 &nbsp;
 <img src="img/J.png">
-<input value=2 type="text" onkeyup="calculateTotals()" id="J-letter" style="width:20px">
+<input value=0 type="text" onkeyup="calculateTotals()" id="J-letter" style="width:20px">
 
 &nbsp;
 <img src="img/L.png">
-<input value=2 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px">
+<input value=0 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px">
 
 &nbsp;
 <img src="img/O.png">
@@ -58,21 +58,21 @@
 
 &nbsp;
 <img src="img/T.png">
-<input value=2 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px">
+<input value=4 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px">
 
 &nbsp;
 <img src="img/S.png">
-<input value=2 type="text" onkeyup="calculateTotals()" id="S-letter" style="width:20px">
+<input value=0 type="text" onkeyup="calculateTotals()" id="S-letter" style="width:20px">
 
 &nbsp;
 <img src="img/Z.png">
-<input value=2 type="text" onkeyup="calculateTotals()" id="Z-letter" style="width:20px">
+<input value=0 type="text" onkeyup="calculateTotals()" id="Z-letter" style="width:20px">
 
 
 <br>
-<b><label id="selectedBlocksLen"></label></b> Blocks: <label id="selectedBlocks"></label></b>
-<small> | Tetronimo Area:</small>
-<b><label id="block_value"></label></b>
+<small><b><label id="selectedBlocksLen"></label></b> Blocks: <label id="selectedBlocks"></label></b>
+ | Tetronimo Area:
+<b><label id="block_value"></label></b> | Possible Combinations: <b><label id="possibleCombinations"></label></b></small>
 
 
 <!--   <br> Possible Block Configurations: <b><label id="possibleCombinations"></label></b>-->
@@ -80,8 +80,8 @@
 <br><br>
 
 <b>Board Configuration:</b><br>
-X: <input min=5 max=20 value=8 type="text" onkeyup="calculateTotals()" id="X-zone" style="width:20px">
-* <input min=5 max=20 value=7 type="text" onkeyup="calculateTotals()" id="Y-zone" style="width:20px"> :Y
+X: <input min=5 max=20 value=6 type="text" onkeyup="calculateTotals()" id="X-zone" style="width:20px">
+* <input min=5 max=20 value=4 type="text" onkeyup="calculateTotals()" id="Y-zone" style="width:20px"> :Y
 <small> - Board Area:</small>
 <b><label id="board_value"></label></b><br>
 
@@ -95,7 +95,7 @@ X: <input min=5 max=20 value=8 type="text" onkeyup="calculateTotals()" id="X-zon
 
 
 
-<hr width="500px">
+<hr width="450px">
 
 
 <table>
@@ -159,7 +159,7 @@ X: <input min=5 max=20 value=8 type="text" onkeyup="calculateTotals()" id="X-zon
 </button>
 <button id="clean_button" type="submit" onclick="reload();test();">Clean Board</button>
 
-<hr width="500px"></td>
+<hr width="450px"></td>
 <br>
 <div id="msgs"></div>
 

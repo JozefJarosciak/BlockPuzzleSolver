@@ -34,31 +34,40 @@
 
 <H1>Tetronimo Puzzle Solver</H1>
 Author: Jozef Jarosciak
+<label id="timer"></label>
 
 <br><br>
-<hr width="450px">
+
+
+
+
+
+
+<div id="configuration">
+
+<hr style="text-align:right;width:450px">
 
 <b>Block Configuration:</b><br>
 
 
 <img src="img/I.png">
-<input value=0 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
+<input value=5 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
 
 &nbsp;
 <img src="img/J.png">
-<input value=0 type="text" onkeyup="calculateTotals()" id="J-letter" style="width:20px">
+<input value=1 type="text" onkeyup="calculateTotals()" id="J-letter" style="width:20px">
 
 &nbsp;
 <img src="img/L.png">
-<input value=0 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px">
+<input value=1 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px">
 
 &nbsp;
 <img src="img/O.png">
-<input value=2 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px">
+<input value=1 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px">
 
 &nbsp;
 <img src="img/T.png">
-<input value=4 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px">
+<input value=0 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px">
 
 &nbsp;
 <img src="img/S.png">
@@ -70,9 +79,9 @@ Author: Jozef Jarosciak
 
 
 <br>
-<small><b><label id="selectedBlocksLen"></label></b> Blocks: <label id="selectedBlocks"></label></b>
+<small><b><label id="selectedBlocksLen"></label></b> Blocks: <b><label id="selectedBlocks"></label></b>
  | Tetronimo Area:
-<b><label id="block_value"></label></b> | Possible Combinations: <b><label id="possibleCombinations"></label></b></small>
+<b><label id="block_value"></label></b> | Board Combinations: <b><label id="possibleCombinations"></label></b></small>
 
 
 <!--   <br> Possible Block Configurations: <b><label id="possibleCombinations"></label></b>-->
@@ -80,22 +89,21 @@ Author: Jozef Jarosciak
 <br><br>
 
 <b>Board Configuration:</b><br>
-X: <input min=5 max=20 value=6 type="text" onkeyup="calculateTotals()" id="X-zone" style="width:20px">
-* <input min=5 max=20 value=4 type="text" onkeyup="calculateTotals()" id="Y-zone" style="width:20px"> :Y
+X: <input min=5 max=20 value=5 type="text" onkeyup="calculateTotals1()" id="X-zone" style="width:20px">
+* <input min=5 max=20 value=4 type="text" onkeyup="calculateTotals1()" id="Y-zone" style="width:20px"> :Y
 <small> - Board Area:
 <b><label id="board_value"></label></b></small><br>
 
 
 <br>
+</div>
 
 
 
 
 
 
-
-
-<hr width="450px">
+<hr style="text-align:right;width:450px">
 
 
 <table>
@@ -108,58 +116,74 @@ X: <input min=5 max=20 value=6 type="text" onkeyup="calculateTotals()" id="X-zon
     <td style="padding:40px;">
             <label id="01Grid"></label>
             <br>
-            <b>Block Tester:</b> X:<label id="xPos"></label> | Y:<label id="yPos"></label> | Block:<label id="pixColor"></label><br>
+            <b>Block Tester:</b> X: <label id="xPos"></label> | Y: <label id="yPos"></label> | Block: <label id="pixColor"></label><br>
 
     </tr>
     </tbody>
 </table>
 
 
-</td>
 
 <table>
     <tbody>
     <tr>
-        <td><b>Max. Error Rate:</b><br></td>
-        <td><select id="errorRate">
-            <option value=0>0</option>
-            <option value=3>3</option>
+        <td><b>Error Rate:</b><br></td>
+        <td><select id="errorRate" onkeyup="calculateTotals()">
+            <option selected value=0>0</option>
             <option value=4>4</option>
-            <option value=5>5</option>
-            <option value=6>6</option>
-            <option value=7>7</option>
             <option value=8>8</option>
-            <option value=9>9</option>
-            <option selected value=10>10</option>
-            <option value=11>11</option>
             <option value=12>12</option>
-            <option value=13>13</option>
-            <option value=14>14</option>
-            <option value=15>15</option>
             <option value=16>16</option>
-            <option value=17>17</option>
-            <option value=18>18</option>
-            <option value=19>19</option>
             <option value=20>20</option>
         </select></td>
     </tr>
     <tr>
         <td><b>Calculation Type:</b><br></td>
         <td><select id="calculation_Type">
-            <option value="all">All Combinations [slow]</option>
-            <option selected value="random">Random Combinations [faster]</option>
+            <option selected value="all">All Combinations [slow]</option>
+            <option value="random">Random Combinations [faster]</option>
         </select></td>
     </tr>
     </tbody>
 </table>
 
 
+<table>
+    <tbody>
+    <tr>
+        <td>
+            <button id="calculate_button" class="button" style="vertical-align:middle" onclick="calculate()"><span id="calcText">Solve </span></button>
+        </td>
+        <td>
+            <button id="clean_button" class="buttonClean" type="submit" onclick="reload();test();">Clean Board</button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label id="result" style="color:red;"></label>
+            <button class="buttonStop" id="stop_button" type="submit" onclick="stopworker();">STOP</button>
+        </td>
+        <td>
 
-<button id="calculate_button" class="button" style="vertical-align:middle" onclick="calculate()"><span id="calcText">Solve </span>
-</button>
-<button id="clean_button" type="submit" onclick="reload();test();">Clean Board</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
-<hr width="450px"></td>
+
+
+
+
+
+
+
+
+
+
+<hr style="text-align:right;width:450px">
+
+
+
 <br>
 <div id="msgs"></div>
 

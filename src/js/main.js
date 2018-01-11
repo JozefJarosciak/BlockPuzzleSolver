@@ -27,6 +27,7 @@ var errorRate = 10;
 var processingBlockNumber = 0;
 var countCombinations = 0;
 
+var worker;
 // initialize array
 
 var gridItems = [[]];
@@ -196,26 +197,6 @@ X[0] = [
 
 
 
-function calculate() {
-    if (document.getElementById("calculation_Type").value === "random"){
-        calculate_random_combinations()
-    }
-
-    if (document.getElementById("calculation_Type").value === "all"){
-        calculate_all_combinations()
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
 //console.log(sizeAr(L[3]));
 
 function permute(permutation) {
@@ -242,194 +223,147 @@ function permute(permutation) {
 }
 
 
+function calculate() {
+    if (document.getElementById("calculation_Type").value === "random"){
+        calculate_random_combinations();
+    }
+
+    if (document.getElementById("calculation_Type").value === "all"){
+      calculate_all_combinations();
+    }
+}
+
+function stopworker() {
+    worker.terminate();
+
+    document.getElementById("clean_button").style.visibility = "visible";
+    document.getElementById("calculate_button").disabled = false;
+    document.getElementById("calculate_button").innerHTML = "Solve";
+    document.getElementById("calculate_button").style.display = "block";
+    document.getElementById("configuration").style.visibility = "visible";
+    document.getElementById("configuration").style.display = "block";
+    document.getElementById("stop_button").style.display = "none";
+    document.getElementById("result").innerHTML = "";
+
+    reload();
+
+}
 
 function calculate_all_combinations() {
 
-    // start the timer
+    reload();
+
+
     t0 = performance.now();
-    var delay = 200;
     testedPositions = 0;
     processingBlockNumber = 0;
-
-    document.getElementById("clean_button").style.visibility = "hidden";
-    document.getElementById("calculate_button").disabled = true;
-    document.getElementById("calculate_button").innerHTML = "Processing...";
-
-    reload();
 
 
     function timeoutLoop() {
         var count = 0;
 
-
-
         errorRate = parseInt(document.getElementById("errorRate").value);
-        // console.log("errorRate: " + errorRate)
         var c_canvas = document.getElementById("canvas");
         var context = c_canvas.getContext("2d");
 
 
-        var finArr = [];
-        // convert tetronimos to a word array of all combinations
-        for (var y = 0; y < tetronimos.length; y += 1) {
-            finArr[y] = [];
-            for (var x = 0; x < this[tetronimos[y]].length; x += 1) {
-                finArr[y][x] = tetronimos[y] + x;
+        // START CALCULATION IN SEP WORKER
+        worker = new Worker("js/calculateCombinations.js");
+
+        worker.onmessage = function(event) {
+
+            if (event.data.aTopic === "reload") {
+                reload();
             }
-        }
+
+            if (event.data.aTopic === "processing") {
+                document.getElementById("stop_button").style.display = "block";
+                document.getElementById("configuration").style.visibility = "hidden";
+                document.getElementById("configuration").style.display = "none";
+                document.getElementById("clean_button").style.visibility = "hidden";
+                document.getElementById("calculate_button").disabled = true;
+                document.getElementById("calculate_button").innerHTML = "Processing...";
+                document.getElementById("calculate_button").style.display = "none";
+            }
+
+            if (event.data.aTopic === "message") {
+                document.getElementById("result").innerHTML = event.data.aBuf;
+            }
+
+
+            if (event.data.aTopic === "error") {
+                document.getElementById("result").innerHTML = event.data.aBuf;
+            }
+
+
+            if (event.data.aTopic === "placeBlock") {
+               // document.getElementById("result").innerHTML = event.data.block;
+
+                gridItems[(event.data.placeAtPosition0)][(event.data.placeAtPosition1)] = 1;
+                context.fillStyle = event.data.blockColor;
+                context.fillRect(((event.data.placeAtPosition1) * 25) + 1, ((event.data.placeAtPosition0) * 25) + 1, 23, 23);
+                context.fillStyle = "#ffffff";
+                context.fillText(event.data.block, ((event.data.placeAtPosition1) * 25) + 10, ((event.data.placeAtPosition0) * 25) + 15);
+                countOccurenceInArray();
+                worker.postMessage({'count01': count01[0]});
+            }
+
+            if (event.data.aTopic === "Finished") {
+                    usedBlocks = event.data.usedBlocks;
+                    usedBlockColors =event.data.usedBlockColors;
+                    countUsedBlocks = event.data.countUsedBlocks;
+                    countCombinations = event.data.countCombinations;
+                    testedPositions = event.data.testedPositions;
+                endResult();
+            }
+
+            if (event.data.aTopic === "Finished-Bad") {
+                countCombinations = event.data.countCombinations;
+                testedPositions = event.data.testedPositions;
+                endResultbad();
+            }
+
+
+
+
+
+
+
+        };
+
+        // pass required variables to worker
+        worker.postMessage({'gridWidth': gridWidth});
+        worker.postMessage({'gridHeight': gridHeight});
+        worker.postMessage({'tetronimos': tetronimos});
+        worker.postMessage({'total_possible_combinations': total_possible_combinations});
+        worker.postMessage({'errorRate': errorRate});
+
+
+
+
+        // start worker
+        worker.postMessage({'start': 'start'});
+
+
 
         countCombinations = 0;
 
-        function iteration(i, tetronimoSpecificCombination) {
-            if (i === finArr.length) {
-                countCombinations++;
-                result.push(tetronimoSpecificCombination);
-
-                //console.log(tetronimoSpecificCombination);
-
-                 var tetronimoSpecificCombination1 = uniq_fast(permute(tetronimoSpecificCombination));
-                //var tetronimoSpecificCombination1 = tetronimoSpecificCombination;
-
-                //throw "exit";
-
-                for (var d = 0; d < tetronimoSpecificCombination1.length; d++) {
-                        reload();
-                  var tetronimoCombination = tetronimoSpecificCombination1[d];
-               // var tetronimoCombination = tetronimoSpecificCombination;
-                    //    console.log(tetronimoSpecificCombination1[d]);
-                    console.log(countCombinations + " - " + tetronimoSpecificCombination + " - " + tetronimoSpecificCombination1.length + " - " + tetronimoCombination);
-                    // reload();
-                 //   console.log(countCombinations + " - " + tetronimoSpecificCombination + " - " + tetronimoSpecificCombination1.length + " - " + tetronimoCombination);
-                    // try specific block if it fits
-                    for (var s = 0; s < tetronimoCombination.length; s++) {
-                        var block = tetronimoCombination[s].charAt(0);
-                        var blockLength = parseInt(tetronimoCombination[s].substr(1));
 
 
 
-                        count = count + 1;
-                        var foundOne = 0;
-
-                        var blockColor = getRandomColor();
-                        testedPositions++;
-                        for (var y = 0; y < gridHeight; y += 1) {
-                            for (var x = 0; x < gridWidth; x += 1) {
-
-                                var cube = this[block][blockLength];
-                                var myPlacingArray = "";
-
-                                var isFreetoPlace = 0;
-                                var countOnes = 0;
-
-                                // try specific block if it fits
-                                for (var j = 0; j < cube.length; j++) {
-
-                                    for (var l = 0; l < sizeAr(this[block][blockLength])[1]; l++) {
-                                        if (((x + l) < (gridWidth + 1)) && ((y + j) < (gridHeight + 1))) {
-                                            if (cube[j][l] === 1) {
-                                                countOnes++;
-                                            }
-                                            try {
-                                                if (gridItems[y + j][x + l] === 0) {
-
-                                                    if (cube[j][l] === 1) {
-                                                        isFreetoPlace++;
-                                                        myPlacingArray = myPlacingArray + (y + j) + "," + (x + l) + " | ";
-                                                    }
-                                                }
-                                            } catch (err) {
-                                            }
-                                        }
-                                    }
-                                }
-
-                                // check if there is any single empty position blocked
-                                if ((isFreetoPlace === countOnes) && (foundOne === 0) && ((isFreetoPlace > 0) && (countOnes > 0))) {
-                                    if (((x + l) < (gridWidth + 1)) && ((y + j) < (gridHeight + 1))) {
-                                        var placingPosition = myPlacingArray.split(" | ");
-                                        for (var f = 0; f < placingPosition.length - 1; f++) {
-                                            var placeAtPosition = placingPosition[f].split(",");
-                                            gridItems[(placeAtPosition[0])][(placeAtPosition[1])] = 1;
-                                            context.fillStyle = blockColor;
-                                            context.fillRect(((placeAtPosition[1]) * 25) + 1, ((placeAtPosition[0]) * 25) + 1, 23, 23);
-                                            context.fillStyle = "#ffffff";
-                                            context.fillText(block,((placeAtPosition[1]) * 25) + 10, ((placeAtPosition[0]) * 25) + 15);
-                                        }
-                                        foundOne = 1;
-                                        isFreetoPlace = 0;
-                                        countUsedPositions = countUsedPositions + countOnes;
-                                        countOnes = 0;
-                                        usedBlocks[countUsedBlocks] = block+"["+blockLength+"]";
-                                        usedBlockColors[countUsedBlocks] = blockColor;
-                                        countUsedBlocks++;
-                                    }
-                                    countOccurenceInArray();
-                                    if (count01[0] === 0) {
-                                        endResult();
-                                        throw "exit";
-                                    } else {
-                                        if (errorRate > 0) {
-                                            if (count01[0] <= errorRate) {
-                                                endResult();
-                                                throw "exit";
-                                            }
-                                        }
-                                    }
-
-
-
-                                }
-
-
-
-
-                            }
-                            //console.log(total_possible_combinations + "===" +  countCombinations);
-
-                            if ((total_possible_combinations === countCombinations) && (count01[0]>0)){
-                                reload();
-                                display(" ------------------");
-                                display(" --- RESULT ---");
-                                display(" ------------------ ");
-                                display("Tried all combination and found no solution.");
-                                throw "exit";
-                            }
-
-                            if ((total_possible_combinations === countCombinations) && (count01[0]===0)){
-                                endResult();
-                                throw "exit";
-                            }
-                        }
-                    }
-                    //  throw "exit";
-                }
-
-
-
-
-
-
-                return;
-            }
-            finArr[i].forEach(function (a) {
-                iteration(i + 1, tetronimoSpecificCombination.concat(a));
-            });
-        }
-
-        var result = [];
-        iteration(0, []);
         finArr = [];
 
     }
 
 
-    setTimeout(timeoutLoop, delay);
+    setTimeout(timeoutLoop, 200);
 
     countOccurenceInArray();
     //endResult();
     document.getElementById("clean_button").style.visibility = "visible";
     document.getElementById("calculate_button").disabled = false;
     document.getElementById("calculate_button").innerHTML = "Solve";
+    document.getElementById("calculate_button").style.display = "block";
 
 
 
@@ -442,7 +376,7 @@ function calculate_random_combinations() {
 
     countCombinations = 0;
     t0 = performance.now();
-    var delay = 100;
+    var delay = 200;
     testedPositions = 0;
 
     reload();
@@ -450,6 +384,7 @@ function calculate_random_combinations() {
     //  document.getElementById("clean_button").style.visibility = "hidden";
     document.getElementById("calculate_button").disabled = true;
     document.getElementById("calculate_button").innerHTML = "Processing...";
+    document.getElementById("calculate_button").style.display = "none";
 
     function timeoutLoop() {
         var errorRate = document.getElementById("errorRate").value;
@@ -475,6 +410,9 @@ function calculate_random_combinations() {
             shuffledTetronimoArray.forEach(function (block) {
                 count = count + 1;
                 var foundOne = 0;
+
+             //   console.log(countCombinations + " - " + shuffledTetronimoArray);
+
 
                 if (foundOne === 0) {
 
@@ -889,9 +827,42 @@ function endResult() {
     document.getElementById("clean_button").style.visibility = "visible";
     document.getElementById("calculate_button").disabled = false;
     document.getElementById("calculate_button").innerHTML = "Solve";
+    document.getElementById("calculate_button").style.display = "block";
+    document.getElementById("configuration").style.visibility = "visible";
+    document.getElementById("configuration").style.display = "block";
 
     create01Grid();
     countCombinations=0;
+
+    document.getElementById("stop_button").style.display = "none";
+}
+
+
+
+function endResultbad() {
+    t1 = performance.now();
+    display(" ------------------");
+    display(" --- RESULT ---");
+    display(" ------------------ ");
+    //display("Selected: " + orig_tetronimos);
+    display("Found No Solution!");
+    display("Length of Calculation: <b>" + msToTime(t1 - t0)) + "</b>";
+    display("Tested: <b>" + countCombinations.toLocaleString() + "</b> board configurations and <b>" + testedPositions.toLocaleString() + "</b> block positions");
+    display("Speed of Calculation: <b>" + (Math.round((testedPositions / ((t1 - t0) / 1000)))).toLocaleString() + "</b> positions per second");
+
+
+    document.getElementById("clean_button").style.visibility = "visible";
+    document.getElementById("calculate_button").disabled = false;
+    document.getElementById("calculate_button").innerHTML = "Solve";
+    document.getElementById("calculate_button").style.display = "block";
+    document.getElementById("configuration").style.visibility = "visible";
+    document.getElementById("configuration").style.display = "block";
+
+    create01Grid();
+    createGrid();
+    countCombinations=0;
+
+    document.getElementById("stop_button").style.display = "none";
 }
 
 function msToTime(duration) {
@@ -969,6 +940,7 @@ function onLoad() {
 
     makeGridItemsArray(gridWidth, gridHeight, 0);
 
+    document.getElementById("stop_button").style.display = "none";
 
     // On mouse click
 
@@ -1060,7 +1032,6 @@ function RandomizerCalculator() {
 
     } else {
         err++;
-        console.log("Error: " +err);
         if (err>1000) {found=1;return "exit";}
     }
 
@@ -1150,6 +1121,11 @@ function test() {
 
 }
 
+function isInt(value) {
+    var x = parseFloat(value);
+    return !isNaN(value) && (x | 0) === x;
+}
+
 var combinations = (function() {
     return function(n,r){
         return Math.factorial(n) / (Math.factorial(r) * Math.factorial(n - r));
@@ -1159,11 +1135,31 @@ Math.factorial = function( _x ) {
     return _x == 1 ? _x : _x * Math.factorial( --_x ) ;
 }
 
-function calculateTotals() {
+function calculateTotals1() {
 
+   gridWidth = parseInt(document.getElementById("X-zone").value);
+    gridHeight = parseInt(document.getElementById("Y-zone").value);
+
+    document.getElementById("board_value").innerHTML = (gridWidth*gridHeight).toString();
+
+    if (parseInt(document.getElementById("block_value").innerHTML) !== gridWidth*gridHeight) {
+        document.getElementById("calculate_button").style.visibility = "hidden";
+        document.getElementById("clean_button").style.visibility = "hidden";
+        document.getElementById("result").innerHTML = "Tetronimo Area and Board Area must equal!";
+    } else {
+        document.getElementById("calculate_button").style.visibility = "visible";
+        document.getElementById("clean_button").style.visibility = "visible";
+        document.getElementById("result").innerHTML = "";
+    }
+
+    createGrid();
+}
+
+
+function calculateTotals() {
     total_possible_combinations = 1;
 
-    var total_value_blocks = parseInt(document.getElementById("I-letter").value) * 4
+   var total_value_blocks = parseInt(document.getElementById("I-letter").value) * 4
         + parseInt(document.getElementById("J-letter").value) * 4
         + parseInt(document.getElementById("L-letter").value) * 4
         + parseInt(document.getElementById("O-letter").value) * 4
@@ -1171,7 +1167,18 @@ function calculateTotals() {
         + parseInt(document.getElementById("S-letter").value) * 4
         + parseInt(document.getElementById("Z-letter").value) * 4;
 
+    for (var i = (parseInt(Math.sqrt(total_value_blocks))); i > 2; i--) {
 
+        if (isInt(total_value_blocks/i) === true) {
+           // console.log(i);
+            document.getElementById("Y-zone").value = i;
+            document.getElementById("X-zone").value = total_value_blocks/i;
+            gridWidth = parseInt(document.getElementById("X-zone").value);
+            gridHeight = parseInt(document.getElementById("Y-zone").value);
+            createGrid();
+            break;
+        }
+    }
 
 
 
@@ -1181,8 +1188,14 @@ function calculateTotals() {
     if (isNaN(total_value_blocks)) {
         total_value_blocks = "";
         document.getElementById("calculate_button").style.visibility = "hidden";
+        document.getElementById("clean_button").style.visibility = "hidden";
+        document.getElementById("result").innerHTML = "Block selection must be a number!";
+
+
     } else {
         document.getElementById("calculate_button").style.visibility = "visible";
+        document.getElementById("clean_button").style.visibility = "visible";
+        document.getElementById("result").innerHTML = "";
         tetronimos = [];
         orig_tetronimos = [];
 
@@ -1247,8 +1260,8 @@ function calculateTotals() {
         var blockTurns = 0;
 
         if (tetronimos[i] === "I") {blockTurns=2}
-        if (tetronimos[i] === "J") {blockTurns=2}
-        if (tetronimos[i] === "L") {blockTurns=2}
+        if (tetronimos[i] === "J") {blockTurns=4}
+        if (tetronimos[i] === "L") {blockTurns=4}
         if (tetronimos[i] === "O") {blockTurns=1}
         if (tetronimos[i] === "T") {blockTurns=4}
         if (tetronimos[i] === "S") {blockTurns=2}
@@ -1261,16 +1274,21 @@ function calculateTotals() {
 
 
 
-    if (total_value_blocks != total_value_board) {
-        document.getElementById("calculate_button").style.visibility = "hidden";
-    } else {
-        document.getElementById("calculate_button").style.visibility = "visible";
-    }
 
     document.getElementById("block_value").innerHTML = total_value_blocks.toString();
     document.getElementById("board_value").innerHTML = total_value_board.toString();
     document.getElementById("possibleCombinations").innerHTML = total_possible_combinations.toLocaleString();
 
+
+    if (total_value_blocks != total_value_board) {
+        document.getElementById("calculate_button").style.visibility = "hidden";
+        document.getElementById("clean_button").style.visibility = "hidden";
+        document.getElementById("result").innerHTML = "Tetronimo Area and Board Area must equal!";
+    } else {
+        document.getElementById("calculate_button").style.visibility = "visible";
+        document.getElementById("clean_button").style.visibility = "visible";
+        document.getElementById("result").innerHTML = "";
+    }
 
 
     if (tetronimos) {
@@ -1280,6 +1298,9 @@ function calculateTotals() {
     } else {
         document.getElementById("selectedBlocks").innerHTML = "";
     }
+
+
+
 
 
 }

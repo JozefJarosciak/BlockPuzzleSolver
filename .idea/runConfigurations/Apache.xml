@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Apache" type="JavascriptDebugType" factoryName="JavaScript Debug" activateToolWindowBeforeRun="false" uri="http://localhost/TetronimoPuzzleSolver/src/index.html">
+    <method>
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

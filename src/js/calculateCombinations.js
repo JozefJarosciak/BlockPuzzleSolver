@@ -267,7 +267,7 @@ function iteration(i, tetronimoSpecificCombination) {
 
 
             // reload();
-            //   console.log(countCombinations + " - " + tetronimoSpecificCombination + " - " + tetronimoSpecificCombination1.length + " - " + tetronimoCombination);
+               console.log(countCombinations + " - " + tetronimoSpecificCombination + " - " + tetronimoSpecificCombination1.length + " - " + tetronimoCombination);
             // try specific block if it fits
             for (var s = 0; s < tetronimoCombination.length; s++) {
 
@@ -340,6 +340,20 @@ function iteration(i, tetronimoSpecificCombination) {
                                     );
 
 
+                                    countOccurenceInArray();
+                               //     console.log(count01[0])
+                                    if (count01[0] === 0) {
+                                        finished();
+                                        throw "exit";
+                                    } else {
+                                        if (errorRate > 0) {
+                                            if (count01[0] === errorRate) {
+                                                finished();
+                                                throw "exit";
+                                            }
+                                        }
+                                    }
+
                                 }
                                 foundOne = 1;
                                 isFreetoPlace = 0;
@@ -350,25 +364,13 @@ function iteration(i, tetronimoSpecificCombination) {
                                 countUsedBlocks++;
                             //}
 
-                            countOccurenceInArray();
 
-                            if (count01[0] === 0) {
-                                finished();
-                                throw "exit";
-                            } else {
-                                if (errorRate > 0) {
-                                    if (count01[0] === errorRate) {
-                                        finished();
-                                        throw "exit";
-                                    }
-                                }
-                            }
 
 
                         }
 
 
-                   if (d === (tetronimoSpecificCombination1.length - 1)) {
+                   if (d === (tetronimoSpecificCombination1.length)) {
                         if ((total_possible_combinations === countCombinations) && (count01[0] > 0)) {
 
                             postMessage(

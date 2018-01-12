@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title></title>
+    <title>Block Puzzle Solver</title>
     <meta name="description" content="Block Puzzle Solver by Jozef Jarosciak">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -19,7 +19,9 @@
 
 
 </head>
+
 <body onload="onLoad()">
+
 
 <a href="https://github.com/JozefJarosciak/TetronimoPuzzleSolver/"><img
     style="position: absolute; top: 0; right: 0; border: 0;"
@@ -29,197 +31,204 @@
 
 <div class="content">
 
-<title>Block Puzzle Solver</title>
+
+    <!--[if lte IE 9]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a
+        href="https://browsehappy.com/">upgrade
+        your browser</a> to improve your experience and security.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+
+    <br><br>
+    <a href="http://www.blockpuzzlesolver.com"><img src="img/logo.png"></a>
+    <br><br>
+    <table style="table-layout: fixed">
+        <tr>
+            <td rowspan="2"
+                style="width: 192px;background: #fffef2;padding: 10px;max-width: 192px;word-wrap:break-word;">
+
+                <div id="configuration">
+
+                    <h3>Block Configuration:</h3>
 
 
+                    <img src="img/I.png">&nbsp;&nbsp;&nbsp;
+                    <input value=0 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
 
-<!--[if lte IE 9]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
-    your browser</a> to improve your experience and security.</p>
-<![endif]-->
+                    <br><br>
+                    <img src="img/J.png">
+                    <input value=2 type="text" onkeyup="calculateTotals()" id="J-letter" style="width:20px">
 
-<!-- Add your site or application content here -->
+                    <br><br>
+                    <img src="img/L.png">
+                    <input value=2 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px">
 
-<br><br>
-    <a href="http://www.blockpuzzlesolver.com" ><img src="img/logo.png"></a>
-<br><br>
-<table style="table-layout: fixed">
-    <tr>
-        <td rowspan="2" style="width: 192px;background: #fffef2;padding: 10px;max-width: 192px;word-wrap:break-word;">
+                    <br><br>
+                    <img src="img/O.png">
+                    <input value=4 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px">
 
-            <div id="configuration">
+                    <br><br>
+                    <img src="img/T.png">
+                    <input value=0 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px">
 
-                <h3>Block Configuration:</h3>
+                    <br><br>
+                    <img src="img/S.png">
+                    <input value=0 type="text" onkeyup="calculateTotals()" id="S-letter" style="width:20px">
 
-
-                <img src="img/I.png">&nbsp;&nbsp;&nbsp;
-                <input value=0 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
-
-                <br><br>
-                <img src="img/J.png">
-                <input value=2 type="text" onkeyup="calculateTotals()" id="J-letter" style="width:20px">
-
-                <br><br>
-                <img src="img/L.png">
-                <input value=2 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px">
-
-                <br><br>
-                <img src="img/O.png">
-                <input value=4 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px">
-
-                <br><br>
-                <img src="img/T.png">
-                <input value=0 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px">
-
-                <br><br>
-                <img src="img/S.png">
-                <input value=0 type="text" onkeyup="calculateTotals()" id="S-letter" style="width:20px">
-
-                <br><br>
-                <img src="img/Z.png">
-                <input value=0 type="text" onkeyup="calculateTotals()" id="Z-letter" style="width:20px">
+                    <br><br>
+                    <img src="img/Z.png">
+                    <input value=0 type="text" onkeyup="calculateTotals()" id="Z-letter" style="width:20px">
 
 
+                    <br>
 
-                <br>
+                    <h3>Board Configuration</h3>
+                    X: <input min=5 max=20 value=8 type="text" onkeyup="calculateTotals1()" id="X-zone"
+                              style="width:20px">
+                    * <input min=5 max=20 value=4 type="text" onkeyup="calculateTotals1()" id="Y-zone"
+                             style="width:20px">
+                    :Y
 
-                <h3>Board Configuration</h3>
-                X: <input min=5 max=20 value=8 type="text" onkeyup="calculateTotals1()" id="X-zone" style="width:20px">
-                * <input min=5 max=20 value=4 type="text" onkeyup="calculateTotals1()" id="Y-zone" style="width:20px">
-                :Y
-
-                <br>
-
-
-                <h3>Calculation Type</h3>
+                    <br>
 
 
-                <select id="calculation_Type">
-                    <option value="all">All Combinations [slow]</option>
-                    <option selected value="random">Random [faster]</option>
-                </select>
-                <br>
-
-                <h3>Error Rate</h3>
-                <select id="errorRate" onkeyup="calculateTotals()">
-                    <option selected value=0>0</option>
-                    <option value=4>4</option>
-                    <option value=8>8</option>
-                    <option value=12>12</option>
-                    <option value=16>16</option>
-                    <option value=20>20</option>
-                </select>
-
-                <hr>
-
-                <h3>Configuration Details</h3>
-                                <small><b> <label id="selectedBlocksLen"></label></b>
-                    Blocks: <b><label id="selectedBlocks"></label></b>
-                    <br><br>Total Block Area: <b><label id="block_value"></label></b>
-                    <br>Total Board Area: <b><label id="board_value"></label></b>
-                    <br>Board Combinations: <b><label id="possibleCombinations"></label></b></small>
+                    <h3>Calculation Type</h3>
 
 
-                <br>
-            </div>
+                    <select id="calculation_Type">
+                        <option value="all">All Combinations [slow]</option>
+                        <option selected value="random">Random [faster]</option>
+                    </select>
+                    <br>
+
+                    <h3>Error Rate</h3>
+                    <select id="errorRate" onkeyup="calculateTotals()">
+                        <option selected value=0>0</option>
+                        <option value=4>4</option>
+                        <option value=8>8</option>
+                        <option value=12>12</option>
+                        <option value=16>16</option>
+                        <option value=20>20</option>
+                    </select>
+
+                    <hr>
+
+                    <h3>Configuration Details</h3>
+                    <small><b> <label id="selectedBlocksLen"></label></b>
+                        Blocks: <b><label id="selectedBlocks"></label></b>
+                        <br><br>Total Block Area: <b><label id="block_value"></label></b>
+                        <br>Total Board Area: <b><label id="board_value"></label></b>
+                        <br>Board Combinations: <b><label id="possibleCombinations"></label></b></small>
 
 
-        </td>
-        <td style="width: 500px;vertical-align:top;padding: 25px;background: #eafff8;">
+                    <br>
+                </div>
 
 
-            <table>
-                <tbody>
-                <tr>
-                    <td>
-                        <canvas id="canvas" style="border:1px solid"></canvas>
-
-                        <div id="configuration3">
-
-                            <label id="01Grid"></label>
-                            <br>
-                            <b>Block Tester:</b> X: <label id="xPos"></label> | Y: <label id="yPos"></label> | Block:
-                            <label id="pixColor"></label><br>
-                        </div>
-                </tr>
-                </tbody>
-            </table>
+            </td>
+            <td style="width: 500px;vertical-align:top;padding: 25px;background: #eafff8;">
 
 
-            <table>
-                <tbody>
-                <tr>
-                    <td>
-                        <button id="calculate_button" class="button" style="vertical-align:middle"
-                                onclick="calculate()"><span id="calcText">Solve </span></button>
-                    </td>
-                    <td>
-                        <button id="clean_button" class="buttonClean" type="submit" onclick="reload();test();">Reset
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                    <div style="word-wrap:break-word;min-width:200px;max-width:500px">
-                        <label id="result" style="color:red;"></label>
-                        </div>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <canvas id="canvas" style="border:1px solid"></canvas>
 
-                        <button class="buttonStop" id="stop_button" type="submit" onclick="stopworker();">STOP</button>
+                            <div id="configuration3">
 
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                                <label id="01Grid"></label>
+                                <br>
+                                <b>Block Tester:</b> X: <label id="xPos"></label> | Y: <label id="yPos"></label> |
+                                Block:
+                                <label id="pixColor"></label><br>
+                            </div>
+                    </tr>
+                    </tbody>
+                </table>
 
 
-        </td>
-    </tr>
-    <tr>
-        <td style="vertical-align:middle;padding: 25px;;background: #fff2f9;">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <button id="calculate_button" class="button" style="vertical-align:middle"
+                                    onclick="calculate()"><span id="calcText">Solve </span></button>
+                        </td>
+                        <td>
+                            <button id="clean_button" class="buttonClean" type="submit" onclick="reload();test();">Reset
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="word-wrap:break-word;min-width:200px;max-width:500px">
+                                <label id="result" style="color:red;"></label>
+                            </div>
 
-            <div id="msgs"></div>
+                            <button class="buttonStop" id="stop_button" type="submit" onclick="stopworker();">STOP
+                            </button>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
 
 
-        </td>
-    </tr>
-</table>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:middle;padding: 25px;;background: #fff2f9;">
+
+                <div id="msgs"></div>
 
 
-<br><br><br>
-<hr style="text-align:right;width:130px;position: fixed;bottom: 0;right: 0;">
-<small style="position: fixed;bottom: 0;right: 0;color:darkgrey">
-    © <script>document.write(new Date().getFullYear())</script> - Jozef Jarosciak</small>
+            </td>
+        </tr>
+    </table>
 
 
-<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID.
-<script>
-    window.ga = function () {
-        ga.q.push(arguments)
-    };
-    ga.q = [];
-    ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto');
-    ga('send', 'pageview')
-</script>
-<script src="https://www.google-analytics.com/analytics.js" async defer></script>
-    -->
+    <br><br><br>
+    <hr style="text-align:right;width:130px;position: fixed;bottom: 0;right: 0;">
+    <small style="position: fixed;bottom: 0;right: 0;color:darkgrey">
+        ©
+        <script>document.write(new Date().getFullYear())</script>
+        - Jozef Jarosciak
+    </small>
+
+
+    <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID.
+    <script>
+        window.ga = function () {
+            ga.q.push(arguments)
+        };
+        ga.q = [];
+        ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+        -->
 
     <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
-        var sc_project=11598702;
-        var sc_invisible=1;
-        var sc_security="b9249090";
+        var sc_project = 11598702;
+        var sc_invisible = 1;
+        var sc_security = "b9249090";
         var scJsHost = (("https:" == document.location.protocol) ?
             "https://secure." : "http://www.");
-        document.write("<sc"+"ript type='text/javascript' src='" +
-            scJsHost+
-            "statcounter.com/counter/counter.js'></"+"script>");
+        document.write("<sc" + "ript type='text/javascript' src='" +
+            scJsHost +
+            "statcounter.com/counter/counter.js'></" + "script>");
     </script>
-    <noscript><div class="statcounter"><a title="Web Analytics
+    <noscript>
+        <div class="statcounter"><a title="Web Analytics
 Made Easy - StatCounter" href="http://statcounter.com/"
-                                          target="_blank"><img class="statcounter"
-                                                               src="//c.statcounter.com/11598702/0/b9249090/1/" alt="Web
-Analytics Made Easy - StatCounter"></a></div></noscript>
+                                    target="_blank"><img class="statcounter"
+                                                         src="//c.statcounter.com/11598702/0/b9249090/1/" alt="Web
+Analytics Made Easy - StatCounter"></a></div>
+    </noscript>
     <!-- End of StatCounter Code for Default Guide -->
 
 

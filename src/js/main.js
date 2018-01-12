@@ -226,7 +226,7 @@ function calculate() {
                 document.getElementById("stop_button").style.display = "block";
                 document.getElementById("configuration3").style.display = "none";
                 document.getElementById("configuration").style.pointerEvents = "none";
-                document.getElementById("clean_button").style.display= "none";
+                document.getElementById("clean_button").style.display = "none";
                 document.getElementById("calculate_button").disabled = true;
                 document.getElementById("calculate_button").innerHTML = "Processing...";
                 document.getElementById("calculate_button").style.display = "none";
@@ -379,7 +379,7 @@ function countOccurenceInArray() {
 
 function display(str) {
     var div = document.getElementById('msgs');
-    div.innerHTML += str ;
+    div.innerHTML += str;
 }
 
 
@@ -576,11 +576,11 @@ function calculateTotals1() {
 
     if (parseInt(document.getElementById("block_value").innerHTML) !== gridWidth * gridHeight) {
         document.getElementById("calculate_button").style.visibility = "hidden";
-        document.getElementById("clean_button").style.display= "none";
+        document.getElementById("clean_button").style.display = "none";
         document.getElementById("result").innerHTML = "Tetronimo Area and Board Area must equal!";
     } else {
         document.getElementById("calculate_button").style.visibility = "visible";
-        document.getElementById("clean_button").style.display= "none";
+        document.getElementById("clean_button").style.display = "none";
         document.getElementById("result").innerHTML = "";
     }
 

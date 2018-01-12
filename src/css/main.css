@@ -11,7 +11,7 @@
 html {
     color: #222;
     font-size: 1em;
-    line-height: 1.2;
+    line-height: 1;
 }
 
 /*
@@ -76,7 +76,7 @@ textarea {
 }
 
 body {
-    margin-left: 30px;
+    margin-left: 0px;
 }
 
 h2 {
@@ -369,12 +369,8 @@ h3 {
 }
 
 
-#c {
-    width: 301px;
-    height: 501px;
-}
 
 .content {
-    max-width: 500px;
+    width: 750px;
     margin: auto;
 }

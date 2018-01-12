@@ -223,15 +223,7 @@ function permute(permutation) {
 }
 
 
-function calculate() {
-    if (document.getElementById("calculation_Type").value === "random"){
-        calculate_random_combinations();
-    }
 
-    if (document.getElementById("calculation_Type").value === "all"){
-      calculate_all_combinations();
-    }
-}
 
 function stopworker() {
     worker.terminate();
@@ -249,9 +241,11 @@ function stopworker() {
 
 }
 
-function calculate_all_combinations() {
+function calculate() {
 
     reload();
+
+
 
 
     t0 = performance.now();
@@ -338,7 +332,13 @@ function calculate_all_combinations() {
         worker.postMessage({'total_possible_combinations': total_possible_combinations});
         worker.postMessage({'errorRate': errorRate});
 
+        if (document.getElementById("calculation_Type").value === "random"){
+            worker.postMessage({'type_of_calculation': "random"});
+        }
 
+        if (document.getElementById("calculation_Type").value === "all"){
+            worker.postMessage({'type_of_calculation': "all"});
+        }
 
 
         // start worker

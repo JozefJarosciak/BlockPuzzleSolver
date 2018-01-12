@@ -11,7 +11,7 @@ There are two available types of calculation. The faster version uses a random u
 Currently the block solver script supports only tetronimo types of blocks, but it should be fairly simply to to adjust it to also support monominoes, dominoes, trominoes, pentominoes and other types of polyominoes.
 
 # Demo
-[https://www.joe0.com/tools/tetronimo/](https://www.joe0.com/tools/tetronimo/)
+[http://www.BlockPuzzleSolver.com/](http://www.BlockPuzzleSolver.com/)
 
 # Screenshots
 In the following article:

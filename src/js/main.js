@@ -1,15 +1,10 @@
 var tetronimos = [];
-var err = 0;
 var orig_tetronimos = [];
-
 var t0, t1 = 0;
 var numofperm = 0;
-
 var gridWidth = 0;
 var gridHeight = 0;
-var usedRandomTetronimos = [[]];
 var total_possible_combinations = 1;
-
 var I = new Array(1);
 var J = new Array(3);
 var L = new Array(3);
@@ -198,7 +193,7 @@ function stopworker() {
     document.getElementById("calculate_button").innerHTML = "Solve";
     document.getElementById("calculate_button").style.display = "block";
     document.getElementById("configuration3").style.display = "block";
-    document.getElementById("configuration").style.pointerEvents = "block";
+    document.getElementById("configuration").style.pointerEvents = "auto";
     document.getElementById("stop_button").style.display = "none";
     document.getElementById("result").innerHTML = "";
     reload();
@@ -230,7 +225,7 @@ function calculate() {
             if (event.data.aTopic === "processing") {
                 document.getElementById("stop_button").style.display = "block";
                 document.getElementById("configuration3").style.display = "none";
-                document.getElementById("configuration").style.pointerEvents = "auto";
+                document.getElementById("configuration").style.pointerEvents = "none";
                 document.getElementById("clean_button").style.display= "none";
                 document.getElementById("calculate_button").disabled = true;
                 document.getElementById("calculate_button").innerHTML = "Processing...";
@@ -321,7 +316,7 @@ function endResult() {
     document.getElementById("calculate_button").innerHTML = "Solve";
     document.getElementById("calculate_button").style.display = "block";
     document.getElementById("configuration3").style.display = "block";
-    document.getElementById("configuration").style.pointerEvents = "block";
+    document.getElementById("configuration").style.pointerEvents = "auto";
 
     create01Grid();
     countCombinations = 0;
@@ -344,7 +339,7 @@ function endResultbad() {
     document.getElementById("calculate_button").innerHTML = "Solve";
     document.getElementById("calculate_button").style.display = "block";
     document.getElementById("configuration3").style.display = "block";
-    document.getElementById("configuration").style.pointerEvents = "block";
+    document.getElementById("configuration").style.pointerEvents = "auto";
 
     create01Grid();
     createGrid();

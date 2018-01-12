@@ -193,12 +193,12 @@ Z[1] = [
 
 function stopworker() {
     worker.terminate();
-    document.getElementById("clean_button").style.visibility = "visible";
+    document.getElementById("clean_button").style.display = "block";
     document.getElementById("calculate_button").disabled = false;
     document.getElementById("calculate_button").innerHTML = "Solve";
     document.getElementById("calculate_button").style.display = "block";
-    document.getElementById("configuration2").style.display = "block";
-    document.getElementById("configuration").style.display = "block";
+    document.getElementById("configuration3").style.display = "block";
+    document.getElementById("configuration").style.pointerEvents = "block";
     document.getElementById("stop_button").style.display = "none";
     document.getElementById("result").innerHTML = "";
     reload();
@@ -229,9 +229,9 @@ function calculate() {
 
             if (event.data.aTopic === "processing") {
                 document.getElementById("stop_button").style.display = "block";
-                document.getElementById("configuration2").style.display = "none";
-                document.getElementById("configuration").style.display = "none";
-                document.getElementById("clean_button").style.visibility = "hidden";
+                document.getElementById("configuration3").style.display = "none";
+                document.getElementById("configuration").style.pointerEvents = "auto";
+                document.getElementById("clean_button").style.display= "none";
                 document.getElementById("calculate_button").disabled = true;
                 document.getElementById("calculate_button").innerHTML = "Processing...";
                 document.getElementById("calculate_button").style.display = "none";
@@ -298,7 +298,7 @@ function calculate() {
     setTimeout(timeoutLoop, 200);
     countOccurenceInArray();
     //endResult();
-    document.getElementById("clean_button").style.visibility = "visible";
+    document.getElementById("clean_button").style.display = "block";
     document.getElementById("calculate_button").disabled = false;
     document.getElementById("calculate_button").innerHTML = "Solve";
     document.getElementById("calculate_button").style.display = "block";
@@ -311,17 +311,17 @@ function endResult() {
     display("<h2> RESULTS </h2>");
     display("<h3>Solution</h3>" + usedBlocks.join(' - '));
     display("<h3>Details</h3><b>Used:</b>" + countUsedBlocks + " of " + tetronimos.length + " blocks");
-    display("<br><b>Length of Calculation: </b>" + msToTime(t1 - t0));
     display("<br><b>Tested: </b>" + countCombinations.toLocaleString() + " board configurations and " + testedPositions.toLocaleString() + " block positions");
-    display("<br><b>Speed of Calculation: </b>" + (Math.round((testedPositions / ((t1 - t0) / 1000)))).toLocaleString() + "</b> positions per second");
+    display("<br><b>Length of Calculation: </b>" + msToTime(t1 - t0));
+    display("<br><b>Calculation Speed: </b>" + (Math.round((testedPositions / ((t1 - t0) / 1000)))).toLocaleString() + "</b> positions per second");
 
 
-    document.getElementById("clean_button").style.visibility = "visible";
+    document.getElementById("clean_button").style.display = "block";
     document.getElementById("calculate_button").disabled = false;
     document.getElementById("calculate_button").innerHTML = "Solve";
     document.getElementById("calculate_button").style.display = "block";
-    document.getElementById("configuration2").style.display = "block";
-    document.getElementById("configuration").style.display = "block";
+    document.getElementById("configuration3").style.display = "block";
+    document.getElementById("configuration").style.pointerEvents = "block";
 
     create01Grid();
     countCombinations = 0;
@@ -334,17 +334,17 @@ function endResultbad() {
     display("<h2> RESULTS </h2>");
     //display("Selected: " + orig_tetronimos);
     display("Found No Solution!");
-    display("Length of Calculation: <b>" + msToTime(t1 - t0)) + "</b>";
     display("Tested: <b>" + countCombinations.toLocaleString() + "</b> board configurations and <b>" + testedPositions.toLocaleString() + "</b> block positions");
-    display("Speed of Calculation: <b>" + (Math.round((testedPositions / ((t1 - t0) / 1000)))).toLocaleString() + "</b> positions per second");
+    display("Length of Calculation: <b>" + msToTime(t1 - t0)) + "</b>";
+    display("Calculation Speed: <b>" + (Math.round((testedPositions / ((t1 - t0) / 1000)))).toLocaleString() + "</b> positions per second");
 
 
-    document.getElementById("clean_button").style.visibility = "visible";
+    document.getElementById("clean_button").style.display = "block";
     document.getElementById("calculate_button").disabled = false;
     document.getElementById("calculate_button").innerHTML = "Solve";
     document.getElementById("calculate_button").style.display = "block";
-    document.getElementById("configuration2").style.display = "block";
-    document.getElementById("configuration").style.display = "block";
+    document.getElementById("configuration3").style.display = "block";
+    document.getElementById("configuration").style.pointerEvents = "block";
 
     create01Grid();
     createGrid();
@@ -581,11 +581,11 @@ function calculateTotals1() {
 
     if (parseInt(document.getElementById("block_value").innerHTML) !== gridWidth * gridHeight) {
         document.getElementById("calculate_button").style.visibility = "hidden";
-        document.getElementById("clean_button").style.visibility = "hidden";
+        document.getElementById("clean_button").style.display= "none";
         document.getElementById("result").innerHTML = "Tetronimo Area and Board Area must equal!";
     } else {
         document.getElementById("calculate_button").style.visibility = "visible";
-        document.getElementById("clean_button").style.visibility = "visible";
+        document.getElementById("clean_button").style.display= "none";
         document.getElementById("result").innerHTML = "";
     }
 
@@ -618,14 +618,14 @@ function calculateTotals() {
 
     if (isNaN(total_value_blocks)) {
         total_value_blocks = "";
-        document.getElementById("calculate_button").style.visibility = "hidden";
-        document.getElementById("clean_button").style.visibility = "hidden";
+        document.getElementById("calculate_button").style.display = "none";
+        document.getElementById("clean_button").style.display = "none";
         document.getElementById("result").innerHTML = "Block selection must be a number!";
 
 
     } else {
         document.getElementById("calculate_button").style.visibility = "visible";
-        document.getElementById("clean_button").style.visibility = "visible";
+        document.getElementById("clean_button").style.display = "block";
         document.getElementById("result").innerHTML = "";
         tetronimos = [];
         orig_tetronimos = [];
@@ -723,12 +723,12 @@ function calculateTotals() {
 
 
     if (total_value_blocks != total_value_board) {
-        document.getElementById("calculate_button").style.visibility = "hidden";
-        document.getElementById("clean_button").style.visibility = "hidden";
+        document.getElementById("calculate_button").style.display = "none";
+        document.getElementById("clean_button").style.display = "none";
         document.getElementById("result").innerHTML = "Tetronimo Area and Board Area must equal!";
     } else {
-        document.getElementById("calculate_button").style.visibility = "visible";
-        document.getElementById("clean_button").style.visibility = "visible";
+        document.getElementById("calculate_button").style.display = "block";
+        document.getElementById("clean_button").style.display = "block";
         document.getElementById("result").innerHTML = "";
     }
 

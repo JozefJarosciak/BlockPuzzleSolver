@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title></title>
-    <meta name="description" content="">
+    <meta name="description" content="n-Block Tetronimo Puzzle Solver by Jozef Jarosciak">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="manifest" href="site.webmanifest">
@@ -22,7 +22,11 @@
 <body onload="onLoad()">
 <title>n-Block Tetronimo Puzzle Solver</title>
 
-<a href="https://github.com/JozefJarosciak/TetronimoPuzzleSolver/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+<a href="https://github.com/JozefJarosciak/TetronimoPuzzleSolver/"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
 
 <!--[if lte IE 9]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
@@ -33,155 +37,158 @@
 
 
 <H1>Tetronimo Puzzle Solver</H1>
-Author: Jozef Jarosciak
+
 <label id="timer"></label>
 
-<br><br>
-
-
-
-
-
-
-<div id="configuration">
-
-<hr style="text-align:right;width:450px">
-
-<b>Block Configuration:</b><br>
-
-
-<img src="img/I.png">
-<input value=0 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
-
-&nbsp;
-<img src="img/J.png">
-<input value=2 type="text" onkeyup="calculateTotals()" id="J-letter" style="width:20px">
-
-&nbsp;
-<img src="img/L.png">
-<input value=2 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px">
-
-&nbsp;
-<img src="img/O.png">
-<input value=4 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px">
-
-&nbsp;
-<img src="img/T.png">
-<input value=0 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px">
-
-&nbsp;
-<img src="img/S.png">
-<input value=0 type="text" onkeyup="calculateTotals()" id="S-letter" style="width:20px">
-
-&nbsp;
-<img src="img/Z.png">
-<input value=0 type="text" onkeyup="calculateTotals()" id="Z-letter" style="width:20px">
-
-
-<br>
-<small><b><label id="selectedBlocksLen"></label></b> Blocks: <b><label id="selectedBlocks"></label></b>
- | Tetronimo Area:
-<b><label id="block_value"></label></b> | Board Combinations: <b><label id="possibleCombinations"></label></b></small>
-
-
-<!--   <br> Possible Block Configurations: <b><label id="possibleCombinations"></label></b>-->
-
-<br><br>
-
-<b>Board Configuration:</b><br>
-X: <input min=5 max=20 value=8 type="text" onkeyup="calculateTotals1()" id="X-zone" style="width:20px">
-* <input min=5 max=20 value=4 type="text" onkeyup="calculateTotals1()" id="Y-zone" style="width:20px"> :Y
-<small> - Board Area:
-<b><label id="board_value"></label></b></small><br>
-
-
-<br>
-</div>
-
-
-
-
-
-
-<hr style="text-align:right;width:450px">
-
-
-<table>
-    <tbody>
+<table style="table-layout: fixed">
     <tr>
-        <td>
-            <canvas id="canvas" style="border:1px solid"></canvas>
+        <td rowspan="2" style="width: 192px;background: #fffef2;padding: 10px;max-width: 200px;word-wrap:break-word;">
+
+            <div id="configuration">
+
+                <h3>Block Configuration:</h3>
+
+
+                <img src="img/I.png">&nbsp;&nbsp;&nbsp;
+                <input value=0 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
+
+                <br><br>
+                <img src="img/J.png">
+                <input value=2 type="text" onkeyup="calculateTotals()" id="J-letter" style="width:20px">
+
+                <br><br>
+                <img src="img/L.png">
+                <input value=2 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px">
+
+                <br><br>
+                <img src="img/O.png">
+                <input value=4 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px">
+
+                <br><br>
+                <img src="img/T.png">
+                <input value=0 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px">
+
+                <br><br>
+                <img src="img/S.png">
+                <input value=0 type="text" onkeyup="calculateTotals()" id="S-letter" style="width:20px">
+
+                <br><br>
+                <img src="img/Z.png">
+                <input value=0 type="text" onkeyup="calculateTotals()" id="Z-letter" style="width:20px">
+
+
+                <small><b> <br><br> <label id="selectedBlocksLen"></label></b>
+                    Blocks: <b><label id="selectedBlocks"></label></b>
+                    <br><br>Tetronimo Area: <b><label id="block_value"></label></b>
+                    <br><br>Board Combinations: <b><label id="possibleCombinations"></label></b></small>
+
+
+                <!--   <br> Possible Block Configurations: <b><label id="possibleCombinations"></label></b>-->
+
+                <br><br>
+
+                <h3>Board Configuration</h3>
+                X: <input min=5 max=20 value=8 type="text" onkeyup="calculateTotals1()" id="X-zone" style="width:20px">
+                * <input min=5 max=20 value=4 type="text" onkeyup="calculateTotals1()" id="Y-zone" style="width:20px">
+                :Y
+                <br><small>Board Area:
+                    <b><label id="board_value"></label></b></small>
+                <br>
+
+
+                <br>
+
+
+                <h3>Calculation Type</h3>
+
+
+                <select id="calculation_Type">
+                    <option value="all">All Combinations [slow]</option>
+                    <option selected value="random">Random [faster]</option>
+                </select>
+                <br>
+
+                <h3>Error Rate</h3>
+                <select id="errorRate" onkeyup="calculateTotals()">
+                    <option selected value=0>0</option>
+                    <option value=4>4</option>
+                    <option value=8>8</option>
+                    <option value=12>12</option>
+                    <option value=16>16</option>
+                    <option value=20>20</option>
+                </select>
+
+                <br>
+            </div>
+
+
         </td>
+        <td style="vertical-align:top;padding: 25px;">
 
-    <td style="padding:40px;">
-            <label id="01Grid"></label>
-            <br>
-            <b>Block Tester:</b> X: <label id="xPos"></label> | Y: <label id="yPos"></label> | Block: <label id="pixColor"></label><br>
 
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <canvas id="canvas" style="border:1px solid"></canvas>
+
+                        <div id="configuration3">
+
+                            <label id="01Grid"></label>
+                            <br>
+                            <b>Block Tester:</b> X: <label id="xPos"></label> | Y: <label id="yPos"></label> | Block:
+                            <label id="pixColor"></label><br>
+                        </div>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <button id="calculate_button" class="button" style="vertical-align:middle"
+                                onclick="calculate()"><span id="calcText">Solve </span></button>
+                    </td>
+                    <td>
+                        <button id="clean_button" class="buttonClean" type="submit" onclick="reload();test();">Reset
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="result" style="color:red;"></label>
+                        <button class="buttonStop" id="stop_button" type="submit" onclick="stopworker();">STOP</button>
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </td>
     </tr>
-    </tbody>
+    <tr>
+        <td style="vertical-align:bottom;padding: 25px;">
+
+            <div id="msgs"></div>
+
+
+        </td>
+    </tr>
 </table>
 
-<div id="configuration2">
-<table>
-    <tbody>
-    <tr>
-        <td><b>Error Rate:</b><br></td>
-        <td><select id="errorRate" onkeyup="calculateTotals()">
-            <option selected value=0>0</option>
-            <option value=4>4</option>
-            <option value=8>8</option>
-            <option value=12>12</option>
-            <option value=16>16</option>
-            <option value=20>20</option>
-        </select></td>
-    </tr>
-    <tr>
-        <td><b>Calculation Type:</b><br></td>
-        <td><select id="calculation_Type">
-            <option value="all">All Combinations [slow]</option>
-            <option selected value="random">Random Combinations [faster]</option>
-        </select></td>
-    </tr>
-    </tbody>
-</table>
-</div>
 
-<table>
-    <tbody>
-    <tr>
-        <td>
-            <button id="calculate_button" class="button" style="vertical-align:middle" onclick="calculate()"><span id="calcText">Solve </span></button>
-        </td>
-        <td>
-            <button id="clean_button" class="buttonClean" type="submit" onclick="reload();test();">Clean Board</button>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label id="result" style="color:red;"></label>
-            <button class="buttonStop" id="stop_button" type="submit" onclick="stopworker();">STOP</button>
-        </td>
-        <td>
-
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-<hr style="text-align:right;width:450px">
-
-<div id="msgs"></div>
+<br><br><br>
+<hr style="text-align:right;width:130px;position: fixed;bottom: 0;right: 0;">
+<small style="position: fixed;bottom: 0;right: 0;color:darkgrey">
+    ©
+    <script>document.write(new Date().getFullYear())</script>
+    - Jozef Jarosciak
+</small>
 
 
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->

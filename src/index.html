@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title></title>
-    <meta name="description" content="n-Block Tetronimo Puzzle Solver by Jozef Jarosciak">
+    <meta name="description" content="Block Puzzle Solver by Jozef Jarosciak">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="manifest" href="site.webmanifest">
@@ -20,7 +20,7 @@
 
 </head>
 <body onload="onLoad()">
-<title>n-Block Tetronimo Puzzle Solver</title>
+<title>Block Puzzle Solver</title>
 
 <a href="https://github.com/JozefJarosciak/TetronimoPuzzleSolver/"><img
     style="position: absolute; top: 0; right: 0; border: 0;"
@@ -35,10 +35,8 @@
 
 <!-- Add your site or application content here -->
 
-
-<H1>Tetronimo Puzzle Solver</H1>
-
-<label id="timer"></label>
+<br><br>
+<img src="img/logo.png">
 
 <table style="table-layout: fixed">
     <tr>
@@ -77,24 +75,13 @@
                 <input value=0 type="text" onkeyup="calculateTotals()" id="Z-letter" style="width:20px">
 
 
-                <small><b> <br><br> <label id="selectedBlocksLen"></label></b>
-                    Blocks: <b><label id="selectedBlocks"></label></b>
-                    <br><br>Tetronimo Area: <b><label id="block_value"></label></b>
-                    <br><br>Board Combinations: <b><label id="possibleCombinations"></label></b></small>
 
-
-                <!--   <br> Possible Block Configurations: <b><label id="possibleCombinations"></label></b>-->
-
-                <br><br>
+                <br>
 
                 <h3>Board Configuration</h3>
                 X: <input min=5 max=20 value=8 type="text" onkeyup="calculateTotals1()" id="X-zone" style="width:20px">
                 * <input min=5 max=20 value=4 type="text" onkeyup="calculateTotals1()" id="Y-zone" style="width:20px">
                 :Y
-                <br><small>Board Area:
-                    <b><label id="board_value"></label></b></small>
-                <br>
-
 
                 <br>
 
@@ -117,6 +104,16 @@
                     <option value=16>16</option>
                     <option value=20>20</option>
                 </select>
+
+                <hr>
+
+                <h3>Configuration Details</h3>
+                                <small><b> <label id="selectedBlocksLen"></label></b>
+                    Blocks: <b><label id="selectedBlocks"></label></b>
+                    <br>Total Block Area: <b><label id="block_value"></label></b>
+                    <br>Total Board Area: <b><label id="board_value"></label></b>
+                    <br>Board Combinations: <b><label id="possibleCombinations"></label></b></small>
+
 
                 <br>
             </div>

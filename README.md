@@ -1,12 +1,14 @@
-# n-Block Tetronimo Tangram Puzzle Solver
+# Block Puzzle Solver
 
 [![Build Status](https://travis-ci.org/h5bp/html5-boilerplate.svg)](https://travis-ci.org/h5bp/html5-boilerplate)
 [![devDependency Status](https://david-dm.org/h5bp/html5-boilerplate/dev-status.svg)](https://david-dm.org/h5bp/html5-boilerplate#info=devDependencies)
 
 # Description
-The following n-Block Tetronimo Tangram Puzzle Solver calculates every possibility to solve the puzzle on a user defined X*Y sized board.
+The following Block Tangram Puzzle Solver calculates every possibility to solve the puzzle on a user defined X*Y sized board.
 
 There are two available types of calculation. The faster version uses a random unique block combinations, whereas the slower model goes through all possible block combinations.
+
+Currently the block solver script supports only tetronimo types of blocks, but it should be fairly simply to to adjust it to also support monominoes, dominoes, trominoes, pentominoes and other types of polyominoes.
 
 # Demo
 [https://www.joe0.com/tools/tetronimo/](https://www.joe0.com/tools/tetronimo/)
@@ -19,7 +21,6 @@ In the following article:
 * Chrome *(latest 2)*
 * Edge *(latest 2)*
 * Firefox *(latest 2)*
-* Internet Explorer 9+
 * Opera *(latest 2)*
 * Safari *(latest 2)*
 

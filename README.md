@@ -29,7 +29,7 @@ just that I'll ensure compatibility with the ones mentioned above.*
 
 ## Contributing
 Anyone is welcome to contribute to this project.
-Currently I am looking for a equation based approach to solving the tetronimo puzzle.
+Currently I am looking for a equation based approach of eliminating early cases where no solution exist: https://math.stackexchange.com/questions/2602742/tetronimo-tiling-with-given-tiles-how-to-eliminate-early-cases-where-no-soluti
 
 ## Resources
 * Wikipedia Tetronimo - https://en.wikipedia.org/wiki/Tetromino

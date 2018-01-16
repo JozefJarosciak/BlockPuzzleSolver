@@ -40,6 +40,7 @@ Currently I am looking for a equation based approach of eliminating early cases 
 * Wolfram Math Polyomino - http://mathworld.wolfram.com/Polyomino.html
 * Federico Dossena's Tetronimo Solver - https://github.com/adolfintel/tetrispuzzlesolver-html5 (only calculates blocks in order defined)
 * George Martin' Polyominoes: A Guide to Puzzles and Problems in Tiling - https://books.google.sk/books?id=D8KbnTGXDWEC&pg=PA49&lpg=PA49&dq=tetronimo+tiling+formula+math+checkerboard&source=bl&ots=gPiYck0dIW&sig=TvCK7UkhMlhWyfi5hlhGrPhm-uY&hl=en&sa=X&ved=0ahUKEwjO292DlNPYAhXGjywKHYv3BSEQ6AEIODAF#v=onepage&q=tetronimo%20tiling%20formula%20math%20checkerboard&f=false
+* Distinguishable Permutations: https://onlinecourses.science.psu.edu/stat414/node/31
 
 ## License
 The code is available under the [MIT license](LICENSE.txt).

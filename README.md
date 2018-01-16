@@ -17,6 +17,9 @@ Currently the block solver script supports only tetronimo types of blocks, but i
 In the following article:
 [https://www.joe0.com/2018/01/03/16-block-tetronimo-tangram-puzzle-solver-in-javascript/](https://www.joe0.com/2018/01/03/16-block-tetronimo-tangram-puzzle-solver-in-javascript/)
 
+![Screenshot1](https://www.joe0.com/wp-content/uploads/2018/01/img_5a591a04529aa.png)
+
+
 ## Browser support
 * Chrome *(latest 2)*
 * Edge *(latest 2)*

@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Block Puzzle Solver</title>
-    <meta name="description" content="Block Puzzle Solver by Jozef Jarosciak">
+    <meta name="description"
+          content="Block Puzzle Solver by Jozef Jarosciak. The Block Puzzle Solver calculates the solutions to tetronimo based rectangular or square tangram puzzle on a user-defined X*Y sized board. The faster version uses a random unique block combinations, while slower model tests all possible block combinations. Supported are tetronimo blocks, with future plan to support monominoes, dominoes, trominoes, pentominoes and other types of polyominoes.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="manifest" href="site.webmanifest">
@@ -42,7 +43,16 @@
 
     <br><br>
     <a href="http://www.blockpuzzlesolver.com"><img src="img/logo.png"></a>
-    <br><br>
+    <br>
+
+    <small><p style="text-align: center;">The Block Puzzle Solver calculates the solutions to tetronimo based
+        rectangular or square tangram puzzle on a user-defined X*Y sized board.
+        The faster version uses a random unique block combinations, while slower model tests all possible block
+        combinations.<br>
+        Supported are tetronimo blocks, with future plan to support monominoes, dominoes, trominoes, pentominoes and
+        other types of polyominoes.
+    </p></small>
+
     <table style="table-layout: fixed">
         <tr>
             <td rowspan="2"
@@ -53,31 +63,31 @@
                     <h3>Block Configuration:</h3>
 
 
-                    <img src="img/I.png">&nbsp;&nbsp;&nbsp;
+                    <img src="img/I.png">&nbsp;&nbsp;&nbsp;&nbsp;<b>I</b>&nbsp;
                     <input value=0 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
 
                     <br><br>
-                    <img src="img/J.png">
+                    <img src="img/J.png">&nbsp;<b>J</b>
                     <input value=2 type="text" onkeyup="calculateTotals()" id="J-letter" style="width:20px">
 
                     <br><br>
-                    <img src="img/L.png">
+                    <img src="img/L.png">&nbsp;<b>L</b>
                     <input value=2 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px">
 
                     <br><br>
-                    <img src="img/O.png">
+                    <img src="img/O.png">&nbsp;<b>O</b>
                     <input value=4 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px">
 
                     <br><br>
-                    <img src="img/T.png">
+                    <img src="img/T.png">&nbsp;<b>T</b>
                     <input value=0 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px">
 
                     <br><br>
-                    <img src="img/S.png">
+                    <img src="img/S.png">&nbsp;<b>S</b>
                     <input value=0 type="text" onkeyup="calculateTotals()" id="S-letter" style="width:20px">
 
                     <br><br>
-                    <img src="img/Z.png">
+                    <img src="img/Z.png">&nbsp;<b>Z</b>
                     <input value=0 type="text" onkeyup="calculateTotals()" id="Z-letter" style="width:20px">
 
 
@@ -170,7 +180,7 @@
                             <button class="buttonStop" id="stop_button" type="submit" onclick="stopworker();">STOP
                             </button>
 
-                           </td>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

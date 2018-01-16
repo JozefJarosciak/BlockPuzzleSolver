@@ -4,7 +4,7 @@ var t0, t1 = 0;
 var numofperm = 0;
 var gridWidth = 0;
 var gridHeight = 0;
-var total_possible_combinations = 1;
+var total_blocks_with_rotation = 1;
 var I = new Array(1);
 var J = new Array(3);
 var L = new Array(3);
@@ -274,7 +274,7 @@ function calculate() {
         worker.postMessage({'gridWidth': gridWidth});
         worker.postMessage({'gridHeight': gridHeight});
         worker.postMessage({'tetronimos': tetronimos});
-        worker.postMessage({'total_possible_combinations': total_possible_combinations});
+        worker.postMessage({'total_possible_combinations': total_blocks_with_rotation});
         worker.postMessage({'errorRate': errorRate});
 
         if (document.getElementById("calculation_Type").value === "random") {
@@ -587,8 +587,23 @@ function calculateTotals1() {
     createGrid();
 }
 
+function uniq_fast(a) {
+    var seen = {};
+    var out = [];
+    var len = a.length;
+    var j = 0;
+    for (var i = 0; i < len; i++) {
+        var item = a[i];
+        if (seen[item] !== 1) {
+            seen[item] = 1;
+            out[j++] = item;
+        }
+    }
+    return out;
+}
+
 function calculateTotals() {
-    total_possible_combinations = 1;
+    total_blocks_with_rotation = 1;
 
     var total_value_blocks = parseInt(document.getElementById("I-letter").value) * 4
         + parseInt(document.getElementById("J-letter").value) * 4
@@ -680,6 +695,8 @@ function calculateTotals() {
         reload();
     }
 
+    var all_letters_comb_array = [];
+    var counter = 0;
 
     for (var i = 0; i < tetronimos.length; i++) {
         var blockTurns = 0;
@@ -708,13 +725,41 @@ function calculateTotals() {
 
         //  console.log(tetronimos[i] + " - " + blockTurns + " - " + parseInt(document.getElementById(tetronimos[i]+"-letter").value));
 
-        total_possible_combinations = total_possible_combinations * blockTurns;
+        total_blocks_with_rotation = total_blocks_with_rotation * blockTurns;
+
+        // add all block combinations into array
+        for (var x = 0; x < (blockTurns); x++) {
+            all_letters_comb_array[counter] = tetronimos[i] + "[" + x + "]";
+            counter++;
+        }
+
     }
 
 
     document.getElementById("block_value").innerHTML = total_value_blocks.toString();
     document.getElementById("board_value").innerHTML = total_value_board.toString();
-    document.getElementById("possibleCombinations").innerHTML = total_possible_combinations.toLocaleString();
+    document.getElementById("totalBlocksWithRotation").innerHTML = total_blocks_with_rotation.toLocaleString();
+
+    // calculate the possible number of combinations
+    var total_combinations = 0;
+
+    var numofUniqueLetters = [];
+    numofUniqueLetters = uniq_fast(all_letters_comb_array);
+    var numofUniqueLettersWithFactorial = Math.factorial(numofUniqueLetters.length);
+
+    var factorialsForEachLetter = 0;
+
+    console.log(numofUniqueLetters[x].charAt(2));
+    for (var x = 0; x < numofUniqueLetters.length; x++) {
+        if (parseInt(numofUniqueLetters[x].charAt(2)) > 0) {
+            console.log(numofUniqueLetters[x].charAt(2));
+        factorialsForEachLetter = factorialsForEachLetter * Math.factorial(parseInt(numofUniqueLetters[x].charAt(2)));
+        }
+    }
+
+//    document.getElementById("possibleCombinations").innerHTML = (numofUniqueLettersWithFactorial/factorialsForEachLetter).toString();
+    document.getElementById("possibleCombinations").innerHTML = factorialsForEachLetter.toString();
+
 
 
     if (total_value_blocks != total_value_board) {

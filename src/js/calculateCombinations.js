@@ -536,7 +536,7 @@ function iteration(i, tetronimoSpecificCombination) {
                         }
 
 
-                        if (d === (tetronimoSpecificCombination1.length)) {
+                        if (d+1 === (tetronimoSpecificCombination1.length)) {
                             if ((total_possible_combinations === countCombinations) && (count01[0] > 0)) {
 
                                 postMessage(

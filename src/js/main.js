@@ -329,9 +329,9 @@ function endResultbad() {
     display("<h2> RESULTS </h2>");
     //display("Selected: " + orig_tetronimos);
     display("Found No Solution!");
-    display("Tested: <b>" + countCombinations.toLocaleString() + "</b> board configurations and <b>" + testedPositions.toLocaleString() + "</b> block positions");
-    display("Length of Calculation: <b>" + msToTime(t1 - t0)) + "</b>";
-    display("Calculation Speed: <b>" + (Math.round((testedPositions / ((t1 - t0) / 1000)))).toLocaleString() + "</b> positions per second");
+    display("<br>Tested all combinations!");
+    display("<br>Length of Calculation: <b>" + msToTime(t1 - t0)) + "</b>";
+    display("<br>Calculation Speed: <b>" + (Math.round((testedPositions / ((t1 - t0) / 1000)))).toLocaleString() + "</b> positions per second");
 
 
     document.getElementById("clean_button").style.display = "block";
@@ -602,6 +602,34 @@ function uniq_fast(a) {
     return out;
 }
 
+
+function numberOfUnigue(arr) {
+    var b = [], prev;
+
+    arr.sort();
+    for ( var i = 0; i < arr.length; i++ ) {
+        if ( arr[i] !== prev ) {
+            b.push(1);
+        } else {
+            b[b.length-1]++;
+        }
+        prev = arr[i];
+    }
+
+    return [b];
+}
+
+
+function multiplyFactorial(array) {
+    var sum = 1;
+    for (var i = 0; i < array[0].length; i++) {
+        sum = sum * Math.factorial(array[0][i]);
+    }
+    return sum;
+}
+
+
+
 function calculateTotals() {
     total_blocks_with_rotation = 1;
 
@@ -741,24 +769,14 @@ function calculateTotals() {
     document.getElementById("totalBlocksWithRotation").innerHTML = total_blocks_with_rotation.toLocaleString();
 
     // calculate the possible number of combinations
-    var total_combinations = 0;
-
-    var numofUniqueLetters = [];
     numofUniqueLetters = uniq_fast(all_letters_comb_array);
-    var numofUniqueLettersWithFactorial = Math.factorial(numofUniqueLetters.length);
-
-    var factorialsForEachLetter = 0;
-
-    console.log(numofUniqueLetters[x].charAt(2));
-    for (var x = 0; x < numofUniqueLetters.length; x++) {
-        if (parseInt(numofUniqueLetters[x].charAt(2)) > 0) {
-            console.log(numofUniqueLetters[x].charAt(2));
-        factorialsForEachLetter = factorialsForEachLetter * Math.factorial(parseInt(numofUniqueLetters[x].charAt(2)));
-        }
-    }
+    var numofUniqueLettersWithFactorial = Math.factorial(all_letters_comb_array.length);
+    var arr = [];
+    arr = numberOfUnigue(all_letters_comb_array);
+    console.log(arr + numofUniqueLettersWithFactorial + "/" + multiplyFactorial(arr));
 
 //    document.getElementById("possibleCombinations").innerHTML = (numofUniqueLettersWithFactorial/factorialsForEachLetter).toString();
-    document.getElementById("possibleCombinations").innerHTML = factorialsForEachLetter.toString();
+    document.getElementById("possibleCombinations").innerHTML = Math.round(numofUniqueLettersWithFactorial/multiplyFactorial(arr)).toLocaleString();
 
 
 

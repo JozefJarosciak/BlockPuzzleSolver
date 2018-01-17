@@ -324,6 +324,7 @@ function endResult() {
     document.getElementById("stop_button").style.display = "none";
 }
 
+
 function endResultbad() {
     t1 = performance.now();
     display("<h2> RESULTS </h2>");
@@ -776,7 +777,8 @@ function calculateTotals() {
     console.log(arr + numofUniqueLettersWithFactorial + "/" + multiplyFactorial(arr));
 
 //    document.getElementById("possibleCombinations").innerHTML = (numofUniqueLettersWithFactorial/factorialsForEachLetter).toString();
-    document.getElementById("possibleCombinations").innerHTML = Math.round(numofUniqueLettersWithFactorial/multiplyFactorial(arr)).toLocaleString();
+    document.getElementById("possibleCombinations").innerHTML = numofUniqueLettersWithFactorial / (multiplyFactorial(arr));
+   // document.getElementById("possibleCombinations").innerHTML = numofUniqueLettersWithFactorial / numofUniqueLetters- );
 
 
 

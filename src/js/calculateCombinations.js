@@ -142,6 +142,7 @@ var usedBlockColors = new Array(15);
 var countUsedBlocks, countUsedPositions = 0;
 var errorRate = 0;
 var type_of_calculation = "";
+var countEachTest = [];
 
 // receive vars
 self.addEventListener('message', function (e) {
@@ -386,7 +387,6 @@ function random() {
 
 function iteration(i, tetronimoSpecificCombination) {
 
-
     postMessage(
         {
             aTopic: 'processing'
@@ -427,6 +427,7 @@ function iteration(i, tetronimoSpecificCombination) {
         //throw "exit";
 
 
+
         for (var d = 0; d < tetronimoSpecificCombination1.length; d++) {
 
 
@@ -437,14 +438,20 @@ function iteration(i, tetronimoSpecificCombination) {
 
             countOccurenceInArray();
 
+            countEachTest.push(tetronimoSpecificCombination1[d]);
+            //var sum = countEachTest.reduce(add, 0);
+            console.log(countEachTest.length + " - " + uniq_fast(countEachTest).length);
+
 
             postMessage(
                 {
                     aTopic: 'message',
-                    aBuf: ("<b>" + countCombinations + " of " + total_possible_combinations + "</b> (" + d + " of " + tetronimoSpecificCombination1.length + ") - " + tetronimoCombination)
+                    //aBuf: ("<b>" + countCombinations + " of " + total_possible_combinations + "</b> (" + d + " of " + tetronimoSpecificCombination1.length + ") - " + tetronimoCombination)
+                    aBuf: ("Testing Combination: <b>" + countCombinations + " of " + total_possible_combinations + "</b> (" + d + " of " + tetronimoSpecificCombination1.length + ") - " + tetronimoCombination)
                     //aBuf: (countCombinations + " - " + tetronimoSpecificCombination + " - " + tetronimoSpecificCombination1.length + " - " + tetronimoCombination)
                 }
             );
+
 
 
             makeGridItemsArray(gridWidth, gridHeight, 0);
@@ -628,6 +635,9 @@ function uniq_fast(a) {
     return out;
 }
 
+function add(a, b) {
+    return a + b;
+}
 
 function permute(permutation) {
 

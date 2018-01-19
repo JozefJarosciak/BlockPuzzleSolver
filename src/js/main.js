@@ -799,7 +799,7 @@ function calculateTotals() {
         //console.log("groupStateTotal - " + b);
         // get letter + c and its value times number of letter occurences to get checkerboard count
         checkerBoardBlockCount = checkerBoardBlockCount + (parseInt(this[numofUniqueLetters[0][z]+"c"]) * numofUniqueLetters[1][z]);
-        console.log("checkerBoardBlockCount - " + checkerBoardBlockCount);
+        //console.log("checkerBoardBlockCount - " + checkerBoardBlockCount);
     }
 
     //console.log(groupCountTotal + " + " + groupStateTotal);

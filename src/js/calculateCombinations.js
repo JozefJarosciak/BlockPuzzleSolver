@@ -2,8 +2,7 @@
 var A = new Array(0);
 var B = new Array(1);
 var C = new Array(1);
-var D = new Array(2);
-var E = new Array(2);
+var D = new Array(3);
 var I = new Array(1);
 var J = new Array(3);
 var L = new Array(3);
@@ -51,26 +50,14 @@ D[1] = [
 ];
 
 D[2] = [
-    [0, 1],
+    [1, 0],
     [1, 1]
 ];
 
-// E
-E[0] = [
-    [1, 1],
-    [0, 1]
-];
-
-E[1] = [
+D[3] = [
     [1, 1],
     [1, 0]
 ];
-
-E[2] = [
-    [1, 1],
-    [1, 0]
-];
-
 
 // I
 I[0] = [

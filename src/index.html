@@ -49,7 +49,7 @@
         rectangular or square tangram puzzle on a user-defined area (board).<br>
         The faster version uses a random unique block combinations, while slower model tests all possible block
         combinations.<br>
-        Supported are tetromino blocks, with future plan for monominoes, dominoes, trominoes, pentominoes and
+        Supported are tetromino blocks, with future plan for monominoes, dominoes, triominoes, pentominoes and
         other types of polyominoes.
     </p></small>
 
@@ -62,48 +62,67 @@
 
                     <h3>Block Configuration:</h3>
 
-                    <img src="img/A.png">&nbsp;&nbsp;&nbsp;&nbsp;<b>A</b>&nbsp;
-                    <input value=2 type="text" onkeyup="calculateTotals()" id="A-letter" style="width:20px">
 
-                    <br><br>
-                    <img src="img/B.png">&nbsp;<b>J</b>
-                    <input value=2 type="text" onkeyup="calculateTotals()" id="B-letter" style="width:20px">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td><img src="img/A.png"></td>
+                            <td>A Monomino</td>
+                            <td><input value=2 type="text" onkeyup="calculateTotals()" id="A-letter" style="width:20px"></td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/B.png"></td>
+                            <td>B Domino</td>
+                            <td><input value=2 type="text" onkeyup="calculateTotals()" id="B-letter" style="width:20px"></td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/C.png"></td>
+                            <td>C Triomino</td>
+                            <td><input value=2 type="text" onkeyup="calculateTotals()" id="C-letter" style="width:20px"></td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/D.png"></td>
+                            <td>D Triomino</td>
+                            <td><input value=2 type="text" onkeyup="calculateTotals()" id="D-letter" style="width:20px"></td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/I.png"></td>
+                            <td>I Tetromino</td>
+                            <td><input value=0 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px"></td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/J.png"></td>
+                            <td>J Tetromino</td>
+                            <td><input value=0 type="text" onkeyup="calculateTotals()" id="J-letter" style="width:20px"></td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/L.png"></td>
+                            <td>L Tetromino</td>
+                            <td><input value=0 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px"></td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/O.png"></td>
+                            <td>O Tetromino</td>
+                            <td><input value=0 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px"></td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/T.png"></td>
+                            <td>T Tetromino</td>
+                            <td><input value=0 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px"></td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/S.png"></td>
+                            <td>S Tetromino</td>
+                            <td><input value=0 type="text" onkeyup="calculateTotals()" id="S-letter" style="width:20px"></td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/Z.png"></td>
+                            <td>Z Tetromino</td>
+                            <td><input value=0 type="text" onkeyup="calculateTotals()" id="Z-letter" style="width:20px"></td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-                    <br><br>
-                    <img src="img/C.png">&nbsp;<b>J</b>
-                    <input value=2 type="text" onkeyup="calculateTotals()" id="C-letter" style="width:20px">
-
-                    <br><br>
-                    <img src="img/D.png">&nbsp;<b>J</b>
-                    <input value=2 type="text" onkeyup="calculateTotals()" id="D-letter" style="width:20px">
-
-                    <br><br>
-                    <img src="img/I.png">&nbsp;&nbsp;&nbsp;&nbsp;<b>I</b>&nbsp;
-                    <input value=2 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
-
-                    <br><br>
-                    <img src="img/J.png">&nbsp;<b>J</b>
-                    <input value=2 type="text" onkeyup="calculateTotals()" id="J-letter" style="width:20px">
-
-                    <br><br>
-                    <img src="img/L.png">&nbsp;<b>L</b>
-                    <input value=2 type="text" onkeyup="calculateTotals()" id="L-letter" style="width:20px">
-
-                    <br><br>
-                    <img src="img/O.png">&nbsp;<b>O</b>
-                    <input value=2 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px">
-
-                    <br><br>
-                    <img src="img/T.png">&nbsp;<b>T</b>
-                    <input value=0 type="text" onkeyup="calculateTotals()" id="T-letter" style="width:20px">
-
-                    <br><br>
-                    <img src="img/S.png">&nbsp;<b>S</b>
-                    <input value=0 type="text" onkeyup="calculateTotals()" id="S-letter" style="width:20px">
-
-                    <br><br>
-                    <img src="img/Z.png">&nbsp;<b>Z</b>
-                    <input value=0 type="text" onkeyup="calculateTotals()" id="Z-letter" style="width:20px">
 
 
                     <br>

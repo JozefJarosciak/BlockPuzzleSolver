@@ -5,6 +5,13 @@ var numofperm = 0;
 var gridWidth = 0;
 var gridHeight = 0;
 var total_blocks_with_rotation = 1;
+
+//letters
+var A = new Array(0);
+var B = new Array(1);
+var C = new Array(1);
+var D = new Array(2);
+var E = new Array(2);
 var I = new Array(1);
 var J = new Array(3);
 var L = new Array(3);
@@ -14,6 +21,11 @@ var S = new Array(1);
 var Z = new Array(1);
 
 // checkerboard count
+var Ac = 1;
+var Bc = 1;
+var Cc = 2;
+var Dc = 2;
+var Ec = 2;
 var Ic = 2;
 var Jc = 2;
 var Lc = 2;
@@ -38,6 +50,64 @@ var worker;
 var gridItems = [[]];
 
 //letters
+
+// A
+A[0] = [
+    [1]
+];
+
+// B
+B[0] = [
+    [1, 1]
+];
+
+B[1] = [
+    [1],
+    [1]
+];
+
+// C
+C[0] = [
+    [1, 1, 1]
+];
+
+C[1] = [
+    [1],
+    [1],
+    [1]
+];
+
+// D
+D[0] = [
+    [1, 1],
+    [1, 0]
+];
+
+D[1] = [
+    [1, 1],
+    [0, 1]
+];
+
+D[2] = [
+    [0, 1],
+    [1, 1]
+];
+
+// E
+E[0] = [
+    [1, 1],
+    [0, 1]
+];
+
+E[1] = [
+    [1, 1],
+    [1, 0]
+];
+
+E[2] = [
+    [1, 1],
+    [1, 0]
+];
 
 // I
 I[0] = [
@@ -647,7 +717,13 @@ function multiplyFactorial(array) {
 function calculateTotals() {
     total_blocks_with_rotation = 1;
 
-    var total_value_blocks = parseInt(document.getElementById("I-letter").value) * 4
+    var total_value_blocks =
+        parseInt(document.getElementById("A-letter").value) * 1
+        + parseInt(document.getElementById("B-letter").value) * 2
+        + parseInt(document.getElementById("C-letter").value) * 3
+        + parseInt(document.getElementById("D-letter").value) * 3
+        + parseInt(document.getElementById("E-letter").value) * 3
+        + parseInt(document.getElementById("I-letter").value) * 4
         + parseInt(document.getElementById("J-letter").value) * 4
         + parseInt(document.getElementById("L-letter").value) * 4
         + parseInt(document.getElementById("O-letter").value) * 4
@@ -682,6 +758,28 @@ function calculateTotals() {
         tetronimos = [];
         orig_tetronimos = [];
 
+        for (var i = 0; i < parseInt(document.getElementById("A-letter").value); i++) {
+            tetronimos.push("A");
+            orig_tetronimos.push("A");
+        }
+
+        for (var i = 0; i < parseInt(document.getElementById("B-letter").value); i++) {
+            tetronimos.push("B");
+            orig_tetronimos.push("B");
+        }
+
+        for (var i = 0; i < parseInt(document.getElementById("C-letter").value); i++) {
+            tetronimos.push("C");
+            orig_tetronimos.push("C");
+        }
+
+        for (var i = 0; i < parseInt(document.getElementById("D-letter").value); i++) {
+            tetronimos.push("D");
+            orig_tetronimos.push("D");        }
+
+        for (var i = 0; i < parseInt(document.getElementById("E-letter").value); i++) {
+            tetronimos.push("E");
+            orig_tetronimos.push("E");        }
 
         for (var i = 0; i < parseInt(document.getElementById("I-letter").value); i++) {
             tetronimos.push("I");
@@ -741,6 +839,26 @@ function calculateTotals() {
 
     for (var i = 0; i < tetronimos.length; i++) {
         var blockTurns = 0;
+
+        if (tetronimos[i] === "A") {
+            blockTurns = 1
+        }
+
+        if (tetronimos[i] === "B") {
+            blockTurns = 2
+        }
+
+        if (tetronimos[i] === "C") {
+            blockTurns = 2
+        }
+
+        if (tetronimos[i] === "D") {
+            blockTurns = 3
+        }
+
+        if (tetronimos[i] === "E") {
+            blockTurns = 3
+        }
 
         if (tetronimos[i] === "I") {
             blockTurns = 2

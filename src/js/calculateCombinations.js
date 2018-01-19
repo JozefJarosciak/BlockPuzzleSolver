@@ -1,4 +1,9 @@
 //letters
+var A = new Array(0);
+var B = new Array(1);
+var C = new Array(1);
+var D = new Array(2);
+var E = new Array(2);
 var I = new Array(1);
 var J = new Array(3);
 var L = new Array(3);
@@ -6,6 +11,66 @@ var O = new Array(0);
 var T = new Array(3);
 var S = new Array(1);
 var Z = new Array(1);
+
+
+// A
+A[0] = [
+    [1]
+];
+
+// B
+B[0] = [
+    [1, 1]
+];
+
+B[1] = [
+    [1],
+    [1]
+];
+
+// C
+C[0] = [
+    [1, 1, 1]
+];
+
+C[1] = [
+    [1],
+    [1],
+    [1]
+];
+
+// D
+D[0] = [
+    [1, 1],
+    [1, 0]
+];
+
+D[1] = [
+    [1, 1],
+    [0, 1]
+];
+
+D[2] = [
+    [0, 1],
+    [1, 1]
+];
+
+// E
+E[0] = [
+    [1, 1],
+    [0, 1]
+];
+
+E[1] = [
+    [1, 1],
+    [1, 0]
+];
+
+E[2] = [
+    [1, 1],
+    [1, 0]
+];
+
 
 // I
 I[0] = [

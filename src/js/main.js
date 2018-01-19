@@ -13,6 +13,16 @@ var T = new Array(3);
 var S = new Array(1);
 var Z = new Array(1);
 
+// checkerboard count
+var Ic = 2;
+var Jc = 2;
+var Lc = 2;
+var Oc = 2;
+var Tc = 3;
+var Sc = 2;
+var Zc = 2;
+
+
 var count01 = new Array(1);
 var usedBlocks = [];
 var usedBlockColors = new Array(15);
@@ -564,6 +574,8 @@ var combinations = (function () {
         return Math.factorial(n) / (Math.factorial(r) * Math.factorial(n - r));
     };
 })();
+
+
 Math.factorial = function (_x) {
     return _x == 1 ? _x : _x * Math.factorial(--_x);
 }
@@ -605,11 +617,12 @@ function uniq_fast(a) {
 
 
 function numberOfUnigue(arr) {
-    var b = [], prev;
+    var a = [], b = [], prev;
 
     arr.sort();
     for ( var i = 0; i < arr.length; i++ ) {
         if ( arr[i] !== prev ) {
+            a.push(arr[i]);
             b.push(1);
         } else {
             b[b.length-1]++;
@@ -617,7 +630,7 @@ function numberOfUnigue(arr) {
         prev = arr[i];
     }
 
-    return [b];
+    return [a, b];
 }
 
 
@@ -724,7 +737,6 @@ function calculateTotals() {
         reload();
     }
 
-    var all_letters_comb_array = [];
     var counter = 0;
 
     for (var i = 0; i < tetronimos.length; i++) {
@@ -755,13 +767,6 @@ function calculateTotals() {
         //  console.log(tetronimos[i] + " - " + blockTurns + " - " + parseInt(document.getElementById(tetronimos[i]+"-letter").value));
 
         total_blocks_with_rotation = total_blocks_with_rotation * blockTurns;
-
-        // add all block combinations into array
-        for (var x = 0; x < (blockTurns); x++) {
-            all_letters_comb_array[counter] = tetronimos[i] + "[" + x + "]";
-            counter++;
-        }
-
     }
 
 
@@ -769,15 +774,40 @@ function calculateTotals() {
     document.getElementById("board_value").innerHTML = total_value_board.toString();
     document.getElementById("totalBlocksWithRotation").innerHTML = total_blocks_with_rotation.toLocaleString();
 
+
+    var total_number_of_letters = tetronimos.length;
+    //console.log("total_number_of_letters: " + total_number_of_letters);
+
+
     // calculate the possible number of combinations
-    numofUniqueLetters = uniq_fast(all_letters_comb_array);
-    var numofUniqueLettersWithFactorial = Math.factorial(all_letters_comb_array.length);
-    var arr = [];
-    arr = numberOfUnigue(all_letters_comb_array);
-    console.log(arr + numofUniqueLettersWithFactorial + "/" + multiplyFactorial(arr));
+    var numofUniqueLetters = numberOfUnigue(tetronimos);
+    //console.log("Number of Unique Letters: " + numofUniqueLetters[0]);
+    //console.log("Count of Unique Letters: " + numofUniqueLetters[1]);
+
+
+    var groupCountTotal = 1;
+    var groupStateTotal = 1;
+    var checkerBoardBlockCount = 0;
+
+    for (var z = 0; z < numofUniqueLetters[0].length; z++) {
+        //console.log(numofUniqueLetters[1][z] + " : " + numofUniqueLetters[0][z] + " - " + this[numofUniqueLetters[0][z]].length);
+        var a = (Math.factorial(numofUniqueLetters[1][z]));
+        groupCountTotal = groupCountTotal * a;
+        //console.log("groupCountTotal - " + a);
+        var b = (Math.pow(this[numofUniqueLetters[0][z]].length,numofUniqueLetters[1][z]));
+        groupStateTotal = groupStateTotal * b;
+        //console.log("groupStateTotal - " + b);
+        // get letter + c and its value times number of letter occurences to get checkerboard count
+        checkerBoardBlockCount = checkerBoardBlockCount + (parseInt(this[numofUniqueLetters[0][z]+"c"]) * numofUniqueLetters[1][z]);
+        console.log("checkerBoardBlockCount - " + checkerBoardBlockCount);
+    }
+
+    //console.log(groupCountTotal + " + " + groupStateTotal);
+
+    var finalNumberOfDistinctPermutations = (Math.factorial(total_number_of_letters) / groupCountTotal) * groupStateTotal;
 
 //    document.getElementById("possibleCombinations").innerHTML = (numofUniqueLettersWithFactorial/factorialsForEachLetter).toString();
-    document.getElementById("possibleCombinations").innerHTML = numofUniqueLettersWithFactorial / (multiplyFactorial(arr));
+    document.getElementById("possibleCombinations").innerHTML = finalNumberOfDistinctPermutations.toLocaleString();
    // document.getElementById("possibleCombinations").innerHTML = numofUniqueLettersWithFactorial / numofUniqueLetters- );
 
 
@@ -800,4 +830,11 @@ function calculateTotals() {
     } else {
         document.getElementById("selectedBlocks").innerHTML = "";
     }
+
+/*
+    // check if board can be calculated
+    if (checkerBoardBlockCount !== (total_value_board/2)) {
+        document.getElementById("calculate_button").style.visibility = "hidden";
+    }
+*/
 }

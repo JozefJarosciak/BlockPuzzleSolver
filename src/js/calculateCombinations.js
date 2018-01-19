@@ -440,7 +440,7 @@ function iteration(i, tetronimoSpecificCombination) {
 
             countEachTest.push(tetronimoSpecificCombination1[d]);
             //var sum = countEachTest.reduce(add, 0);
-            console.log(countEachTest.length + " - " + uniq_fast(countEachTest).length);
+           //console.log(countEachTest.length + " - " + uniq_fast(countEachTest).length);
 
 
             postMessage(
@@ -542,8 +542,13 @@ function iteration(i, tetronimoSpecificCombination) {
 
                         }
 
-
-                        if (d+1 === (tetronimoSpecificCombination1.length)) {
+                        var countComb = 0;
+                        if (tetronimoSpecificCombination1.length === 1) {
+                            countComb = 0;
+                        } else {
+                            countComb = 1;
+                        }
+                        if ((d + countComb) === (tetronimoSpecificCombination1.length)) {
                             if ((total_possible_combinations === countCombinations) && (count01[0] > 0)) {
 
                                 postMessage(

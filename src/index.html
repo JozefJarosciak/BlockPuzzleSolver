@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Block Puzzle Solver</title>
     <meta name="description"
-          content="Block Puzzle Solver by Jozef Jarosciak. The Block Puzzle Solver calculates the solutions to tetronimo based rectangular or square tangram puzzle on a user-defined X*Y sized board. The faster version uses a random unique block combinations, while slower model tests all possible block combinations. Supported are tetronimo blocks, with future plan to support monominoes, dominoes, trominoes, pentominoes and other types of polyominoes.">
+          content="Block Puzzle Solver by Jozef Jarosciak. The Block Puzzle Solver calculates the solutions to tetromino based rectangular or square tangram puzzle on a user-defined X*Y sized board. The faster version uses a random unique block combinations, while slower model tests all possible block combinations. Supported are tetromino blocks, with future plan to support monominoes, dominoes, trominoes, pentominoes and other types of polyominoes.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="manifest" href="site.webmanifest">
@@ -45,11 +45,11 @@
     <a href="http://www.blockpuzzlesolver.com"><img src="img/logo.png"></a>
     <br>
 
-    <small><p style="text-align: center;">The Block Puzzle Solver calculates the solutions to tetronimo based
+    <small><p style="text-align: center;">The Block Puzzle Solver calculates the solutions to tetromino based
         rectangular or square tangram puzzle on a user-defined area (board).<br>
         The faster version uses a random unique block combinations, while slower model tests all possible block
         combinations.<br>
-        Supported are tetronimo blocks, with future plan for monominoes, dominoes, trominoes, pentominoes and
+        Supported are tetromino blocks, with future plan for monominoes, dominoes, trominoes, pentominoes and
         other types of polyominoes.
     </p></small>
 
@@ -64,7 +64,7 @@
 
 
                     <img src="img/I.png">&nbsp;&nbsp;&nbsp;&nbsp;<b>I</b>&nbsp;
-                    <input value=0 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
+                    <input value=2 type="text" onkeyup="calculateTotals()" id="I-letter" style="width:20px">
 
                     <br><br>
                     <img src="img/J.png">&nbsp;<b>J</b>
@@ -76,7 +76,7 @@
 
                     <br><br>
                     <img src="img/O.png">&nbsp;<b>O</b>
-                    <input value=4 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px">
+                    <input value=2 type="text" onkeyup="calculateTotals()" id="O-letter" style="width:20px">
 
                     <br><br>
                     <img src="img/T.png">&nbsp;<b>T</b>
@@ -94,7 +94,7 @@
                     <br>
 
                     <h3>Board Configuration</h3>
-                    X: <input min=5 max=20 value=8 type="text" onkeyup="calculateTotals1()" id="X-zone"
+                    X: <input min=5 max=20 value=5 type="text" onkeyup="calculateTotals1()" id="X-zone"
                               style="width:20px">
                     * <input min=5 max=20 value=4 type="text" onkeyup="calculateTotals1()" id="Y-zone"
                              style="width:20px">
@@ -132,7 +132,8 @@
                         <br><br>Total Block Area: <b><label id="block_value"></label></b>
                         <br>Total Board Area: <b><label id="board_value"></label></b>
                         <br>
-                        <br>Block Permutations: <b><label id="totalBlocksWithRotation"></label></b> with possible distinct combinations: <b><label id="possibleCombinations"></label></b>
+                        <br>Block Combinations: <b><label id="totalBlocksWithRotation"></label></b>
+                        <br>Distinct Permutations: <b><label id="possibleCombinations"></label></b>
                     </small>
 
 

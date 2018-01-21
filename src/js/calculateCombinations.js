@@ -213,7 +213,7 @@ self.addEventListener('message', function (e) {
     if (data.start === "start") {
         // start the calculation
         if (type_of_calculation === "random") {
-            random();
+            randomizeBlocks();
         } else {
             iteration(0, []);
         }
@@ -250,7 +250,7 @@ self.addEventListener('message', function (e) {
 }, false);
 
 
-function random() {
+function randomizeBlocks() {
 
     postMessage(
         {
@@ -281,7 +281,8 @@ function random() {
         postMessage(
             {
                 aTopic: 'message',
-                aBuf: (countCombinations + " - " + tetronimoCombination)
+                //aBuf: (countCombinations + " - " + tetronimoCombination)
+                aBuf: ("Combination: "+ countCombinations)
             }
         );
         countOccurenceInArray();

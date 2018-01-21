@@ -226,6 +226,7 @@ function stopworker() {
     document.getElementById("configuration3").style.display = "block";
     document.getElementById("configuration").style.pointerEvents = "auto";
     document.getElementById("stop_button").style.display = "none";
+    document.getElementById("canvasShow").style.display = "block";
     document.getElementById("result").innerHTML = "";
     reload();
 }
@@ -272,10 +273,8 @@ function calculate() {
                 document.getElementById("result").innerHTML = event.data.aBuf;
             }
 
-
             if (event.data.aTopic === "placeBlock") {
                 // document.getElementById("result").innerHTML = event.data.block;
-
                 gridItems[(event.data.placeAtPosition0)][(event.data.placeAtPosition1)] = 1;
                 context.fillStyle = event.data.blockColor;
                 context.fillRect(((event.data.placeAtPosition1) * 25) + 1, ((event.data.placeAtPosition0) * 25) + 1, 23, 23);
@@ -291,6 +290,7 @@ function calculate() {
                 countUsedBlocks = event.data.countUsedBlocks;
                 countCombinations = event.data.countCombinations;
                 testedPositions = event.data.testedPositions;
+                document.getElementById("canvasShow").style.display = "block";
                 endResult();
             }
 
@@ -307,6 +307,12 @@ function calculate() {
         worker.postMessage({'tetronimos': tetronimos});
         worker.postMessage({'total_possible_combinations': total_blocks_with_rotation});
         worker.postMessage({'errorRate': errorRate});
+
+        if (document.getElementById("showProgress").value === "0") {
+            document.getElementById("canvasShow").style.display = "none";
+        } else {
+            document.getElementById("canvasShow").style.display = "block";
+        }
 
         if (document.getElementById("calculation_Type").value === "random") {
             worker.postMessage({'type_of_calculation': "random"});
@@ -328,6 +334,7 @@ function calculate() {
     document.getElementById("calculate_button").disabled = false;
     document.getElementById("calculate_button").innerHTML = "Solve";
     document.getElementById("calculate_button").style.display = "block";
+    document.getElementById("canvasShow").style.display = "block";
 }
 
 
@@ -353,6 +360,9 @@ function endResult() {
     countCombinations = 0;
 
     document.getElementById("stop_button").style.display = "none";
+
+    document.getElementById("canvasShow").style.display = "block";
+
 }
 
 
@@ -378,6 +388,7 @@ function endResultbad() {
     countCombinations = 0;
 
     document.getElementById("stop_button").style.display = "none";
+    document.getElementById("canvasShow").style.display = "block";
 }
 
 function msToTime(duration) {
@@ -446,6 +457,7 @@ function onLoad() {
     makeGridItemsArray(gridWidth, gridHeight, 0);
 
     document.getElementById("stop_button").style.display = "none";
+    document.getElementById("canvasShow").style.display = "block";
 
     // On mouse click
 
@@ -684,8 +696,8 @@ function calculateTotals() {
 
         if (isInt(total_value_blocks / i) === true) {
             // console.log(i);
-            document.getElementById("Y-zone").value = i;
-            document.getElementById("X-zone").value = total_value_blocks / i;
+            document.getElementById("X-zone").value = i;
+            document.getElementById("Y-zone").value = total_value_blocks / i;
             gridWidth = parseInt(document.getElementById("X-zone").value);
             gridHeight = parseInt(document.getElementById("Y-zone").value);
             createGrid();

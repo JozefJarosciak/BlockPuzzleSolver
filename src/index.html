@@ -48,11 +48,11 @@
     <table style="table-layout: fixed">
         <tr>
             <td rowspan="2"
-                style="width: 192px;background: #fffef2;padding: 10px;max-width: 192px;word-wrap:break-word;">
+                style="width: 192px;background: #fffef2;padding: 10px;max-width: 192px;word-wrap:break-word; vertical-align: top;text-align: left;">
 
                 <div id="configuration">
 
-                    <h3>Block Configuration:</h3>
+                    <h4>Block Configuration</h4>
 
 
                     <table>
@@ -114,17 +114,17 @@
 
                     <br>
 
-                    <h3>Board Configuration</h3>
-                    X: <input min=5 max=20 value=5 type="text" onkeyup="calculateTotals1()" id="X-zone"
+                    <h4>Board Configuration</h4>
+                    X: <input min=5 max=20 value=1 type="text" onkeyup="calculateTotals1()" id="X-zone"
                               style="width:20px">
-                    * <input min=5 max=20 value=4 type="text" onkeyup="calculateTotals1()" id="Y-zone"
+                    * <input min=5 max=1 value=4 type="text" onkeyup="calculateTotals1()" id="Y-zone"
                              style="width:20px">
                     :Y
 
                     <br>
 
 
-                    <h3>Calculation Type</h3>
+                    <h4>Calculation Type</h4>
 
 
                     <select id="calculation_Type">
@@ -133,7 +133,7 @@
                     </select>
                     <br>
 
-                    <h3>Error Rate</h3>
+                    <h4>Error Rate</h4>
                     <select id="errorRate" onkeyup="calculateTotals()">
                         <option selected value=0>0</option>
                         <option value=4>4</option>
@@ -143,19 +143,11 @@
                         <option value=20>20</option>
                     </select>
 
-                    <hr>
-
-                    <h3>Configuration Details</h3>
-                    <small>
-                        Selected: <b><label id="selectedBlocksLen"></label></b> blocks:
-                        <b><label id="selectedBlocks"></label></b>
-
-                        <br><br>Total Block Area: <b><label id="block_value"></label></b>
-                        <br>Total Board Area: <b><label id="board_value"></label></b>
-                        <br>
-                        <br>Block Combinations: <b><label id="totalBlocksWithRotation"></label></b>
-                        <br>Distinct Permutations: <b><label id="possibleCombinations"></label></b>
-                    </small>
+                    <h4>Show Progress</h4>
+                    <select id="showProgress">
+                        <option selected value=0>No</option>
+                        <option value=1>Yes</option>
+                    </select>
 
 
                     <br>
@@ -170,7 +162,24 @@
                     <tbody>
                     <tr>
                         <td>
+
+                            <div id="config" style="width: 480px;background: #fffef2;padding: 5px;max-width: 480px;word-wrap:break-word;">
+
+                            <small>
+                                Selected: <b><label id="selectedBlocksLen"></label></b> blocks:
+                                <b><label id="selectedBlocks"></label></b>
+                                <br>Total Block Area: <b><label id="block_value"></label></b>
+                                <br>Total Board Area: <b><label id="board_value"></label></b>
+                                <br>Block Combinations: <b><label id="totalBlocksWithRotation"></label></b>
+                                <br>Distinct Permutations: <b><label id="possibleCombinations"></label></b>
+                            </small>
+                            </div>
+
+<br>
+
+                            <div id="canvasShow">
                             <canvas id="canvas" style="border:1px solid"></canvas>
+                            </div>
 
                             <div id="configuration3">
 
@@ -199,6 +208,7 @@
                     </tr>
                     <tr>
                         <td>
+
                             <div style="word-wrap:break-word;min-width:200px;max-width:500px">
                                 <label id="result" style="color:red;"></label>
                             </div>
@@ -225,7 +235,7 @@
             </td>
         </tr>
         <tr>
-            <td style="vertical-align:middle;padding: 25px;;background: #fff2f9;">
+            <td style="vertical-align:middle;padding: 25px;background: #fff2f9;">
 
                 <div id="msgs"></div>
 

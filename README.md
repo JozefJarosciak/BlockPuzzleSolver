@@ -4,11 +4,13 @@
 [![devDependency Status](https://david-dm.org/h5bp/html5-boilerplate/dev-status.svg)](https://david-dm.org/h5bp/html5-boilerplate#info=devDependencies)
 
 # Description
-The following Block Tangram Puzzle Solver calculates every possibility to solve the puzzle on a user defined X*Y sized board.
+The Block Puzzle Solver calculates the solutions to monomino, domino, triomino, tetromino and pentomino(1) based rectangular or square tangram puzzle in a user-defined area, with support for block rotation and reflection. 
 
-There are two available types of calculation. The faster version uses a random unique block combinations, whereas the slower model goes through all possible block combinations.
+The fast version uses a random unique block combinations. 
 
-Currently the block solver script supports only tetromino types of blocks, but it should be fairly simply to to adjust it to also support monominoes, dominoes, trominoes, pentominoes and other types of polyominoes.
+The slow version tests all possible block combinations and permutations (there can be quite a lot of them). 
+
+The plan for future is to include more pentominoes, heptominoes, octominoes & other polyominoes; as well as support user defined areas of any shape. 
 
 # Demo
 [http://www.BlockPuzzleSolver.com/](http://www.BlockPuzzleSolver.com/)

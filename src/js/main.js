@@ -12,12 +12,11 @@ var B = new Array(1);
 var C = new Array(1);
 var D = new Array(3);
 var I = new Array(1);
-var J = new Array(3);
-var L = new Array(3);
+var L = new Array(7);
 var O = new Array(0);
 var T = new Array(3);
-var S = new Array(1);
-var Z = new Array(1);
+var S = new Array(3);
+var X = new Array(0);
 
 // checkerboard count
 var Ac = 1;
@@ -25,13 +24,11 @@ var Bc = 1;
 var Cc = 2;
 var Dc = 2;
 var Ic = 2;
-var Jc = 2;
 var Lc = 2;
 var Oc = 2;
 var Tc = 3;
 var Sc = 2;
-var Zc = 2;
-
+var Xc = 1;
 
 var count01 = new Array(1);
 var usedBlocks = [];
@@ -110,31 +107,6 @@ I[1] = [
 ];
 
 
-// J
-J[0] = [
-    [1, 0, 0],
-    [1, 1, 1]
-];
-
-J[1] = [
-    [0, 1],
-    [0, 1],
-    [1, 1]
-];
-
-J[2] = [
-    [1, 1, 1],
-    [0, 0, 1]
-];
-
-
-J[3] = [
-    [1, 1],
-    [1, 0],
-    [1, 0]
-];
-
-
 // L
 L[0] = [
     [1, 1, 1],
@@ -157,6 +129,29 @@ L[3] = [
     [1, 1],
     [0, 1],
     [0, 1]
+];
+
+L[4] = [
+    [1, 0, 0],
+    [1, 1, 1]
+];
+
+L[5] = [
+    [0, 1],
+    [0, 1],
+    [1, 1]
+];
+
+L[6] = [
+    [1, 1, 1],
+    [0, 0, 1]
+];
+
+
+L[7] = [
+    [1, 1],
+    [1, 0],
+    [1, 0]
 ];
 
 
@@ -203,56 +198,24 @@ S[1] = [
     [0, 1]
 ];
 
-
-// Z
-Z[0] = [
+S[2] = [
     [1, 1, 0],
     [0, 1, 1]
 ];
 
-Z[1] = [
+S[3] = [
     [0, 1],
     [1, 1],
     [1, 0]
 ];
 
 
-/*
-
-
- V[0] = [
- [1, 1],
- [0, 1]
- ];
-
- V[1] = [
- [1, 1],
- [1, 0]
- ];
-
- V[2] = [
- [0, 1],
- [1, 1]
- ];
-
- V[3] = [
- [1, 0],
- [1, 1]
- ];
-
-
-
- X[0] = [
- [0, 1, 0],
- [1, 1, 1],
- [0, 1, 0]
- ];
-
- */
-
-
-
-//console.log(sizeAr(L[3]));
+// X
+X[0] = [
+    [0, 1, 0],
+    [1, 1, 1],
+    [0, 1, 0]
+];
 
 function stopworker() {
     worker.terminate();
@@ -711,12 +674,11 @@ function calculateTotals() {
         + parseInt(document.getElementById("C-letter").value) * 3
         + parseInt(document.getElementById("D-letter").value) * 3
         + parseInt(document.getElementById("I-letter").value) * 4
-        + parseInt(document.getElementById("J-letter").value) * 4
         + parseInt(document.getElementById("L-letter").value) * 4
         + parseInt(document.getElementById("O-letter").value) * 4
         + parseInt(document.getElementById("T-letter").value) * 4
         + parseInt(document.getElementById("S-letter").value) * 4
-        + parseInt(document.getElementById("Z-letter").value) * 4;
+        + parseInt(document.getElementById("X-letter").value) * 5;
 
     for (var i = (parseInt(Math.sqrt(total_value_blocks))); i > 2; i--) {
 
@@ -769,11 +731,6 @@ function calculateTotals() {
             orig_tetronimos.push("I");
         }
 
-        for (var i = 0; i < parseInt(document.getElementById("J-letter").value); i++) {
-            tetronimos.push("J");
-            orig_tetronimos.push("J");
-        }
-
         for (var i = 0; i < parseInt(document.getElementById("L-letter").value); i++) {
             tetronimos.push("L");
             orig_tetronimos.push("L");
@@ -794,9 +751,9 @@ function calculateTotals() {
             orig_tetronimos.push("S");
         }
 
-        for (var i = 0; i < parseInt(document.getElementById("Z-letter").value); i++) {
-            tetronimos.push("Z");
-            orig_tetronimos.push("Z");
+        for (var i = 0; i < parseInt(document.getElementById("X-letter").value); i++) {
+            tetronimos.push("X");
+            orig_tetronimos.push("X");
         }
 
     }
@@ -842,11 +799,8 @@ function calculateTotals() {
         if (tetronimos[i] === "I") {
             blockTurns = 2
         }
-        if (tetronimos[i] === "J") {
-            blockTurns = 4
-        }
         if (tetronimos[i] === "L") {
-            blockTurns = 4
+            blockTurns = 8
         }
         if (tetronimos[i] === "O") {
             blockTurns = 1
@@ -855,12 +809,11 @@ function calculateTotals() {
             blockTurns = 4
         }
         if (tetronimos[i] === "S") {
-            blockTurns = 2
+            blockTurns = 4
         }
-        if (tetronimos[i] === "Z") {
-            blockTurns = 2
+        if (tetronimos[i] === "X") {
+            blockTurns = 1
         }
-
         //  console.log(tetronimos[i] + " - " + blockTurns + " - " + parseInt(document.getElementById(tetronimos[i]+"-letter").value));
 
         total_blocks_with_rotation = total_blocks_with_rotation * blockTurns;

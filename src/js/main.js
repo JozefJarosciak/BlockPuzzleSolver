@@ -342,7 +342,7 @@ function endResult() {
     t1 = performance.now();
 
     display("<h2> RESULTS </h2>");
-    display("<h3>Solution</h3>" + usedBlocks.join(' - '));
+    display("<h3>Solution</h3><small><b>" + usedBlocks.join('-').toString().replace(/\[/g,'').replace(/]/g,"") + "</b></small>");
     display("<h3>Details</h3><b>Used:</b>" + countUsedBlocks + " of " + tetronimos.length + " blocks");
     display("<br><b>Tested: </b>" + countCombinations.toLocaleString() + " board configurations and " + testedPositions.toLocaleString() + " block positions");
     display("<br><b>Length of Calculation: </b>" + msToTime(t1 - t0));

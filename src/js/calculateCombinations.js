@@ -282,7 +282,7 @@ function randomizeBlocks() {
             {
                 aTopic: 'message',
                 //aBuf: (countCombinations + " - " + tetronimoCombination)
-                aBuf: ("Combination: "+ countCombinations)
+                aBuf: (" Combination: "+ countCombinations)
             }
         );
         countOccurenceInArray();
@@ -505,7 +505,8 @@ function iteration(i, tetronimoSpecificCombination) {
                 {
                     aTopic: 'message',
                     //aBuf: ("<b>" + countCombinations + " of " + total_possible_combinations + "</b> (" + d + " of " + tetronimoSpecificCombination1.length + ") - " + tetronimoCombination)
-                    aBuf: ("Testing Combination: <b>" + countCombinations + " of " + total_possible_combinations + "</b> (" + d + " of " + tetronimoSpecificCombination1.length + ") - " + tetronimoCombination)
+                    //aBuf: ("Combination: <b>" + countCombinations + " of " + total_possible_combinations + "</b> (" + d + " of " + tetronimoSpecificCombination1.length + ") - " + tetronimoCombination);
+                    aBuf: (" Combination: <b>" + countCombinations + " of " + total_possible_combinations + "</b> (" + d + " of " + tetronimoSpecificCombination1.length + ")")
                     //aBuf: (countCombinations + " - " + tetronimoSpecificCombination + " - " + tetronimoSpecificCombination1.length + " - " + tetronimoCombination)
                 }
             );

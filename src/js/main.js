@@ -471,7 +471,7 @@ function calculateTotals() {
         + parseInt(document.getElementById("O-letter").value) * 4
         + parseInt(document.getElementById("T-letter").value) * 4
         + parseInt(document.getElementById("S-letter").value) * 4
-        + parseInt(document.getElementById("U-letter").value) * 5;
+        + parseInt(document.getElementById("U-letter").value) * 5
         + parseInt(document.getElementById("X-letter").value) * 5;
 
 

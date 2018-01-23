@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/main.css">
 
     <script src="js/plugins.js"></script>
+    <script src="js/globalVariables.js"></script>
     <script src="js/main.js"></script>
 
 
@@ -19,11 +20,6 @@
 <body onload="onLoad()">
 
 
-<a href="https://github.com/JozefJarosciak/BlockPuzzleSolver/"><img
-    style="position: absolute; top: 0; right: 0; border: 0;"
-    src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
-    alt="Fork me on GitHub"
-    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
 
 <div class="content">
 
@@ -101,6 +97,11 @@
                             <td><img src="img/S.png"></td>
                             <td>S Tetromino</td>
                             <td><input value=0 type="text" onkeyup="calculateTotals()" id="S-letter" style="width:20px"></td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/U.png"></td>
+                            <td>U Pentomino</td>
+                            <td><input value=0 type="text" onkeyup="calculateTotals()" id="U-letter" style="width:20px"></td>
                         </tr>
                         <tr>
                             <td><img src="img/X.png"></td>
@@ -246,11 +247,12 @@
     </script>
 
     <br><br><br>
-    <hr style="text-align:right;width:130px;position: fixed;bottom: 0;right: 0;">
-    <small style="position: fixed;bottom: 0;right: 0;color:darkgrey">
+    <hr style="text-align:right;width:364px;position: fixed;padding:10px;bottom: 0;right: 0;">
+    <small style="position: fixed;bottom: 0;right: 0;padding:10px;color:darkgrey">
         ©
         <script>document.write(new Date().getFullYear())</script>
-        - Jozef Jarosciak
+        - Jozef Jarosciak - Open Source on <a href="https://github.com/JozefJarosciak/BlockPuzzleSolver/" target="_blank">GitHub</a> under <a href="https://github.com/JozefJarosciak/BlockPuzzleSolver/blob/master/LICENSE.txt" target="_blank">MIT</a> license.
+        <br>
     </small>
 
 

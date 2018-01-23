@@ -1,222 +1,3 @@
-var tetronimos = [];
-var orig_tetronimos = [];
-var t0, t1 = 0;
-var numofperm = 0;
-var gridWidth = 0;
-var gridHeight = 0;
-var total_blocks_with_rotation = 1;
-
-//letters
-var A = new Array(0);
-var B = new Array(1);
-var C = new Array(1);
-var D = new Array(3);
-var I = new Array(1);
-var L = new Array(7);
-var O = new Array(0);
-var T = new Array(3);
-var S = new Array(3);
-var X = new Array(0);
-
-// checkerboard count
-var Ac = 1;
-var Bc = 1;
-var Cc = 2;
-var Dc = 2;
-var Ic = 2;
-var Lc = 2;
-var Oc = 2;
-var Tc = 3;
-var Sc = 2;
-var Xc = 1;
-
-var count01 = new Array(1);
-var usedBlocks = [];
-var usedBlockColors = new Array(15);
-var countUsedBlocks, countUsedPositions = 0;
-var testedPositions = 0;
-var errorRate = 10;
-var processingBlockNumber = 0;
-var countCombinations = 0;
-
-var worker;
-// initialize array
-
-var gridItems = [[]];
-
-//letters
-
-// A
-A[0] = [
-    [1]
-];
-
-// B
-B[0] = [
-    [1, 1]
-];
-
-B[1] = [
-    [1],
-    [1]
-];
-
-// C
-C[0] = [
-    [1, 1, 1]
-];
-
-C[1] = [
-    [1],
-    [1],
-    [1]
-];
-
-// D
-D[0] = [
-    [1, 1],
-    [1, 0]
-];
-
-D[1] = [
-    [1, 1],
-    [0, 1]
-];
-
-D[2] = [
-    [1, 0],
-    [1, 1]
-];
-
-D[3] = [
-    [1, 1],
-    [1, 0]
-];
-
-
-// I
-I[0] = [
-    [1, 1, 1, 1]
-];
-
-I[1] = [
-    [1],
-    [1],
-    [1],
-    [1]
-];
-
-
-// L
-L[0] = [
-    [1, 1, 1],
-    [1, 0, 0]
-];
-
-L[1] = [
-    [1, 0],
-    [1, 0],
-    [1, 1]
-];
-
-L[2] = [
-    [0, 0, 1],
-    [1, 1, 1]
-];
-
-
-L[3] = [
-    [1, 1],
-    [0, 1],
-    [0, 1]
-];
-
-L[4] = [
-    [1, 0, 0],
-    [1, 1, 1]
-];
-
-L[5] = [
-    [0, 1],
-    [0, 1],
-    [1, 1]
-];
-
-L[6] = [
-    [1, 1, 1],
-    [0, 0, 1]
-];
-
-
-L[7] = [
-    [1, 1],
-    [1, 0],
-    [1, 0]
-];
-
-
-// O
-O[0] = [
-    [1, 1],
-    [1, 1]
-];
-
-
-// T
-T[0] = [
-    [1, 1, 1],
-    [0, 1, 0]
-];
-
-T[1] = [
-    [0, 1, 0],
-    [1, 1, 1]
-];
-
-T[2] = [
-    [1, 0],
-    [1, 1],
-    [1, 0]
-];
-
-T[3] = [
-    [0, 1],
-    [1, 1],
-    [0, 1]
-];
-
-
-// S
-S[0] = [
-    [0, 1, 1],
-    [1, 1, 0]
-];
-
-S[1] = [
-    [1, 0],
-    [1, 1],
-    [0, 1]
-];
-
-S[2] = [
-    [1, 1, 0],
-    [0, 1, 1]
-];
-
-S[3] = [
-    [0, 1],
-    [1, 1],
-    [1, 0]
-];
-
-
-// X
-X[0] = [
-    [0, 1, 0],
-    [1, 1, 1],
-    [0, 1, 0]
-];
-
 function stopworker() {
     worker.terminate();
     document.getElementById("clean_button").style.display = "block";
@@ -690,7 +471,9 @@ function calculateTotals() {
         + parseInt(document.getElementById("O-letter").value) * 4
         + parseInt(document.getElementById("T-letter").value) * 4
         + parseInt(document.getElementById("S-letter").value) * 4
+        + parseInt(document.getElementById("U-letter").value) * 5;
         + parseInt(document.getElementById("X-letter").value) * 5;
+
 
     for (var i = (parseInt(Math.sqrt(total_value_blocks))); i > 2; i--) {
 
@@ -763,6 +546,11 @@ function calculateTotals() {
             orig_tetronimos.push("S");
         }
 
+        for (var i = 0; i < parseInt(document.getElementById("U-letter").value); i++) {
+            tetronimos.push("U");
+            orig_tetronimos.push("U");
+        }
+
         for (var i = 0; i < parseInt(document.getElementById("X-letter").value); i++) {
             tetronimos.push("X");
             orig_tetronimos.push("X");
@@ -821,6 +609,9 @@ function calculateTotals() {
             blockTurns = 4
         }
         if (tetronimos[i] === "S") {
+            blockTurns = 4
+        }
+        if (tetronimos[i] === "U") {
             blockTurns = 4
         }
         if (tetronimos[i] === "X") {

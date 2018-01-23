@@ -1,205 +1,4 @@
-//letters
-var A = new Array(0);
-var B = new Array(1);
-var C = new Array(1);
-var D = new Array(3);
-var I = new Array(1);
-var L = new Array(7);
-var O = new Array(0);
-var T = new Array(3);
-var S = new Array(3);
-var X = new Array(0);
-
-//letters
-
-// A
-A[0] = [
-    [1]
-];
-
-// B
-B[0] = [
-    [1, 1]
-];
-
-B[1] = [
-    [1],
-    [1]
-];
-
-// C
-C[0] = [
-    [1, 1, 1]
-];
-
-C[1] = [
-    [1],
-    [1],
-    [1]
-];
-
-// D
-D[0] = [
-    [1, 1],
-    [1, 0]
-];
-
-D[1] = [
-    [1, 1],
-    [0, 1]
-];
-
-D[2] = [
-    [1, 0],
-    [1, 1]
-];
-
-D[3] = [
-    [1, 1],
-    [1, 0]
-];
-
-
-// I
-I[0] = [
-    [1, 1, 1, 1]
-];
-
-I[1] = [
-    [1],
-    [1],
-    [1],
-    [1]
-];
-
-
-// L
-L[0] = [
-    [1, 1, 1],
-    [1, 0, 0]
-];
-
-L[1] = [
-    [1, 0],
-    [1, 0],
-    [1, 1]
-];
-
-L[2] = [
-    [0, 0, 1],
-    [1, 1, 1]
-];
-
-
-L[3] = [
-    [1, 1],
-    [0, 1],
-    [0, 1]
-];
-
-L[4] = [
-    [1, 0, 0],
-    [1, 1, 1]
-];
-
-L[5] = [
-    [0, 1],
-    [0, 1],
-    [1, 1]
-];
-
-L[6] = [
-    [1, 1, 1],
-    [0, 0, 1]
-];
-
-
-L[7] = [
-    [1, 1],
-    [1, 0],
-    [1, 0]
-];
-
-
-// O
-O[0] = [
-    [1, 1],
-    [1, 1]
-];
-
-
-// T
-T[0] = [
-    [1, 1, 1],
-    [0, 1, 0]
-];
-
-T[1] = [
-    [0, 1, 0],
-    [1, 1, 1]
-];
-
-T[2] = [
-    [1, 0],
-    [1, 1],
-    [1, 0]
-];
-
-T[3] = [
-    [0, 1],
-    [1, 1],
-    [0, 1]
-];
-
-
-// S
-S[0] = [
-    [0, 1, 1],
-    [1, 1, 0]
-];
-
-S[1] = [
-    [1, 0],
-    [1, 1],
-    [0, 1]
-];
-
-S[2] = [
-    [1, 1, 0],
-    [0, 1, 1]
-];
-
-S[3] = [
-    [0, 1],
-    [1, 1],
-    [1, 0]
-];
-
-
-// X
-X[0] = [
-    [0, 1, 0],
-    [1, 1, 1],
-    [0, 1, 0]
-];
-
-
-// define other global vars
-var countCombinations = 0;
-var result = [];
-var testedPositions = 0;
-var gridWidth = 0;
-var gridHeight = 0;
-var total_possible_combinations = 1;
-var count01 = new Array(1);
-var gridItems = [[]];
-var tetronimos = [];
-var usedBlocks = [];
-var usedBlockColors = new Array(15);
-var countUsedBlocks, countUsedPositions = 0;
-var errorRate = 0;
-var type_of_calculation = "";
-var countEachTest = [];
+self.importScripts('globalVariables.js');
 
 // receive vars
 self.addEventListener('message', function (e) {
@@ -282,7 +81,7 @@ function randomizeBlocks() {
             {
                 aTopic: 'message',
                 //aBuf: (countCombinations + " - " + tetronimoCombination)
-                aBuf: (" Combination: "+ countCombinations)
+                aBuf: (" Combination: " + countCombinations)
             }
         );
         countOccurenceInArray();
@@ -376,68 +175,11 @@ function randomizeBlocks() {
                                 }
                             }
                         }
-
-
                     }
-
-
-                    /*
-                     if (d === (tetronimoSpecificCombination1.length)) {
-
-                     if ((total_possible_combinations === countCombinations) && (count01[0] > 0)) {
-
-                     postMessage(
-                     {
-                     aTopic: 'Finished-Bad',
-                     countCombinations: countCombinations,
-                     testedPositions: testedPositions
-                     }
-                     );
-
-                     postMessage(
-                     {
-                     aTopic: 'message',
-                     aBuf: ("")
-                     }
-                     );
-
-                     throw "exit";
-                     }
-
-                     if ((total_possible_combinations === countCombinations) && (count01[0] === 0)) {
-                     finished();
-                     throw "exit";
-                     }
-
-                     }
-                     */
-
-
                 }
 
             }
         }
-        //  throw "exit";
-        /*
-         if ((d === 0) && (tetronimoSpecificCombination1.length === 1)) {
-         postMessage(
-         {
-         aTopic: 'Finished-Bad',
-         countCombinations: countCombinations,
-         testedPositions: testedPositions
-         }
-         );
-
-         postMessage(
-         {
-         aTopic: 'message',
-         aBuf: ("")
-         }
-         );
-         }
-         */
-        // }
-
     }
     return;
 }
@@ -485,7 +227,6 @@ function iteration(i, tetronimoSpecificCombination) {
         //throw "exit";
 
 
-
         for (var d = 0; d < tetronimoSpecificCombination1.length; d++) {
 
 
@@ -498,7 +239,7 @@ function iteration(i, tetronimoSpecificCombination) {
 
             countEachTest.push(tetronimoSpecificCombination1[d]);
             //var sum = countEachTest.reduce(add, 0);
-           //console.log(countEachTest.length + " - " + uniq_fast(countEachTest).length);
+            //console.log(countEachTest.length + " - " + uniq_fast(countEachTest).length);
 
 
             postMessage(
@@ -510,7 +251,6 @@ function iteration(i, tetronimoSpecificCombination) {
                     //aBuf: (countCombinations + " - " + tetronimoSpecificCombination + " - " + tetronimoSpecificCombination1.length + " - " + tetronimoCombination)
                 }
             );
-
 
 
             makeGridItemsArray(gridWidth, gridHeight, 0);

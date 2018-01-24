@@ -62,7 +62,7 @@ function calculate() {
                 context.fillStyle = "#ffffff";
                 context.fillText(event.data.block, ((event.data.placeAtPosition1) * 25) + 10, ((event.data.placeAtPosition0) * 25) + 15);
                 countOccurenceInArray();
-                worker.postMessage({'count01': count01[0]});
+//                worker.postMessage({'count01': count01[0]});
             }
 
             if (event.data.aTopic === "Finished") {
@@ -80,6 +80,8 @@ function calculate() {
                 testedPositions = event.data.testedPositions;
                 endResultbad();
             }
+
+            event.data = null;
         };
 
         // pass required variables to worker

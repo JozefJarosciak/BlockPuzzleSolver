@@ -45,17 +45,14 @@ self.addEventListener('message', function (e) {
         errorRate = data.errorRate;
     }
 
+    data = null;
 
 }, false);
 
 
 function randomizeBlocks() {
 
-    postMessage(
-        {
-            aTopic: 'processing'
-        }
-    );
+    postMessage({aTopic: 'processing'});
 
 
     makeGridItemsArray(gridWidth, gridHeight, 0);
@@ -77,6 +74,7 @@ function randomizeBlocks() {
 
         var tetronimoCombination = shuffle(tetronimos);
 
+
         postMessage(
             {
                 aTopic: 'message',
@@ -84,7 +82,9 @@ function randomizeBlocks() {
                 aBuf: (" Combination: " + countCombinations)
             }
         );
-        countOccurenceInArray();
+
+
+        // countOccurenceInArray();
 
         for (var s = 0; s < tetronimoCombination.length; s++) {
             var block = tetronimoCombination[s];

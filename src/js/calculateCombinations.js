@@ -87,6 +87,9 @@ function randomizeBlocks() {
         // countOccurenceInArray();
 
         for (var s = 0; s < tetronimoCombination.length; s++) {
+
+
+
             var block = tetronimoCombination[s];
             var blockLength = Math.floor((Math.random() * parseInt(this[tetronimoCombination[s]].length)));
 
@@ -149,6 +152,7 @@ function randomizeBlocks() {
                                 }
                             );
 
+                            sleep(1000);
 
                             countOccurenceInArray();
 
@@ -177,13 +181,24 @@ function randomizeBlocks() {
                         }
                     }
                 }
-
             }
+
+            // abandon this combination if it creates enclosed space
+           // foundEmptySpace
+
         }
     }
     return;
 }
 
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+            break;
+        }
+    }
+}
 
 function iteration(i, tetronimoSpecificCombination) {
 

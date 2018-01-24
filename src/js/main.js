@@ -208,26 +208,6 @@ function display(str) {
     div.innerHTML += str;
 }
 
-
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-}
-
 //on Load
 function onLoad() {
     var c_canvas = document.getElementById("canvas");
@@ -265,16 +245,6 @@ function onLoad() {
     createGrid();
 }
 
-function sizeAr(ar) {
-    var row_count = ar.length;
-    var row_sizes = []
-    for (var i = 0; i < row_count; i++) {
-        row_sizes.push(ar[i].length)
-    }
-    return [row_count, Math.min.apply(null, row_sizes)]
-}
-
-
 function reload() {
     numofperm = 0;
     countUsedBlocks = 0;
@@ -301,12 +271,6 @@ function makeGridItemsArray(w, h, val) {
         }
     }
     return gridItems;
-}
-
-function ifExists(arr1, arr2) {
-    var aStr = JSON.stringify(arr1);
-    var doesExists = !!arr2.find(s => JSON.stringify(s) == aStr);
-    return doesExists;
 }
 
 function createGrid() {
@@ -385,13 +349,6 @@ function isInt(value) {
     return !isNaN(value) && (x | 0) === x;
 }
 
-var combinations = (function () {
-    return function (n, r) {
-        return Math.factorial(n) / (Math.factorial(r) * Math.factorial(n - r));
-    };
-})();
-
-
 Math.factorial = function (_x) {
     return _x == 1 ? _x : _x * Math.factorial(--_x);
 }
@@ -416,22 +373,6 @@ function calculateTotals1() {
     createGrid();
 }
 
-function uniq_fast(a) {
-    var seen = {};
-    var out = [];
-    var len = a.length;
-    var j = 0;
-    for (var i = 0; i < len; i++) {
-        var item = a[i];
-        if (seen[item] !== 1) {
-            seen[item] = 1;
-            out[j++] = item;
-        }
-    }
-    return out;
-}
-
-
 function numberOfUnigue(arr) {
     var a = [], b = [], prev;
 
@@ -448,16 +389,6 @@ function numberOfUnigue(arr) {
 
     return [a, b];
 }
-
-
-function multiplyFactorial(array) {
-    var sum = 1;
-    for (var i = 0; i < array[0].length; i++) {
-        sum = sum * Math.factorial(array[0][i]);
-    }
-    return sum;
-}
-
 
 
 function calculateTotals() {

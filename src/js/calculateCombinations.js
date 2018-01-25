@@ -155,7 +155,7 @@ function randomizeBlocks() {
                                     }
                                 );
 
-                                //   sleep(1000);
+                                // sleep(1000);
 
                                 countOccurenceInArray();
 
@@ -176,7 +176,7 @@ function randomizeBlocks() {
                                 throw "exit";
                             } else {
                                 if (errorRate > 0) {
-                                    if (count01[0] === errorRate) {
+                                    if (count01[0] <= errorRate) {
                                         finished();
                                         throw "exit";
                                     }
@@ -260,14 +260,43 @@ function foundEmptySpace() {
             }
 
             // sleep(400);
-            if ((countOnes >= 2) && (countAval === countOnes)) {
-                //     console.log('gridItems[' + y + '][' + x + ']=0 - | - countAval=' + countAval + ' - countOnes=' + countOnes);
-                return 1;
+            if (tetronimos.indexOf('A') === -1) {
+                if ((countOnes >= 2) && (countAval === countOnes)) {
+                    //     console.log('gridItems[' + y + '][' + x + ']=0 - | - countAval=' + countAval + ' - countOnes=' + countOnes);
+                    return 1;
+                }
             }
         }
     }
     return 0;
 }
+
+var contains = function (needle) {
+    // Per spec, the way to identify NaN is that it is not equal to itself
+    var findNaN = needle !== needle;
+    var indexOf;
+
+    if (!findNaN && typeof Array.prototype.indexOf === 'function') {
+        indexOf = Array.prototype.indexOf;
+    } else {
+        indexOf = function (needle) {
+            var i = -1, index = -1;
+
+            for (i = 0; i < this.length; i++) {
+                var item = this[i];
+
+                if ((findNaN && item !== item) || item === needle) {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
+        };
+    }
+
+    return indexOf.call(this, needle) > -1;
+};
 
 function sleep(milliseconds) {
     var start = new Date().getTime();
@@ -425,7 +454,7 @@ function iteration(i, tetronimoSpecificCombination) {
                                 throw "exit";
                             } else {
                                 if (errorRate > 0) {
-                                    if (count01[0] === errorRate) {
+                                    if (count01[0] <= errorRate) {
                                         finished();
                                         throw "exit";
                                     }

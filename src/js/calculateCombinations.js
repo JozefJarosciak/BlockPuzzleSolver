@@ -85,116 +85,121 @@ function randomizeBlocks() {
 
 
         // countOccurenceInArray();
+        var goToNextBlock = 0;
 
         for (var s = 0; s < tetronimoCombination.length; s++) {
 
 
-
-            var block = tetronimoCombination[s];
-            var blockLength = Math.floor((Math.random() * parseInt(this[tetronimoCombination[s]].length)));
-
-            // count = count + 1;
-            var foundOne = 0;
-
-            var blockColor = getRandomColor();
+            if (goToNextBlock === 0) {
 
 
-            testedPositions++;
-            for (var y = 0; y < gridHeight; y += 1) {
-                for (var x = 0; x < gridWidth; x += 1) {
+                var block = tetronimoCombination[s];
+                var blockLength = Math.floor((Math.random() * parseInt(this[tetronimoCombination[s]].length)));
 
-                    var cube = this[block][blockLength];
-                    var myPlacingArray = "";
+                // count = count + 1;
+                var foundOne = 0;
 
-                    var isFreetoPlace = 0;
-                    var countOnes = 0;
+                var blockColor = getRandomColor();
 
 
-                    // try specific block if it fits
-                    for (var j = 0; j < cube.length; j++) {
+                testedPositions++;
+                for (var y = 0; y < gridHeight; y += 1) {
+                    for (var x = 0; x < gridWidth; x += 1) {
 
-                        for (var l = 0; l < sizeAr(this[block][blockLength])[1]; l++) {
-                            if (((x + l) < (gridWidth + 1)) && ((y + j) < (gridHeight + 1))) {
-                                if (cube[j][l] === 1) {
-                                    countOnes++;
-                                }
-                                try {
-                                    if (gridItems[y + j][x + l] === 0) {
+                        var cube = this[block][blockLength];
+                        var myPlacingArray = "";
 
-                                        if (cube[j][l] === 1) {
-                                            isFreetoPlace++;
-                                            myPlacingArray = myPlacingArray + (y + j) + "," + (x + l) + " | ";
-                                        }
+                        var isFreetoPlace = 0;
+                        var countOnes = 0;
+
+
+                        // try specific block if it fits
+                        for (var j = 0; j < cube.length; j++) {
+
+                            for (var l = 0; l < sizeAr(this[block][blockLength])[1]; l++) {
+                                if (((x + l) < (gridWidth + 1)) && ((y + j) < (gridHeight + 1))) {
+                                    if (cube[j][l] === 1) {
+                                        countOnes++;
                                     }
-                                } catch (err) {
+                                    try {
+                                        if (gridItems[y + j][x + l] === 0) {
+
+                                            if (cube[j][l] === 1) {
+                                                isFreetoPlace++;
+                                                myPlacingArray = myPlacingArray + (y + j) + "," + (x + l) + " | ";
+                                            }
+                                        }
+                                    } catch (err) {
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    // place if it fits
-                    if ((isFreetoPlace === countOnes) && (foundOne === 0) && ((isFreetoPlace > 0) && (countOnes > 0))) {
-                        //if (((x + l) < (gridWidth + 1)) && ((y + j) < (gridHeight + 1))) {
-                        var placingPosition = myPlacingArray.split(" | ");
-                        for (var f = 0; f < placingPosition.length - 1; f++) {
-                            var placeAtPosition = placingPosition[f].split(",");
+                        // place if it fits
+                        if ((isFreetoPlace === countOnes) && (foundOne === 0) && ((isFreetoPlace > 0) && (countOnes > 0))) {
+                            //if (((x + l) < (gridWidth + 1)) && ((y + j) < (gridHeight + 1))) {
+                            var placingPosition = myPlacingArray.split(" | ");
+                            for (var f = 0; f < placingPosition.length - 1; f++) {
+                                var placeAtPosition = placingPosition[f].split(",");
 
-                            gridItems[(placeAtPosition[0])][(placeAtPosition[1])] = 1;
-
-
-                            postMessage(
-                                {
-                                    aTopic: 'placeBlock',
-                                    placeAtPosition0: placeAtPosition[0],
-                                    placeAtPosition1: placeAtPosition[1],
-                                    blockColor: blockColor,
-                                    block: block
-                                }
-                            );
-
-                            sleep(1000);
-
-                            countOccurenceInArray();
+                                gridItems[(placeAtPosition[0])][(placeAtPosition[1])] = 1;
 
 
-                        }
-                        foundOne = 1;
-                        isFreetoPlace = 0;
-                        countUsedPositions = countUsedPositions + countOnes;
-                        countOnes = 0;
-                        usedBlocks[countUsedBlocks] = block + "[" + blockLength + "]";
-                        usedBlockColors[countUsedBlocks] = blockColor;
-                        countUsedBlocks++;
-                        //}
+                                postMessage(
+                                    {
+                                        aTopic: 'placeBlock',
+                                        placeAtPosition0: placeAtPosition[0],
+                                        placeAtPosition1: placeAtPosition[1],
+                                        blockColor: blockColor,
+                                        block: block
+                                    }
+                                );
 
-                        //     console.log(count01[0])
-                        if (count01[0] === 0) {
-                            finished();
-                            throw "exit";
-                        } else {
-                            if (errorRate > 0) {
-                                if (count01[0] === errorRate) {
-                                    finished();
-                                    throw "exit";
+                                //   sleep(1000);
+
+                                countOccurenceInArray();
+
+
+                            }
+                            foundOne = 1;
+                            isFreetoPlace = 0;
+                            countUsedPositions = countUsedPositions + countOnes;
+                            countOnes = 0;
+                            usedBlocks[countUsedBlocks] = block + "[" + blockLength + "]";
+                            usedBlockColors[countUsedBlocks] = blockColor;
+                            countUsedBlocks++;
+                            //}
+
+                            //     console.log(count01[0])
+                            if (count01[0] === 0) {
+                                finished();
+                                throw "exit";
+                            } else {
+                                if (errorRate > 0) {
+                                    if (count01[0] === errorRate) {
+                                        finished();
+                                        throw "exit";
+                                    }
                                 }
                             }
                         }
                     }
                 }
+
+                // abandon this combination if it creates enclosed space
+                if (foundEmptySpace() === 1) {
+                    // console.log("WE MUST STOP");
+                    goToNextBlock = 1;
+                }
+
             }
-
-            // abandon this combination if it creates enclosed space
-          if (foundEmptySpace() === 1) {
-                console.log("WE MUST STOP");
-          }
-
         }
     }
     return;
 }
 
 function foundEmptySpace() {
-    var countAval = 0; var countOnes=0;
+
     for (var y = 0; y < gridHeight; y += 1) {
         for (var x = 0; x < gridWidth; x += 1) {
             var posLeft = x-1;
@@ -202,57 +207,61 @@ function foundEmptySpace() {
             var posUp = y-1;
             var posDown = y+1;
 
-            try { if (gridItems[y][x] === 0) {
+            var countAval = 0;
+            var countOnes = 0;
+
+            if (gridItems[y][x] === 0) {
 
                 try {
-                    if (gridItems[y][posLeft]) {
+                    if (gridItems[y][posLeft] === 1) {
                         countAval++;
-                        if (gridItems[y][posLeft] === 1) {
-                            countOnes++;
-                        }
+                        countOnes++;
+                    } else if (gridItems[y][posLeft] === 0) {
+                        countAval++;
                     }
-                } catch (err) {
+                } catch (err1) {
                 }
-                console.log('gridItems[' + y + '][' + posLeft + '] - countAval=' + countAval + ' - countOnes=' + countOnes);
+                // console.log('gridItems[' + y + '][' + posLeft + '] - countAval=' + countAval + ' - countOnes=' + countOnes);
 
                 try {
-                    if (gridItems[y][posRight]) {
+                    if (gridItems[y][posRight] === 1) {
                         countAval++;
-                        if (gridItems[y][posRight] === 1) {
-                            countOnes++;
-                        }
+                        countOnes++;
+                    } else if (gridItems[y][posRight] === 0) {
+                        countAval++;
                     }
-                } catch (err) {
+                } catch (err2) {
                 }
-                console.log('gridItems[' + y + '][' + posRight + '] - countAval=' + countAval + ' - countOnes=' + countOnes);
+                // console.log('gridItems[' + y + '][' + posRight + '] - countAval=' + countAval + ' - countOnes=' + countOnes);
 
                 try {
-                    if (gridItems[posUp][x]) {
+                    if (gridItems[posUp][x] === 1) {
                         countAval++;
-                        if (gridItems[posUp][x] === 1) {
-                            countOnes++;
-                        }
+                        countOnes++;
+                    } else if (gridItems[posUp][x] === 0) {
+                        countAval++;
                     }
-                } catch (err) {
+                } catch (err3) {
                 }
-                console.log('gridItems[' + posUp + '][' + x + '] - countAval=' + countAval + ' - countOnes=' + countOnes);
+                //  console.log('gridItems[' + posUp + '][' + x + '] - countAval=' + countAval + ' - countOnes=' + countOnes);
 
                 try {
-                    if (gridItems[posDown][x]) {
+                    if (gridItems[posDown][x] === 1) {
                         countAval++;
-                        if (gridItems[posDown][x] === 1) {
-                            countOnes++;
-                        }
+                        countOnes++;
+                    } else if (gridItems[posDown][x] === 0) {
+                        countAval++;
                     }
-                } catch (err) {
+                } catch (err4) {
                 }
-                console.log('gridItems[' + posDown + '][' + x + '] - countAval=' + countAval + ' - countOnes=' + countOnes);
+                //   console.log('gridItems[' + posDown + '][' + x + '] - countAval=' + countAval + ' - countOnes=' + countOnes);
 
 
-            }} catch(err) {}
+            }
 
-            sleep(1000);
-            if (countAval === countOnes) {
+            // sleep(400);
+            if ((countOnes >= 2) && (countAval === countOnes)) {
+                //     console.log('gridItems[' + y + '][' + x + ']=0 - | - countAval=' + countAval + ' - countOnes=' + countOnes);
                 return 1;
             }
         }

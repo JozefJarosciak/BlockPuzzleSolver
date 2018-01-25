@@ -184,11 +184,80 @@ function randomizeBlocks() {
             }
 
             // abandon this combination if it creates enclosed space
-           // foundEmptySpace
+          if (foundEmptySpace() === 1) {
+                console.log("WE MUST STOP");
+          }
 
         }
     }
     return;
+}
+
+function foundEmptySpace() {
+    var countAval = 0; var countOnes=0;
+    for (var y = 0; y < gridHeight; y += 1) {
+        for (var x = 0; x < gridWidth; x += 1) {
+            var posLeft = x-1;
+            var posRight = x+1;
+            var posUp = y-1;
+            var posDown = y+1;
+
+            try { if (gridItems[y][x] === 0) {
+
+                try {
+                    if (gridItems[y][posLeft]) {
+                        countAval++;
+                        if (gridItems[y][posLeft] === 1) {
+                            countOnes++;
+                        }
+                    }
+                } catch (err) {
+                }
+                console.log('gridItems[' + y + '][' + posLeft + '] - countAval=' + countAval + ' - countOnes=' + countOnes);
+
+                try {
+                    if (gridItems[y][posRight]) {
+                        countAval++;
+                        if (gridItems[y][posRight] === 1) {
+                            countOnes++;
+                        }
+                    }
+                } catch (err) {
+                }
+                console.log('gridItems[' + y + '][' + posRight + '] - countAval=' + countAval + ' - countOnes=' + countOnes);
+
+                try {
+                    if (gridItems[posUp][x]) {
+                        countAval++;
+                        if (gridItems[posUp][x] === 1) {
+                            countOnes++;
+                        }
+                    }
+                } catch (err) {
+                }
+                console.log('gridItems[' + posUp + '][' + x + '] - countAval=' + countAval + ' - countOnes=' + countOnes);
+
+                try {
+                    if (gridItems[posDown][x]) {
+                        countAval++;
+                        if (gridItems[posDown][x] === 1) {
+                            countOnes++;
+                        }
+                    }
+                } catch (err) {
+                }
+                console.log('gridItems[' + posDown + '][' + x + '] - countAval=' + countAval + ' - countOnes=' + countOnes);
+
+
+            }} catch(err) {}
+
+            sleep(1000);
+            if (countAval === countOnes) {
+                return 1;
+            }
+        }
+    }
+    return 0;
 }
 
 function sleep(milliseconds) {

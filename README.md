@@ -13,7 +13,7 @@ The slow version tests all possible block combinations and permutations (there c
 The plan for future is to include more pentominoes, heptominoes, octominoes & other polyominoes; as well as support user defined areas of any shape. 
 
 # Demo
-[http://www.BlockPuzzleSolver.com/](http://www.BlockPuzzleSolver.com/)
+[https://www.joe0.com/blockpuzzlesolver.com/](https://www.joe0.com/blockpuzzlesolver.com/)
 
 # Screenshots
 In the following article:

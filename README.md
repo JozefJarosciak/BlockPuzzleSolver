@@ -1,7 +1,18 @@
 # Block Puzzle Solver
 
-# Description
 
+# ⚠️ **Important Update** ⚠️
+
+## 🚀 **New Version Available!** 🚀  
+As of **November 23, 2024**, a new and improved version of the Tangram Puzzle Solver is available.  
+Access it here: [Tangram Puzzle Solver (New Version)](https://github.com/JozefJarosciak/TangramPuzzleSolver)
+
+🔗 **Why Update?**  - The new version includes enhanced algorithms, optimized performance, and improved features for solving puzzles efficiently.
+
+---
+
+
+# Description
 The **Block Puzzle Solver** is a tool designed to calculate solutions for tangram-style puzzles based on monomino, domino, triomino, tetromino, and pentomino shapes within a user-defined rectangular or square area. It supports **block rotation** and **reflection** for maximum flexibility.
 
 ## Features
@@ -19,7 +30,7 @@ This repository is ideal for puzzle enthusiasts, developers, or anyone intereste
 
 # Demo
 
-- **Live Demo**: [Block Puzzle Solver](https://www.joe0.com/blockpuzzlesolver.com/)  
+- **Live Demo**: [Block Puzzle Solver](https://www.joe0.com/blockpuzzlesolver.com/old)  
 - **Project Details**: Learn more about the development of this project [here](https://www.joe0.com/2018/01/03/n-block-tetromino-tangram-puzzle-solver-in-javascript/).
 
 
@@ -45,7 +56,7 @@ The Block Puzzle Solver is tested and compatible with the following browsers:
 
 Contributions to this project are welcome and encouraged!  
 
-Currently, I am seeking an **equation-based approach** to efficiently eliminate early cases where no solution exists. If you're interested, check out this discussion for more context: [Tetromino Tiling: How to Eliminate Early Cases with No Solution](https://math.stackexchange.com/questions/2602742/tetronimo-tiling-with-given-tiles-how-to-eliminate-early-cases-where-no-soluti).
+Currently, I am seeking an **equation-based approach** to eliminate early cases where no solution exists efficiently. If you're interested, check out this discussion for more context: [Tetromino Tiling: How to Eliminate Early Cases with No Solution](https://math.stackexchange.com/questions/2602742/tetronimo-tiling-with-given-tiles-how-to-eliminate-early-cases-where-no-soluti).
 
 
 # Resources
